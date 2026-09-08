@@ -1,0 +1,97 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FFFFE0;
+}
+
+#menu {
+    background-color: #FFC800;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    border: #3A2603 solid;
+    border-radius: 10px;
+    justify-content: flex-start;
+}
+
+#menu img {
+    max-height: 90px;
+	margin: 0;
+}
+
+#menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0 20px;
+    font-size: 20px;
+}
+
+#rodape {
+    background-color: #FFC800;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    border: #3A2603 solid;
+    border-radius: 10px;
+    justify-content: flex-start;
+}
+
+#rodape a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0 12px;
+    justify-content: center;
+    align-items: center;
+}
+
+#rodape img {
+    max-height: 90px;
+	margin: 0;
+}
+
+#carrossel {
+    width: 1200px;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    margin: 30px auto;
+}
+
+.imagens {
+    display: flex;
+    width: 3600px;
+    transition: transform 0.5s;
+}
+
+.imagens img {
+    width: 1200px;
+    height: 300px;
+    flex-shrink: 0;
+    object-fit: cover;
+}
+
+/* Setas */
+
+.anterior,
+.proximo {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: rgb(0, 0, 0);
+    font-size: 40px;
+    cursor: pointer;
+}
+
+.anterior {
+    left: 10px;
+}
+
+.proximo {
+    right: 10px;
+}
