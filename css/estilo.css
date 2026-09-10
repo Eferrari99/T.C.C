@@ -217,5 +217,16 @@ body {
     margin: 2px;
     font-size: 20px;
 }
+<<<<<<< HEAD
 /*Fim da area do login*/
 >>>>>>> 03a90874ebc4af7167d4862a5c46ef736a6a4c0e
+=======
+
+.faca-cadastro {
+    color: #999;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 20px;
+}
+/*Fim da area do login*/
+>>>>>>> 361317ce332188d1c7e35015d0ffa781cd6372bc
