@@ -75,7 +75,7 @@
     #sugestoes {
         width: 100%;
         background: white;
-        
+        border: #b5b5b5 solid 1px;
         border-radius: 8px;
         height: auto;
         margin-top: 5px;
