@@ -95,3 +95,113 @@ body {
 .proximo {
     right: 10px;
 }
+
+/* =========================
+   ÁREA DE PRODUTOS
+========================= */
+
+.produto-carrossel {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 190px;
+}
+
+/* Área onde os produtos ficam */
+.produto-container {
+    width: calc(100% - 160px);
+    max-width: 1000px;
+    overflow: hidden;
+}
+
+/* Linha dos produtos */
+.produto-lista {
+    display: flex;
+    gap: 10px;
+    transition: transform 0.5s ease;
+}
+
+/* CARD DO PRODUTO */
+.produto-card {
+    flex: 0 0 140px;
+    height: 165px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 7px;
+    text-align: center;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* IMAGEM DO PRODUTO */
+.produto-imagem {
+    width: 120px;
+    height: 102px;
+    margin: 0 auto;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.produto-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* NOME E PREÇO */
+.produto-card h2 {
+    margin: 4px 0;
+    font-size: 10px;
+}
+
+/* BOTÃO */
+.produto-botao {
+    width: 115px;
+    height: 17px;
+    background-color: #ffc400;
+    border: none;
+    border-radius: 10px;
+    font-size: 9px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.produto-botao:hover {
+    background-color: #eab300;
+}
+
+/* SETAS DO CARROSSEL DE PRODUTOS */
+.produto-seta {
+    width: 23px;
+    height: 23px;
+    border: none;
+    border-radius: 50%;
+    background-color: #ffc400;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Seta esquerda */
+.produto-seta:first-child {
+    left: 20px;
+}
+
+/* Seta direita */
+.produto-seta:last-child {
+    right: 20px;
+}
+
+.produto-seta:hover {
+    transform: translateY(-50%) scale(1.1);
+}

@@ -21,3 +21,15 @@ function anterior() {
     document.querySelector(".imagens").style.transform =
         "translateX(-" + (imagemAtual * 1200) + "px)";
 }
+
+let posicao = 0;
+
+function mover(direcao) {
+
+    const produtos = document.getElementById("produtos");
+
+    posicao += direcao;
+
+    produtos.style.transform =
+        `translateX(${posicao * -375}px)`;
+}
