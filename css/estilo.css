@@ -2,10 +2,14 @@ body {
     margin: 0;
     padding: 0;
     background-color: #FFFFE0;
+
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 #menu {
-    background-color: #FFC800;
+    background-color: #ffc800;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,28 +33,29 @@ body {
 }
 
 #rodape {
+    margin-top: auto;
+
+    min-height: 90px;
     background-color: #FFC800;
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 50px;
+
     border: #3A2603 solid;
     border-radius: 10px;
-    justify-content: flex-start;
+    box-sizing: border-box;
 }
 
 #rodape a {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    padding: 0 12px;
-    justify-content: center;
-    align-items: center;
+    padding: 30px;
 }
 
 #rodape img {
-    max-height: 90px;
-	margin: 0;
+    height: 90px;
+    margin: 0;
+    padding: 0;
 }
 
 #carrossel {
@@ -96,6 +101,7 @@ body {
     right: 10px;
 }
 
+<<<<<<< HEAD
 /* =========================
    ÁREA DE PRODUTOS
 ========================= */
@@ -205,3 +211,130 @@ body {
 .produto-seta:hover {
     transform: translateY(-50%) scale(1.1);
 }
+=======
+
+
+
+
+
+
+#ajuda {
+    /*deixa em uma coluna centralizada*/
+    margin: 0 auto;
+    width: 300px;
+    padding: 10px;
+    
+    border-radius: 10px;
+    /*coloca borda e cor na borda*/
+    border: 1px solid #8a8a8a;
+    /*alinha itens no centro*/
+    text-align: center;
+    /*coloca um quadrado cinza de funda da div*/
+    background-color: #ffffed;
+}
+#pesquisa {
+    /*deixa em uma coluna centralizada*/
+    margin: 0 auto;
+    width: 50%;
+    padding: 10px;
+    /*tipo da fonte*/
+    font-family: Arial, sans-serif;
+    /*tamanho da fonte*/
+    font-size: 16px;
+   
+    
+    border-radius: 5px;
+    /*alinha itens no centro*/
+    text-align: center;
+}
+#fill {
+    width: 90%;
+    height: 50px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+
+/*Area do login*/
+/*Deixando o bloco de fundo elegante*/
+.blocao {
+    width: 600px;
+    height: 350px;
+    background-color: #E1B982;
+    margin: 40px auto;
+    border: 1px solid black;
+    border-radius: 15px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* deixando o componte email bonito*/
+.email input {
+    width: 500px;
+    height: 45px;
+    margin-left: 50px;
+    margin-top: 50px;
+    border: none;
+    border-radius: 25px;
+    padding-left: 20px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* deixando o componte senha bonito*/
+.senha input {
+    width: 500px;
+    height: 45px;
+    margin-left: 50px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 25px;
+    padding-left: 20px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* deixando o componte confirmar bonito*/
+.confirmar button {
+    width: 300px;
+    height: 45px;
+    margin-left: 150px;
+    margin-top: 75px;
+    border: none;
+    border-radius: 25px;
+    background-color: #55B63F;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* deixando o componte login bonito*/
+.login {
+    width: 320px;
+    height: 30px;
+    background-color: #55B63F;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 0 auto;
+    position: relative;
+    top: -20px;
+    text-align: center;
+    color: white;
+}
+
+.login h3 {
+    margin: 2px;
+    font-size: 20px;
+}
+
+
+.faca-cadastro {
+    color: #999;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 20px;
+}
+/*Fim da area do login*/
+
+>>>>>>> 431451c42bb054ffb34e4fcceba5e3b97063c186
