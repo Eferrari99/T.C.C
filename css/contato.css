@@ -1,0 +1,107 @@
+#entre_em_contato {
+    /*deixa em uma coluna centralizada*/
+    margin: 0 auto;
+    width: 400px;
+    padding: 5px;
+    
+    border-radius: 10px;
+    /*coloca borda e cor na borda*/
+    border: #3A2603 solid;
+    
+    /*alinha itens no centro*/
+    text-align: center;
+    /*coloca um quadrado cinza de funda da div*/
+    background-color: #FFC800;
+}
+
+#contato {
+    /*deixa em uma coluna centralizada*/
+    margin: 0 auto;
+    width: 50%;
+    padding: 20px;
+
+    
+    border-radius: 5px;
+    /*alinha itens no centro*/
+    text-align: center;
+}
+#pesquisa {
+    /*coloca um quadrado bonitinho*/
+    margin: 0 auto;
+    width: 50%;
+    padding: 10px;
+    
+    border-radius: 5px;
+    /*alinha itens no centro*/
+    text-align: center;
+}
+
+#ajuda {
+    /*deixa em uma coluna centralizada*/
+    margin: 0 auto;
+    width: 300px;
+    padding: 10px;
+    height: auto;
+    
+    border-radius: 10px;
+    /*coloca borda e cor na borda*/
+    border: 1px solid #8a8a8a;
+    /*alinha itens no centro*/
+    text-align: center;
+    /*coloca um quadrado cinza de funda da div*/
+    background-color: #ffffed;
+}
+
+
+#telefone {
+    /*deixa cinza o texto*/
+    color: #8a8a8a;
+}
+#inputAjuda {
+    /*deixa em uma coluna centralizada*/
+    margin: 0 auto;
+    width: 50%;
+    padding: 10px;
+    /*tipo da fonte*/
+    font-family: Arial, sans-serif;
+    /*tamanho da fonte*/
+    font-size: 16px;
+   
+    
+    border-radius: 5px;
+    /*alinha itens no centro*/
+    text-align: center;
+}
+    #sugestoes {
+        width: 100%;
+        background: white;
+        
+        border-radius: 8px;
+        height: auto;
+        margin-top: 5px;
+    }
+    
+    .sugestao {
+        padding: 10px;
+        cursor: pointer;
+        text-align: left;
+    }
+    
+   
+    #resposta {
+        margin-top: 15px;
+        padding: 15px;
+        background-color: #ffffff;
+       border: #b5b5b5 solid 1px;
+        border-radius: 8px;
+        text-align: left;
+    }
+
+#fill {
+    width: 80%;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}

@@ -10,7 +10,8 @@
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
 
-   <link rel="stylesheet" href="css/estilo.css">
+   <link rel="stylesheet" href="css/estilo.css">   <link rel="stylesheet" href="css/contato.css">
+
 </head>
 
 <body>
@@ -26,25 +27,33 @@
    </div>
 
    <div id="contato">
-      <h1>Entre em contato conosco</h1>
-      <p>Telefone: (11) 9999-9999</p>
-
-   </div>
-   <div id="ajuda">
-      <h1>Ajuda</h1>
-
-      <p>Como podemos ajudar?</p>
-      <div id="pesquisa"></div>
-      <input id="fill"type="text" placeholder="Digite sua pergunta">
+      <h1 id="entre_em_contato">Entre em contato conosco</h1>
       </div>
 
-   </div>
+      <div id="ajuda">
+         <h1>Ajuda</h1>
+         <p>Como podemos ajudar?</p>
+     
+         <p id="telefone">Telefone: (11) 9999-9999</p>
+     
+         <input
+             id="inputAjuda"
+             type="text"
+             placeholder="Digite sua pergunta"
+             autocomplete="off"
+         >
+     
+         <div id="sugestoes"></div>
+     
+         <div id="resposta"></div>
+     </div>
 
    <div id="rodape">
       <img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog">
       <a href="contato.html"></i>Entre em contato</a><br>
    </div>
-
+   
+   <script src="JavaScript/ajuda.js"></script>
 </body>
 
 </html>
