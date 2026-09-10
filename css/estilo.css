@@ -234,4 +234,11 @@ body {
     margin: 2px;
     font-size: 20px;
 }
+
+.faca-cadastro {
+    color: #999;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 20px;
+}
 /*Fim da area do login*/
