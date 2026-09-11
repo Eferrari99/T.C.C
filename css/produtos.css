@@ -1,6 +1,7 @@
 /* =========================
    ÁREA DE PRODUTOS
 ========================= */
+
 .produto-carrossel {
     width: 100%;
     display: flex;
@@ -20,7 +21,7 @@
 /* Linha dos produtos */
 .produto-lista {
     display: flex;
-    gap: 10px;
+    gap: 70px;
     transition: transform 0.5s ease;
 }
 
@@ -87,7 +88,6 @@
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
-
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -105,42 +105,4 @@
 
 .produto-seta:hover {
     transform: translateY(-50%) scale(1.1);
-}
-
-#ajuda {
-    /*deixa em uma coluna centralizada*/
-    margin: 0 auto;
-    width: 300px;
-    padding: 10px;
-    
-    border-radius: 10px;
-    /*coloca borda e cor na borda*/
-    border: 1px solid #8a8a8a;
-    /*alinha itens no centro*/
-    text-align: center;
-    /*coloca um quadrado cinza de funda da div*/
-    background-color: #ffffed;
-}
-#pesquisa {
-    /*deixa em uma coluna centralizada*/
-    margin: 0 auto;
-    width: 50%;
-    padding: 10px;
-    /*tipo da fonte*/
-    font-family: Arial, sans-serif;
-    /*tamanho da fonte*/
-    font-size: 16px;
-   
-    
-    border-radius: 5px;
-    /*alinha itens no centro*/
-    text-align: center;
-}
-#fill {
-    width: 90%;
-    height: 50px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 10px;
-    box-sizing: border-box;
 }
