@@ -38,6 +38,7 @@
     border: 1px solid #333;
     border-radius: 20px;
     padding: 6px;
+    text-align: center;
     font-weight: bold;
     z-index: 2;
     position: relative;
@@ -83,6 +84,11 @@
 
 #caixa_cadastro button:hover {
     background: #469A30;
+}
+
+.btn_cadastro{
+    display: block;
+    margin: 0 auto;
 }
 
 .login {
