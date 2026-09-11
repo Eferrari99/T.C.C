@@ -86,11 +86,12 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: none;
+    background: black;
     border: none;
     color: rgb(0, 0, 0);
     font-size: 40px;
     cursor: pointer;
+    
 }
 
 .anterior {
