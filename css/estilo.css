@@ -101,7 +101,6 @@ body {
     right: 10px;
 }
 
-<<<<<<< HEAD
 /* =========================
    ÁREA DE PRODUTOS
 ========================= */
@@ -211,12 +210,6 @@ body {
 .produto-seta:hover {
     transform: translateY(-50%) scale(1.1);
 }
-=======
-
-
-
-
-
 
 #ajuda {
     /*deixa em uma coluna centralizada*/
@@ -337,4 +330,3 @@ body {
 }
 /*Fim da area do login*/
 
->>>>>>> 431451c42bb054ffb34e4fcceba5e3b97063c186
