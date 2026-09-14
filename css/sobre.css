@@ -8,68 +8,82 @@
     padding: 10px;
 }
 
-/* Título principal */
+/* ===================================== */
+/* TÍTULO PRINCIPAL */
+/* ===================================== */
 
 .sobre h1 {
-    text-align: center;
-    margin-bottom: 35px;
     color: rgb(0, 0, 0);
-
-    margin: 0 auto;
-
+    margin: 30px auto;
     width: 300px;
-
-    padding: 8px;
-
+    padding: 10px;
     border-radius: 10px;
-
     border: #3A2603 solid;
-
     text-align: center;
-
     background-color: #ffd640;
-
-    margin-top: 30px;
-
-    margin-bottom: 30px;
-
     font-weight: bold;
-
     box-sizing: border-box;
-    
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Seções */
+/* ===================================== */
+/* SEÇÕES */
+/* ===================================== */
 
 .sobre section {
     background-color: #fdd194;
     border: 2px solid #3A2603;
     border-radius: 12px;
-    padding: 25px;
+    padding: 25px 30px;
     margin-bottom: 25px;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Títulos das seções */
+.sobre section:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+}
+
+/* ===================================== */
+/* TÍTULOS DAS SEÇÕES */
+/* ===================================== */
 
 .sobre h2 {
     margin-top: 0;
     margin-bottom: 15px;
+    color: #3A2603;
+    font-size: 24px;
 }
 
-/* Textos */
+/* ===================================== */
+/* TEXTOS */
+/* ===================================== */
 
 .sobre p {
-    line-height: 1.6;
+    line-height: 1.7;
     margin-bottom: 15px;
+    color: #2d220f;
+    font-size: 16px;
 }
 
-/* Lista */
+.sobre section p:last-child {
+    margin-bottom: 0;
+}
+
+/* ===================================== */
+/* LISTA */
+/* ===================================== */
 
 .sobre ul {
     line-height: 1.8;
     padding-left: 25px;
+    margin-bottom: 0;
+}
+
+.sobre li {
+    margin-bottom: 5px;
 }
 
 /* ===================================== */
@@ -82,7 +96,9 @@
     gap: 20px;
 }
 
-/* Cada serviço */
+/* ===================================== */
+/* CADA SERVIÇO */
+/* ===================================== */
 
 .servicos-sobre > div {
     text-align: center;
@@ -90,29 +106,47 @@
     border-radius: 10px;
     padding: 20px;
     background-color: #fffcf8;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Ícones */
+/* Efeito ao passar o mouse */
+
+.servicos-sobre > div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ===================================== */
+/* ÍCONES */
+/* ===================================== */
 
 .servicos-sobre i {
-    font-size: 40px;
+    font-size: 45px;
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    color: #3A2603;
 }
 
-/* Nome do serviço */
+/* ===================================== */
+/* NOME DO SERVIÇO */
+/* ===================================== */
 
 .servicos-sobre h3 {
     margin: 10px 0;
+    color: #3A2603;
+    font-size: 20px;
 }
 
-/* Descrição do serviço */
+/* ===================================== */
+/* DESCRIÇÃO DO SERVIÇO */
+/* ===================================== */
 
 .servicos-sobre p {
     margin-bottom: 0;
+    font-size: 15px;
+    line-height: 1.5;
 }
-
-
 
 /* ===================================== */
 /* RESPONSIVIDADE */
@@ -133,13 +167,21 @@
         margin: 20px auto;
     }
 
+    .sobre h1 {
+        width: 100%;
+        max-width: 300px;
+    }
+
     .sobre section {
         padding: 18px;
+    }
+
+    .sobre h2 {
+        font-size: 21px;
     }
 
     .servicos-sobre {
         grid-template-columns: 1fr;
     }
-    
-    
+
 }
