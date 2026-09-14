@@ -211,18 +211,6 @@ body {
 .produto-seta:hover {
     transform: translateY(-50%) scale(1.1);
 }
-<<<<<<< HEAD
-=======
-
-
-
-
-
-
-
-
-
->>>>>>> 7520baf31e1d0b57f375d60910927b6e42de05c3
 
 #ajuda {
     /*deixa em uma coluna centralizada*/
@@ -261,7 +249,6 @@ body {
     padding: 10px;
     box-sizing: border-box;
 }
-<<<<<<< HEAD
 
 
 /*Area do login*/
@@ -344,5 +331,3 @@ body {
 }
 /*Fim da area do login*/
 
-=======
->>>>>>> 7520baf31e1d0b57f375d60910927b6e42de05c3
