@@ -1,0 +1,187 @@
+/* ===================================== */
+/* CSS - PÁGINA QUEM SOMOS / SOBRE */
+/* ===================================== */
+
+.sobre {
+    max-width: 1100px;
+    margin: 1px auto;
+    padding: 10px;
+}
+
+/* ===================================== */
+/* TÍTULO PRINCIPAL */
+/* ===================================== */
+
+.sobre h1 {
+    color: rgb(0, 0, 0);
+    margin: 30px auto;
+    width: 300px;
+    padding: 10px;
+    border-radius: 10px;
+    border: #3A2603 solid;
+    text-align: center;
+    background-color: #ffd640;
+    font-weight: bold;
+    box-sizing: border-box;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ===================================== */
+/* SEÇÕES */
+/* ===================================== */
+
+.sobre section {
+    background-color: #fdd194;
+    border: 2px solid #3A2603;
+    border-radius: 12px;
+    padding: 25px 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sobre section:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+}
+
+/* ===================================== */
+/* TÍTULOS DAS SEÇÕES */
+/* ===================================== */
+
+.sobre h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #3A2603;
+    font-size: 24px;
+}
+
+/* ===================================== */
+/* TEXTOS */
+/* ===================================== */
+
+.sobre p {
+    line-height: 1.7;
+    margin-bottom: 15px;
+    color: #2d220f;
+    font-size: 16px;
+}
+
+.sobre section p:last-child {
+    margin-bottom: 0;
+}
+
+/* ===================================== */
+/* LISTA */
+/* ===================================== */
+
+.sobre ul {
+    line-height: 1.8;
+    padding-left: 25px;
+    margin-bottom: 0;
+}
+
+.sobre li {
+    margin-bottom: 5px;
+}
+
+/* ===================================== */
+/* SERVIÇOS */
+/* ===================================== */
+
+.servicos-sobre {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* ===================================== */
+/* CADA SERVIÇO */
+/* ===================================== */
+
+.servicos-sobre > div {
+    text-align: center;
+    border: 2px solid #3A2603;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fffcf8;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efeito ao passar o mouse */
+
+.servicos-sobre > div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ===================================== */
+/* ÍCONES */
+/* ===================================== */
+
+.servicos-sobre i {
+    font-size: 45px;
+    display: block;
+    margin-bottom: 12px;
+    color: #3A2603;
+}
+
+/* ===================================== */
+/* NOME DO SERVIÇO */
+/* ===================================== */
+
+.servicos-sobre h3 {
+    margin: 10px 0;
+    color: #3A2603;
+    font-size: 20px;
+}
+
+/* ===================================== */
+/* DESCRIÇÃO DO SERVIÇO */
+/* ===================================== */
+
+.servicos-sobre p {
+    margin-bottom: 0;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* ===================================== */
+/* RESPONSIVIDADE */
+/* ===================================== */
+
+@media (max-width: 900px) {
+
+    .servicos-sobre {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .sobre {
+        padding: 15px;
+        margin: 20px auto;
+    }
+
+    .sobre h1 {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .sobre section {
+        padding: 18px;
+    }
+
+    .sobre h2 {
+        font-size: 21px;
+    }
+
+    .servicos-sobre {
+        grid-template-columns: 1fr;
+    }
+
+}
