@@ -1,0 +1,665 @@
+/* ========================================
+   TÍTULO DA PÁGINA
+======================================== */
+
+#titulo {
+
+    color: aliceblue;
+
+    margin: 0 auto;
+
+    width: 200px;
+
+    padding: 8px;
+
+    border-radius: 10px;
+
+    border: #3A2603 solid;
+
+    text-align: center;
+
+    background-color: #ff0000;
+
+    margin-top: 30px;
+
+    margin-bottom: 30px;
+
+    font-weight: bold;
+
+    box-sizing: border-box;
+
+}
+
+
+
+/* ========================================
+   MAPA + PAINEL
+======================================== */
+
+.area-emergencia {
+
+    width: 900px;
+
+    max-width: 92%;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    gap: 20px;
+
+    align-items: stretch;
+
+}
+
+
+
+/* ========================================
+   MAPA
+======================================== */
+
+#mapa {
+
+    width: 480px;
+
+    height: 400px;
+
+    border-radius: 15px;
+
+    border: 2px solid #3A2603;
+
+    overflow: hidden;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+
+}
+
+
+
+/* ========================================
+   PAINEL SOS
+======================================== */
+
+#SOS {
+
+    flex: 1;
+
+    width: auto;
+
+    max-width: none;
+
+    min-height: 400px;
+
+    margin: 0;
+
+    padding: 25px;
+
+    border-radius: 15px;
+
+    border: 2px solid #3A2603;
+
+    background-color: #FFC800;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+
+    box-sizing: border-box;
+
+    color: #000;
+
+}
+
+
+
+/* ========================================
+   CABEÇALHO DO SOS
+======================================== */
+
+.sos-cabecalho {
+
+    text-align: center;
+
+}
+
+
+.sos-cabecalho i {
+
+    font-size: 42px;
+
+    color: #d60000;
+
+}
+
+
+.sos-cabecalho h2 {
+
+    margin: 8px 0;
+
+    font-size: 24px;
+
+}
+
+
+.sos-cabecalho p {
+
+    margin: 0 0 20px;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+
+
+/* ========================================
+   ÁREA DE LOCALIZAÇÃO
+======================================== */
+
+.localizacao-box {
+
+    text-align: left;
+
+}
+
+
+.localizacao-box label {
+
+    display: block;
+
+    font-weight: bold;
+
+    margin-bottom: 7px;
+
+}
+
+
+.localizacao-box label i {
+
+    color: #d60000;
+
+}
+
+
+
+/* ========================================
+   CAMPO DE LOCALIZAÇÃO
+======================================== */
+
+.campo-localizacao {
+
+    display: flex;
+
+    width: 100%;
+
+}
+
+
+#inputlocal {
+
+    margin: 0;
+
+    width: 100%;
+
+    padding: 13px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 15px;
+
+    border: 2px solid #3A2603;
+
+    border-right: none;
+
+    border-radius: 8px 0 0 8px;
+
+    box-sizing: border-box;
+
+    outline: none;
+
+}
+
+
+#inputlocal:focus {
+
+    border-color: #d60000;
+
+}
+
+
+
+/* ========================================
+   BOTÃO GPS
+======================================== */
+
+#btnLocalizacao {
+
+    width: 52px;
+
+    border: 2px solid #3A2603;
+
+    background-color: white;
+
+    border-radius: 0 8px 8px 0;
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+    transition: 0.2s;
+
+}
+
+
+#btnLocalizacao:hover {
+
+    background-color: #eeeeee;
+
+}
+
+
+#btnLocalizacao:active {
+
+    transform: scale(0.95);
+
+}
+
+
+
+/* ========================================
+   SUGESTÕES DE ENDEREÇO
+======================================== */
+
+#sugestoes {
+
+    background-color: white;
+
+    border-radius: 0 0 8px 8px;
+
+    overflow: hidden;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+
+}
+
+
+.sugestao {
+
+    padding: 12px;
+
+    cursor: pointer;
+
+    border-bottom: 1px solid #ddd;
+
+    font-size: 14px;
+
+    transition: 0.2s;
+
+}
+
+
+.sugestao:hover {
+
+    background-color: #eeeeee;
+
+}
+
+
+.sugestao i {
+
+    color: #d60000;
+
+    margin-right: 7px;
+
+}
+
+
+
+/* ========================================
+   STATUS
+======================================== */
+
+#statusLocalizacao {
+
+    font-size: 13px;
+
+    margin: 8px 0;
+
+    min-height: 18px;
+
+}
+
+
+
+/* ========================================
+   BOTÃO CONFIRMAR
+======================================== */
+
+.btn-confirmar {
+
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background-color: #d60000;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+
+.btn-confirmar:hover {
+
+    background-color: #a80000;
+
+    transform: scale(1.02);
+
+}
+
+
+.btn-confirmar:active {
+
+    transform: scale(0.98);
+
+}
+
+
+
+/* ========================================
+   ÁREA DOS RESULTADOS
+======================================== */
+
+#resultados {
+
+    width: 800px;
+
+    max-width: 90%;
+
+    margin: 30px auto 130px;
+
+}
+
+
+
+/* ========================================
+   TÍTULO DOS RESULTADOS
+======================================== */
+
+.resultados-titulo {
+
+    text-align: center;
+
+    margin-bottom: 20px;
+
+}
+
+
+.resultados-titulo h2 {
+
+    margin-bottom: 5px;
+
+}
+
+
+.resultados-titulo h2 i {
+
+    color: #d60000;
+
+}
+
+
+.resultados-titulo p {
+
+    color: #555;
+
+}
+
+
+
+/* ========================================
+   LISTA DE LOCAIS
+======================================== */
+
+#listaLocais {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+
+}
+
+
+
+/* ========================================
+   CARD DOS ESTABELECIMENTOS
+======================================== */
+
+.card-local {
+
+    background-color: white;
+
+    border: 2px solid #FFC800;
+
+    border-radius: 12px;
+
+    padding: 18px;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+
+    transition: 0.2s;
+
+}
+
+
+.card-local:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.18);
+
+}
+
+
+.card-local h3 {
+
+    margin: 0 0 8px;
+
+    font-size: 18px;
+
+}
+
+
+.card-local h3 i {
+
+    color: #d60000;
+
+}
+
+
+
+/* ========================================
+   TIPO DO ESTABELECIMENTO
+======================================== */
+
+.tipo-local {
+
+    display: inline-block;
+
+    background-color: #FFC800;
+
+    padding: 4px 8px;
+
+    border-radius: 5px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+
+}
+
+
+
+/* ========================================
+   ENDEREÇO
+======================================== */
+
+.endereco {
+
+    font-size: 14px;
+
+    color: #555;
+
+    margin-bottom: 8px;
+
+}
+
+
+.distancia {
+
+    font-weight: bold;
+
+    margin-bottom: 12px;
+
+}
+
+
+
+/* ========================================
+   BOTÃO VER ROTA
+======================================== */
+
+.btn-rota {
+
+    display: inline-block;
+
+    text-decoration: none;
+
+    background-color: #222;
+
+    color: white;
+
+    padding: 9px 12px;
+
+    border-radius: 6px;
+
+    font-size: 13px;
+
+}
+
+
+.btn-rota:hover {
+
+    background-color: #000;
+
+}
+
+
+
+/* ========================================
+   MENSAGEM INICIAL
+======================================== */
+
+.mensagem-inicial {
+
+    background-color: #f5f5f5;
+
+    border-radius: 10px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    color: #666;
+
+}
+
+
+.mensagem-inicial i {
+
+    font-size: 35px;
+
+}
+
+
+
+/* ========================================
+   MARCADORES DO MAPA
+======================================== */
+
+.marcador-clinica {
+
+    color: #d60000;
+
+}
+
+
+.marcador-petshop {
+
+    color: #FFC800;
+
+}
+
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 800px) {
+
+    .area-emergencia {
+
+        flex-direction: column;
+
+        width: 95%;
+
+    }
+
+
+    #mapa {
+
+        width: 100%;
+
+        height: 300px;
+
+    }
+
+
+    #SOS {
+
+        width: 100%;
+
+    }
+
+
+    #resultados {
+
+        width: 95%;
+
+    }
+
+
+    #listaLocais {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
