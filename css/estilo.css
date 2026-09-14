@@ -86,11 +86,12 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: none;
+    background: black;
     border: none;
     color: rgb(0, 0, 0);
     font-size: 40px;
     cursor: pointer;
+    
 }
 
 .anterior {
@@ -99,6 +100,7 @@ body {
 
 .proximo {
     right: 10px;
+
 }
 
 /* =========================
@@ -124,7 +126,7 @@ body {
 /* Linha dos produtos */
 .produto-lista {
     display: flex;
-    gap: 10px;
+    gap: 70px;
     transition: transform 0.5s ease;
 }
 
@@ -191,7 +193,6 @@ body {
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
-
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -210,6 +211,18 @@ body {
 .produto-seta:hover {
     transform: translateY(-50%) scale(1.1);
 }
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+
+
+>>>>>>> 7520baf31e1d0b57f375d60910927b6e42de05c3
 
 #ajuda {
     /*deixa em uma coluna centralizada*/
@@ -248,6 +261,7 @@ body {
     padding: 10px;
     box-sizing: border-box;
 }
+<<<<<<< HEAD
 
 
 /*Area do login*/
@@ -330,3 +344,5 @@ body {
 }
 /*Fim da area do login*/
 
+=======
+>>>>>>> 7520baf31e1d0b57f375d60910927b6e42de05c3
