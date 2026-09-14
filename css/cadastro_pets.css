@@ -29,7 +29,6 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
 }
 
 .titulo {
@@ -64,6 +63,7 @@
     background: #E5E5E5;
     padding: 0 15px;
     font-size: 15px;
+    color: #000000;
 }
 
 #caixa_cadastro input::placeholder {
@@ -87,9 +87,12 @@
     background: #469A30;
 }
 
-.btn_cadastro{
-    display: block;
+.btn_confirmar{
+    display: flex;
     margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
 }
 
 .login {
@@ -105,4 +108,25 @@
 
 .login a:hover {
     text-decoration: underline;
+}
+
+input, select {
+    color: #8A8A8A;
+    width: 100%;
+    height: 42px;
+    margin-bottom: 14px;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    background: #E5E5E5;
+    padding: 0 15px;
+    font-size: 15px;
+}
+
+select.selecionado {
+    color: #000000;
+}
+
+a {
+    text-decoration: none;
 }
