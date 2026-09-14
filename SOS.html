@@ -1,33 +1,267 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <title>Taxi-Dog</title>
-        <!-- Favicon / Shorticon -->
-        <link rel="shortcut icon" href="img/TAXI-DOG.png" type="image/x-icon">
-        <!-- Pacote de ícones https://icons.getbootstrap.com/-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-     
-     
-        <link rel="stylesheet" href="css/estilo.css">
-     </head>
+
+<head>
+
+   <meta charset="UTF-8">
+
+   <title>Taxi-Dog - Emergência</title>
+
+   <!-- Favicon / Shorticon -->
+   <link rel="shortcut icon" href="img/TAXI-DOG.png" type="image/x-icon">
+
+   <!-- Bootstrap Icons -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+   <!-- Leaflet - Biblioteca do mapa -->
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+   <!-- CSS do site -->
+   <link rel="stylesheet" href="css/estilo.css">
+
+   <!-- CSS da página de emergência -->
+   <link rel="stylesheet" href="css/SOS.css">
+
+</head>
+
+
 <body>
-        <div id="menu">
-           <img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog">
-           <a href="index.html"><i class="bi bi-house-door-fill"></i> Home</a>
-           <a href="sobre.html"><i class="bi bi-person-rolodex"></i> Quem Somos</a>
-           <a href="produtos.html"><i class="bi bi-bag-fill"></i> produtos</a>
-           <a href="corrida.html"><i class="bi bi-taxi-front"></i> corrida</a>
-           <a href="carrinho.html"><i class="bi bi-cart4"></i> carrinho</a>
-           <a href="perfil.html"><i class="bi bi-person-fill"></i> Perfil</a>
-
-        </div>
 
 
-        <div id="rodape">
-                <img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog">
-                <a href="contato.html"></i>Entre em contato</a><br>
+   <!-- =========================
+         CABEÇALHO
+    ========================== -->
+
+   <div id="menu">
+
+      <img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog">
+
+      <a href="index.html">
+         <i class="bi bi-house-door-fill"></i>
+         Home
+      </a>
+
+      <a href="sobre.html">
+         <i class="bi bi-person-rolodex"></i>
+         Quem Somos
+      </a>
+
+      <a href="produtos.html">
+         <i class="bi bi-bag-fill"></i>
+         produtos
+      </a>
+
+      <a href="corrida.html">
+         <i class="bi bi-taxi-front"></i>
+         corrida
+      </a>
+
+      <a href="carrinho.html">
+         <i class="bi bi-cart4"></i>
+         carrinho
+      </a>
+
+      <a href="perfil.html">
+         <i class="bi bi-person-fill"></i>
+         Perfil
+      </a>
+
+   </div>
+
+
+
+   <!-- =========================
+         TÍTULO
+    ========================== -->
+
+   <div id="titulo">
+      EMERGÊNCIA
+   </div>
+
+
+
+   <!-- =========================
+         MAPA + ÁREA DE EMERGÊNCIA
+    ========================== -->
+
+   <div class="area-emergencia">
+
+
+      <!-- MAPA -->
+
+      <div id="mapa"></div>
+
+
+
+      <!-- PAINEL DE EMERGÊNCIA -->
+
+      <div id="SOS">
+
+
+         <div class="sos-cabecalho">
+
+            <i class="bi bi-exclamation-triangle-fill"></i>
+
+            <h2>
+               Precisa de ajuda?
+            </h2>
+
+            <p>
+               Informe sua localização para encontrarmos
+               atendimento para seu pet.
+            </p>
+
          </div>
+
+
+
+         <!-- LOCALIZAÇÃO -->
+
+         <div class="localizacao-box">
+
+            <label for="inputlocal">
+
+               <i class="bi bi-geo-alt-fill"></i>
+
+               Sua localização
+
+            </label>
+
+
+            <div class="campo-localizacao">
+
+
+               <input id="inputlocal" type="text" placeholder="Digite seu endereço..." autocomplete="off">
+
+
+               <button id="btnLocalizacao" title="Usar minha localização">
+
+                  <i class="bi bi-crosshair"></i>
+
+               </button>
+
+
+            </div>
+
+
+            <!-- Sugestões de endereço -->
+
+            <div id="sugestoes"></div>
+
+
+            <!-- Mensagem de status -->
+
+            <p id="statusLocalizacao"></p>
+
+
+         </div>
+
+
+
+         <!-- CONFIRMAR LOCALIZAÇÃO -->
+
+         <button id="btnConfirmar" class="btn-confirmar">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            Confirmar localização
+
+         </button>
+
+
+      </div>
+
+   </div>
+
+
+
+   <!-- =========================
+         RESULTADOS
+    ========================== -->
+
+   <div id="resultados">
+
+
+      <div class="resultados-titulo">
+
+         <h2>
+
+            <i class="bi bi-hospital-fill"></i>
+
+            Atendimento próximo
+
+         </h2>
+
+
+         <p>
+
+            Clínicas veterinárias e petshops encontrados
+            perto da sua localização.
+
+         </p>
+
+      </div>
+
+
+
+      <!-- LISTA DOS ESTABELECIMENTOS -->
+
+      <div id="listaLocais">
+
+
+         <div class="mensagem-inicial">
+
+            <i class="bi bi-geo-alt"></i>
+
+            <p>
+
+               Informe sua localização para encontrar
+               clínicas e petshops próximos.
+
+            </p>
+
+         </div>
+
+
+      </div>
+
+
+   </div>
+
+
+
+   <!-- =========================
+         RODAPÉ
+    ========================== -->
+
+   <div id="rodape">
+
+      <img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog">
+
+      <a href="contato.html">
+         Entre em contato
+      </a>
+
+      <br>
+
+   </div>
+
+
+
+   <!-- =========================
+         LEAFLET JAVASCRIPT
+    ========================== -->
+
+   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+   </script>
+
+
+   <!-- =========================
+         JAVASCRIPT DA EMERGÊNCIA
+    ========================== -->
+
+   <script src="JavaScript/sos.js"></script>
+
 
 </body>
 
