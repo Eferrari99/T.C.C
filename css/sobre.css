@@ -1,0 +1,145 @@
+/* ===================================== */
+/* CSS - PÁGINA QUEM SOMOS / SOBRE */
+/* ===================================== */
+
+.sobre {
+    max-width: 1100px;
+    margin: 1px auto;
+    padding: 10px;
+}
+
+/* Título principal */
+
+.sobre h1 {
+    text-align: center;
+    margin-bottom: 35px;
+    color: rgb(0, 0, 0);
+
+    margin: 0 auto;
+
+    width: 300px;
+
+    padding: 8px;
+
+    border-radius: 10px;
+
+    border: #3A2603 solid;
+
+    text-align: center;
+
+    background-color: #ffd640;
+
+    margin-top: 30px;
+
+    margin-bottom: 30px;
+
+    font-weight: bold;
+
+    box-sizing: border-box;
+    
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Seções */
+
+.sobre section {
+    background-color: #fdd194;
+    border: 2px solid #3A2603;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Títulos das seções */
+
+.sobre h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* Textos */
+
+.sobre p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* Lista */
+
+.sobre ul {
+    line-height: 1.8;
+    padding-left: 25px;
+}
+
+/* ===================================== */
+/* SERVIÇOS */
+/* ===================================== */
+
+.servicos-sobre {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* Cada serviço */
+
+.servicos-sobre > div {
+    text-align: center;
+    border: 2px solid #3A2603;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fffcf8;
+}
+
+/* Ícones */
+
+.servicos-sobre i {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Nome do serviço */
+
+.servicos-sobre h3 {
+    margin: 10px 0;
+}
+
+/* Descrição do serviço */
+
+.servicos-sobre p {
+    margin-bottom: 0;
+}
+
+
+
+/* ===================================== */
+/* RESPONSIVIDADE */
+/* ===================================== */
+
+@media (max-width: 900px) {
+
+    .servicos-sobre {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .sobre {
+        padding: 15px;
+        margin: 20px auto;
+    }
+
+    .sobre section {
+        padding: 18px;
+    }
+
+    .servicos-sobre {
+        grid-template-columns: 1fr;
+    }
+    
+    
+}
