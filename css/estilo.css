@@ -404,6 +404,10 @@ body {
 
 }
 
+#rodape {
+    margin-top: auto;
+}
+
 #entre_em_contato {
     /*deixa em uma coluna centralizada*/
     margin: 0 auto;
