@@ -4,37 +4,63 @@
 
 let imagemAtual = 0;
 
-
 function anterior() {
 
-    if (imagemAtual > 0) {
+    const imagens =
+        document.querySelector(".imagens");
 
-        imagemAtual--;
-
+    if (!imagens) {
+        return;
     }
 
-    const imagens = document.querySelector(".imagens");
+    const quantidadeImagens =
+        imagens.children.length;
+
+    imagemAtual--;
+
+    if (imagemAtual < 0) {
+        imagemAtual = quantidadeImagens - 1;
+    }
 
     imagens.style.transform =
         `translateX(-${imagemAtual * 1200}px)`;
-
 }
 
 
 function proximo() {
 
-    if (imagemAtual < 2) {
+    const imagens =
+        document.querySelector(".imagens");
 
-        imagemAtual++;
-
+    if (!imagens) {
+        return;
     }
 
-    const imagens = document.querySelector(".imagens");
+    const quantidadeImagens =
+        imagens.children.length;
+
+    imagemAtual++;
+
+    if (imagemAtual >= quantidadeImagens) {
+        imagemAtual = 0;
+    }
 
     imagens.style.transform =
         `translateX(-${imagemAtual * 1200}px)`;
-
 }
+
+
+/* =========================
+   BANNER AUTOMÁTICO
+========================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    setInterval(function () {
+        proximo();
+    }, 3000);
+
+});
 
 
 /* =========================
@@ -42,15 +68,9 @@ function proximo() {
 ========================= */
 
 let posicao = 0;
-
 let quantidadeProdutos = 0;
-
 let movimentoProduto = 0;
-
 let animando = false;
-
-
-/* Quantidade de cópias */
 
 const quantidadeCopias = 10;
 
@@ -61,29 +81,19 @@ const quantidadeCopias = 10;
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const produtos = document.getElementById("produtos");
+    const produtos =
+        document.getElementById("produtos");
 
     if (!produtos) {
-
         return;
-
     }
-
-
-    /* Guarda os 4 produtos originais */
 
     const produtosOriginais =
         Array.from(produtos.children);
 
-
     quantidadeProdutos =
         produtosOriginais.length;
 
-
-    /*
-        Cria vários produtos antes
-        e depois dos originais.
-    */
 
     const fragmentoAntes =
         document.createDocumentFragment();
@@ -122,51 +132,35 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /*
-        Limpa a lista
-        e coloca tudo novamente.
-    */
+    /* Reorganiza os produtos */
 
     produtos.innerHTML = "";
 
-
     produtos.appendChild(fragmentoAntes);
 
-
     produtosOriginais.forEach(function (produto) {
-
         produtos.appendChild(produto);
-
     });
-
 
     produtos.appendChild(fragmentoDepois);
 
 
-    /*
-        Começamos no meio dos produtos.
-    */
+    /* Começa no meio */
 
     posicao =
         quantidadeProdutos * quantidadeCopias;
 
-
     calcularMovimento();
 
 
-    /*
-        Posiciona os produtos sem animação
-        na primeira vez.
-    */
+    /* Posiciona sem animação */
 
     produtos.style.transition = "none";
 
     atualizarPosicao();
 
 
-    /*
-        Depois libera a animação.
-    */
+    /* Libera a animação */
 
     setTimeout(function () {
 
@@ -187,26 +181,20 @@ function calcularMovimento() {
     const produtos =
         document.getElementById("produtos");
 
-
     const card =
         produtos.querySelector(".produto-card");
-
 
     const estilo =
         window.getComputedStyle(produtos);
 
-
     const largura =
         card.getBoundingClientRect().width;
-
 
     const gap =
         parseFloat(estilo.gap);
 
-
     movimentoProduto =
         largura + gap;
-
 }
 
 
@@ -219,10 +207,8 @@ function atualizarPosicao() {
     const produtos =
         document.getElementById("produtos");
 
-
     produtos.style.transform =
         `translateX(-${posicao * movimentoProduto}px)`;
-
 }
 
 
@@ -235,33 +221,20 @@ function mover(direcao) {
     const produtos =
         document.getElementById("produtos");
 
-
     if (!produtos || animando) {
-
         return;
-
     }
-
 
     calcularMovimento();
 
-
-    /*
-        Move um produto.
-    */
-
     posicao += direcao;
 
-
     animando = true;
-
 
     produtos.style.transition =
         "transform 0.5s ease";
 
-
     atualizarPosicao();
-
 }
 
 
@@ -274,11 +247,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const produtos =
         document.getElementById("produtos");
 
-
     if (!produtos) {
-
         return;
-
     }
 
 
@@ -286,21 +256,12 @@ document.addEventListener("DOMContentLoaded", function () {
         "transitionend",
         function (evento) {
 
-            /*
-                Ignora outras propriedades.
-            */
-
             if (evento.propertyName !== "transform") {
-
                 return;
-
             }
 
 
-            /*
-                Se chegou muito para a direita,
-                volta uma sequência de 4 produtos.
-            */
+            /* Loop para a direita */
 
             if (
                 posicao >=
@@ -310,33 +271,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 posicao -= quantidadeProdutos;
 
-
                 produtos.style.transition =
                     "none";
 
-
                 atualizarPosicao();
-
-
-                /*
-                    Força o navegador a aplicar
-                    a nova posição antes de
-                    liberar a animação novamente.
-                */
 
                 void produtos.offsetWidth;
 
-
                 produtos.style.transition =
                     "transform 0.5s ease";
-
             }
 
 
-            /*
-                Se chegou muito para a esquerda,
-                avança uma sequência de 4 produtos.
-            */
+            /* Loop para a esquerda */
 
             else if (
                 posicao <=
@@ -346,27 +293,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 posicao += quantidadeProdutos;
 
-
                 produtos.style.transition =
                     "none";
 
-
                 atualizarPosicao();
-
 
                 void produtos.offsetWidth;
 
-
                 produtos.style.transition =
                     "transform 0.5s ease";
-
             }
 
 
             animando = false;
 
         }
-
     );
 
 });
