@@ -48,10 +48,16 @@
     margin-top: 75px;
     border: none;
     border-radius: 25px;
-    background-color: #55B63F;
+    background-color: #58B53D;
     color: white;
     font-size: 18px;
     font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.confirmar button:hover {
+    background: #469A30;
 }
 
 /* deixando o componte login bonito*/
