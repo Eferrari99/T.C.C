@@ -5,16 +5,20 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
+}
 
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
 
 body {
-
-    margin: 0;
-    padding: 0;
-
     background-color: #FFFFE0;
-
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 
@@ -394,4 +398,8 @@ body {
 
     margin: 0;
 
+}
+
+#rodape {
+    margin-top: auto;
 }
