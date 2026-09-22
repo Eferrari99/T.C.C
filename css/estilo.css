@@ -374,7 +374,7 @@ body {
 
     align-items: center;
 
-    gap: 50px;
+    gap: 0px;
 
     border: #3A2603 solid;
 
@@ -402,6 +402,10 @@ body {
 
     margin: 0;
 
+}
+
+#rodape {
+    margin-top: auto;
 }
 
 #entre_em_contato {
