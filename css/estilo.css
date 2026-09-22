@@ -74,8 +74,8 @@ body {
 #carrossel {
     width: 1200px;
     height: 300px;
-    overflow: hidden;
-    position: relative;
+    
+    position:relative;
     margin: 30px auto;
 }
 
