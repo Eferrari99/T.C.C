@@ -92,66 +92,6 @@ body {
     object-fit: cover;
 }
 
-/* Setas do banner */
-
-.anterior,
-.proximo {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: black;
-    font-size: 40px;
-    cursor: pointer;
-}
-
-.anterior {
-    left: 10px;
-}
-
-.proximo {
-    right: 10px;
-}
-
-/* Setas do banner */
-
-.anterior,
-.proximo {
-
-    position: absolute;
-
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    background: none;
-
-    border: none;
-
-    color: black;
-
-    font-size: 40px;
-
-    cursor: pointer;
-
-}
-
-
-.anterior {
-
-    left: 10px;
-
-}
-
-
-.proximo {
-
-    right: 10px;
-
-}
-
-
 /* =========================
    CARROSSEL DE PRODUTOS
 ========================= */
