@@ -1,33 +1,472 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <title>Taxi-Dog</title>
-        <!-- Favicon / Shorticon -->
-        <link rel="shortcut icon" href="img/TAXI-DOG.png" type="image/x-icon">
-        <!-- Pacote de ícones https://icons.getbootstrap.com/-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-     
-     
-        <link rel="stylesheet" href="css/estilo.css">
-     </head>
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Taxi-Dog</title>
+
+    <!-- Favicon -->
+    <link
+        rel="shortcut icon"
+        href="img/TAXI-DOG.png"
+        type="image/x-icon"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    >
+
+    <!-- CSS principal -->
+    <link
+        rel="stylesheet"
+        href="css/estilo.css"
+    >
+
+    <!-- CSS da página -->
+    <link
+        rel="stylesheet"
+        href="css/corrida.css"
+    >
+
+    <!-- Leaflet CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+</head>
+
 <body>
-        <div id="menu">
-           <img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog">
-           <a href="index.html"><i class="bi bi-house-door-fill"></i> Home</a>
-           <a href="sobre.html"><i class="bi bi-person-rolodex"></i> Quem Somos</a>
-           <a href="produtos.html"><i class="bi bi-bag-fill"></i> produtos</a>
-           <a href="corrida.html"><i class="bi bi-taxi-front"></i> corrida</a>
-           <a href="carrinho.html"><i class="bi bi-cart4"></i> carrinho</a>
-           <a href="perfil.html"><i class="bi bi-person-fill"></i> Perfil</a>
+
+    <!-- ==========================================
+         MENU
+    =========================================== -->
+
+    <div id="menu">
+
+        <img
+            src="img/TAXI-DOG.png"
+            alt="Logo Taxi-Dog"
+            title="Logo Taxi-Dog"
+        >
+
+        <a href="index.html">
+            <i class="bi bi-house-door-fill"></i>
+            Home
+        </a>
+
+        <a href="sobre.html">
+            <i class="bi bi-person-rolodex"></i>
+            Quem Somos
+        </a>
+
+        <a href="produtos.html">
+            <i class="bi bi-bag-fill"></i>
+            produtos
+        </a>
+
+        <a href="corrida.html">
+            <i class="bi bi-taxi-front"></i>
+            corrida
+        </a>
+
+        <a href="carrinho.html">
+            <i class="bi bi-cart4"></i>
+            carrinho
+        </a>
+
+        <a href="perfil.html">
+            <i class="bi bi-person-fill"></i>
+            Perfil
+        </a>
+
+    </div>
+
+
+    <!-- ==========================================
+         CONTEÚDO
+    =========================================== -->
+
+    <main class="corrida">
+
+        <h1>
+            <i class="bi bi-taxi-front"></i>
+            Agendar Corrida
+        </h1>
+
+        <p class="descricao-corrida">
+            Solicite um transporte para seu pet de forma simples,
+            rápida e prática.
+        </p>
+
+
+        <div class="conteudo-corrida">
+
+            <!-- ======================================
+                 FORMULÁRIO
+            ======================================= -->
+
+            <section class="formulario-corrida">
+
+                <h2>
+                    <i class="bi bi-pencil-square"></i>
+                    Dados da corrida
+                </h2>
+
+
+                <!-- PET -->
+
+                <label for="pet">
+                    <i class="bi bi-heart-fill"></i>
+                    Selecione o pet
+                </label>
+
+                <select id="pet">
+
+                    <option value="">
+                        Selecione seu pet
+                    </option>
+
+                    <option value="pet1">
+                        Princesa Cupcake
+                    </option>
+
+                    <option value="pet2">
+                        Laika
+                    </option>
+
+                </select>
+
+
+                <!-- ENDEREÇO -->
+
+                <label for="origem">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    Local de partida
+                </label>
+
+                <div class="campo-endereco">
+
+                    <input
+                        type="text"
+                        id="origem"
+                        placeholder="Digite seu endereço"
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="button"
+                        id="buscarEndereco"
+                    >
+                        <i class="bi bi-search"></i>
+                        Buscar endereço
+                    </button>
+
+                    <button
+                        type="button"
+                        id="usarLocal"
+                    >
+                        <i class="bi bi-crosshair"></i>
+                        Usar localização atual
+                    </button>
+
+                </div>
+
+
+                <!-- SUGESTÕES -->
+
+                <div id="sugestoes"></div>
+
+
+                <!-- MAPA -->
+
+                <div id="mapa"></div>
+
+
+                <!-- STATUS -->
+
+                <p
+                    id="mensagemLocal"
+                    class="mensagem-local"
+                >
+                    Digite um endereço ou use sua localização.
+                </p>
+
+
+                <!-- PETSHOP -->
+
+                <label for="petshop">
+                    <i class="bi bi-shop"></i>
+                    Petshop / destino
+                </label>
+
+                <select id="petshop">
+
+                    <option value="">
+                        Informe seu endereço primeiro
+                    </option>
+
+                </select>
+
+                <p
+                    id="distanciaPetshop"
+                    class="distancia-petshop"
+                ></p>
+
+
+                <!-- DATA E HORÁRIO -->
+
+                <div class="linha-formulario">
+
+                    <div>
+
+                        <label for="data">
+                            <i class="bi bi-calendar-event"></i>
+                            Data
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data"
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="horario">
+                            <i class="bi bi-clock"></i>
+                            Horário
+                        </label>
+
+                        <input
+                            type="time"
+                            id="horario"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- TIPO -->
+
+                <label for="tipo">
+                    <i class="bi bi-car-front-fill"></i>
+                    Tipo de corrida
+                </label>
+
+                <select id="tipo">
+
+                    <option value="Corrida comum">
+                        Corrida comum
+                    </option>
+
+                    <option value="Veterinário">
+                        Ida ao veterinário
+                    </option>
+
+                    <option value="Banho e tosa">
+                        Banho e tosa
+                    </option>
+
+                    <option value="Outro">
+                        Outro
+                    </option>
+
+                </select>
+
+
+                <!-- OBSERVAÇÕES -->
+
+                <label for="observacoes">
+                    <i class="bi bi-chat-left-text"></i>
+                    Observações
+                </label>
+
+                <textarea
+                    id="observacoes"
+                    placeholder="Alguma informação importante sobre o pet ou a corrida?"
+                ></textarea>
+
+
+                <!-- SOLICITAR -->
+
+                <button
+                    type="button"
+                    class="botao-corrida"
+                    id="solicitarCorrida"
+                >
+                    <i class="bi bi-check-circle-fill"></i>
+                    Solicitar corrida
+                </button>
+
+                <p
+                    id="mensagemSolicitacao"
+                    class="mensagem-solicitacao"
+                ></p>
+
+            </section>
+
+
+            <!-- ======================================
+                 RESUMO
+            ======================================= -->
+
+            <section class="resumo-corrida">
+
+                <h2>
+                    <i class="bi bi-receipt"></i>
+                    Resumo da corrida
+                </h2>
+
+
+                <div class="item-resumo">
+
+                    <i class="bi bi-heart-fill"></i>
+
+                    <div>
+                        <strong>Pet</strong>
+
+                        <span id="resumoPet">
+                            Não informado
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="item-resumo">
+
+                    <i class="bi bi-geo-alt-fill"></i>
+
+                    <div>
+                        <strong>Partida</strong>
+
+                        <span id="resumoOrigem">
+                            Não informado
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="item-resumo">
+
+                    <i class="bi bi-shop"></i>
+
+                    <div>
+                        <strong>Destino</strong>
+
+                        <span id="resumoPetshop">
+                            Não informado
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="item-resumo">
+
+                    <i class="bi bi-calendar-event"></i>
+
+                    <div>
+                        <strong>Data</strong>
+
+                        <span id="resumoData">
+                            Não informado
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="item-resumo">
+
+                    <i class="bi bi-clock"></i>
+
+                    <div>
+                        <strong>Horário</strong>
+
+                        <span id="resumoHorario">
+                            Não informado
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="item-resumo">
+
+                    <i class="bi bi-car-front-fill"></i>
+
+                    <div>
+                        <strong>Tipo</strong>
+
+                        <span id="resumoTipo">
+                            Corrida comum
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <hr>
+
+
+                <div class="preco">
+
+                    <span>
+                        Valor estimado
+                    </span>
+
+                    <strong id="valorCorrida">
+                        R$ 15,00
+                    </strong>
+
+                </div>
+
+            </section>
 
         </div>
 
+    </main>
 
-        <div id="rodape">
-                <img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog">
-                <a href="contato.html"></i>Entre em contato</a><br>
-         </div>
+
+    <!-- ==========================================
+         RODAPÉ
+    =========================================== -->
+
+    <div id="rodape">
+
+        <img
+            src="img/TAXI-DOG.png"
+            alt="Logo Taxi-Dog"
+            title="Logo Taxi-Dog"
+        >
+
+        <a href="contato.html">
+            Entre em contato
+        </a>
+
+    </div>
+
+
+    <!-- ==========================================
+         SCRIPTS
+    =========================================== -->
+
+    <!-- Leaflet JS -->
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+
+    <!-- JavaScript da página -->
+    <script src="JavaScript/corrida.js"></script>
+
 
 </body>
 

@@ -89,8 +89,8 @@ const perguntas = [
     },
 
     {
-        pergunta: "Como cadastrar meu cachorro?",
-        resposta: "Para cadastrar seu cachorro, acesse a área de 'Perfil' e procure pela opção de cadastro de animal. Informe os dados solicitados, como nome, raça, idade, peso e outras informações importantes. Mantenha os dados atualizados para facilitar o atendimento e a utilização dos serviços."
+        pergunta: "Como cadastrar meu pet?",
+        resposta: "Para cadastrar seu pet, acesse a área de 'Perfil' e procure pela opção de cadastro de animal. Informe os dados solicitados, como nome, raça, idade, peso e outras informações importantes. Mantenha os dados atualizados para facilitar o atendimento e a utilização dos serviços."
     },
 
     {
