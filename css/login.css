@@ -22,35 +22,29 @@
     height: 90px;
     width: auto;
 }
-
-
-
-
-
-
 /*Area do login*/
 /*Deixando o bloco de fundo elegante*/
-.blocao {
+.blocao{
     width: 600px;
     height: 350px;
-    background-color: #E1B982;
+    background: #E1B982;
     margin: 40px auto;
     border: 1px solid black;
     border-radius: 15px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
 /* deixando o componte email bonito*/
 .email input {
     background-color:#E5E5E5;
     color: #8A8A8A;
     width: 500px;
     height: 45px;
-    margin-left: 50px;
     margin-top: 50px;
     border: none;
     border-radius: 25px;
-    padding-left: 20px;
+    padding: 20px;
     font-size: 16px;
     box-sizing: border-box;
 }
@@ -61,21 +55,32 @@
     color: #8A8A8A;
     width: 500px;
     height: 45px;
-    margin-left: 50px;
-    margin-top: 20px;
+    margin-top: 40px;
     border: none;
     border-radius: 25px;
-    padding-left: 20px;
+    padding: 20px;
     font-size: 16px;
     box-sizing: border-box;
 }
 
+.email input:focus,
+.senha input:focus {
+    outline: none;              /* remove a borda padrão */
+    border: 2px solid #3A2603;  /* sua borda personalizada */
+    transition: 0.1s;
+}
+
 /* deixando o componte confirmar bonito*/
-.confirmar button {
+.confirmar{
+    display: flex;
+    justify-content: center; /* centraliza horizontal */
+    margin-top: 50px;
+    margin-bottom: 40px;
+}
+
+.confirmar button{
     width: 300px;
     height: 45px;
-    margin-left: 150px;
-    margin-top: 75px;
     border: none;
     border-radius: 25px;
     background-color: #58B53D;

@@ -1,0 +1,443 @@
+
+/* =====================================
+   CSS - PÁGINA DE CORRIDA
+===================================== */
+
+.corrida {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+/* =====================================
+   TÍTULO
+===================================== */
+
+.corrida h1 {
+    width: 320px;
+    margin: 20px auto;
+    padding: 10px;
+    text-align: center;
+    background-color: #ffd640;
+    border: 2px solid #3A2603;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    color: #000;
+}
+
+.corrida h1 i {
+    margin-right: 8px;
+}
+
+/* =====================================
+   DESCRIÇÃO
+===================================== */
+
+.descricao-corrida {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+/* =====================================
+   LAYOUT
+===================================== */
+
+.conteudo-corrida {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+/* =====================================
+   CARDS
+===================================== */
+
+.formulario-corrida,
+.resumo-corrida {
+    background-color: #fdd194;
+    border: 2px solid #3A2603;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* =====================================
+   TÍTULOS
+===================================== */
+
+.formulario-corrida h2,
+.resumo-corrida h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #3A2603;
+}
+
+/* =====================================
+   LABEL
+===================================== */
+
+.formulario-corrida label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+.formulario-corrida label i {
+    margin-right: 5px;
+    color: #3A2603;
+}
+
+/* =====================================
+   INPUT / SELECT / TEXTAREA
+===================================== */
+
+.formulario-corrida input,
+.formulario-corrida select,
+.formulario-corrida textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 2px solid #3A2603;
+    border-radius: 8px;
+    background-color: #fffcf8;
+    color: #000;
+    font-size: 15px;
+    outline: none;
+}
+
+/* =====================================
+   FOCO
+===================================== */
+
+.formulario-corrida input:focus,
+.formulario-corrida select:focus,
+.formulario-corrida textarea:focus {
+    box-shadow: 0 0 0 2px #ffd640;
+}
+
+/* =====================================
+   TEXTAREA
+===================================== */
+
+.formulario-corrida textarea {
+    min-height: 100px;
+    resize: vertical;
+    font-family: Arial, sans-serif;
+}
+
+/* =====================================
+   DATA / HORÁRIO
+===================================== */
+
+.linha-formulario {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* =====================================
+   ENDEREÇO
+===================================== */
+
+.campo-endereco {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 8px;
+    width: 100%;
+}
+
+.campo-endereco input {
+    min-width: 0;
+}
+
+/* =====================================
+   BOTÕES DE ENDEREÇO
+===================================== */
+
+.campo-endereco button {
+    padding: 10px 14px;
+    border: 2px solid #3A2603;
+    border-radius: 8px;
+    background-color: #ffd640;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+.campo-endereco button:hover {
+    background-color: #ffc800;
+    transform: translateY(-2px);
+}
+
+.campo-endereco button:active {
+    transform: translateY(0);
+}
+
+.campo-endereco button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* =====================================
+   SUGESTÕES
+===================================== */
+
+#sugestoes {
+    position: relative;
+    width: 100%;
+    z-index: 1000;
+}
+
+.sugestao {
+    padding: 12px;
+    background-color: #fffcf8;
+    border: 1px solid #3A2603;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.15s;
+}
+
+.sugestao:hover {
+    background-color: #ffd640;
+}
+
+.sugestao i {
+    margin-right: 6px;
+    color: #3A2603;
+}
+
+/* =====================================
+   MAPA
+===================================== */
+
+#mapa {
+    width: 100%;
+    height: 400px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border: 2px solid #3A2603;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #ddd;
+}
+
+#mapa .leaflet-container {
+    width: 100%;
+    height: 100%;
+}
+
+/* =====================================
+   MENSAGEM LOCAL
+===================================== */
+
+.mensagem-local {
+    min-height: 20px;
+    margin: 8px 0;
+    font-size: 14px;
+    color: #3A2603;
+}
+
+/* =====================================
+   DISTÂNCIA
+===================================== */
+
+.distancia-petshop {
+    min-height: 20px;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #3A2603;
+}
+
+/* =====================================
+   BOTÃO PRINCIPAL
+===================================== */
+
+.botao-corrida {
+    width: 100%;
+    margin-top: 25px;
+    padding: 13px;
+    border: 2px solid #3A2603;
+    border-radius: 8px;
+    background-color: #ffd640;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.botao-corrida:hover {
+    background-color: #ffc800;
+    transform: translateY(-2px);
+}
+
+.botao-corrida:active {
+    transform: translateY(0);
+}
+
+.botao-corrida:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* =====================================
+   MENSAGEM SOLICITAÇÃO
+===================================== */
+
+.mensagem-solicitacao {
+    min-height: 20px;
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: #3A2603;
+}
+
+/* =====================================
+   RESUMO
+===================================== */
+
+.item-resumo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(58, 38, 3, 0.3);
+}
+
+/* =====================================
+   ÍCONES DO RESUMO
+===================================== */
+
+.item-resumo > i {
+    width: 30px;
+    color: #3A2603;
+    font-size: 25px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* =====================================
+   TEXTOS DO RESUMO
+===================================== */
+
+.item-resumo div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.item-resumo span {
+    color: #555;
+    font-size: 14px;
+}
+
+.item-resumo strong {
+    color: #000;
+    overflow-wrap: anywhere;
+}
+
+/* =====================================
+   PREÇO
+===================================== */
+
+.preco {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    font-size: 17px;
+}
+
+.preco strong {
+    color: #3A2603;
+    font-size: 22px;
+}
+
+/* =====================================
+   MARCADORES
+===================================== */
+
+.marcador-petshop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+/* =====================================
+   RESPONSIVIDADE
+===================================== */
+
+@media (max-width: 900px) {
+    .conteudo-corrida {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .campo-endereco {
+        grid-template-columns: 1fr;
+    }
+
+    .campo-endereco button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .corrida {
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    .corrida h1 {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .linha-formulario {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    #mapa {
+        height: 300px;
+    }
+
+    .formulario-corrida,
+    .resumo-corrida {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 400px) {
+    .corrida {
+        padding: 10px;
+    }
+
+    .formulario-corrida,
+    .resumo-corrida {
+        padding: 15px;
+    }
+
+    .corrida h1 {
+        font-size: 22px;
+    }
+
+    .descricao-corrida {
+        font-size: 15px;
+    }
+
+    #mapa {
+        height: 260px;
+    }
+}

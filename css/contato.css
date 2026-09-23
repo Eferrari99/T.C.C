@@ -16,7 +16,7 @@
 
 #contato {
     /*deixa em uma coluna centralizada*/
-    margin: 0 auto;
+    margin: 10 auto;
     width: 50%;
     padding: 20px;
 
@@ -38,10 +38,13 @@
 
 #ajuda {
     /*deixa em uma coluna centralizada*/
-    margin: 0 auto;
+
+    margin: 20px auto;
     width: 300px;
     padding: 10px;
     height: auto;
+    /*alinha no centro*/
+    
     
     border-radius: 10px;
     /*coloca borda e cor na borda*/
