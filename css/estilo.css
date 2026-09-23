@@ -73,7 +73,7 @@ body {
 
 #carrossel {
     width: 1200px;
-    height: 300px;
+    height: 1000px;
     overflow: hidden;
     position: relative;
     margin: 30px auto;
@@ -87,7 +87,7 @@ body {
 
 .imagens img {
     width: 1200px;
-    height: 300px;
+    height: 1000px;
     flex-shrink: 0;
     object-fit: cover;
 }
