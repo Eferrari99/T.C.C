@@ -465,3 +465,68 @@ body {
     /*alinha itens no centro*/
     text-align: center;
 }
+
+/* =========================
+   PARCERIAS
+========================= */
+
+#parcerias {
+
+    width: 100%;
+
+    padding: 30px 0 40px;
+
+    margin-top: 50px;
+
+    text-align: center;
+
+}
+
+
+
+/* =========================
+   ÁREA DOS LOGOS
+========================= */
+
+.logos-parcerias {
+
+    width: 700px;
+
+    margin: 30px auto 0;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 170px);
+
+    grid-template-rows: repeat(2, 130px);
+
+    justify-content: center;
+
+    gap: 25px 45px;
+
+}
+
+
+/* =========================
+   CARTÃO DO PARCEIRO
+========================= */
+
+.logos-parcerias img {
+
+    width: 170px;
+
+    height: 130px;
+
+    object-fit: contain;
+
+    background-color: white;
+
+    border-radius: 12px;
+
+    border: 2px solid #3A2603;
+
+    padding: 5px;
+
+    box-sizing: border-box;
+
+}
