@@ -1,142 +1,297 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <title>Taxi-Dog</title>
-        <!-- Favicon / Shorticon -->
-        <link rel="shortcut icon" href="img/TAXI-DOG.png" type="image/x-icon">
-        <!-- Pacote de ícones https://icons.getbootstrap.com/-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-     
-     
-        <link rel="stylesheet" href="css/estilo.css">
-        <link rel="stylesheet" href="css/carrinho.css">
-     </head>
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Taxi-Dog</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="img/TAXI-DOG.png" type="image/x-icon">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/carrinho.css">
+</head>
+
 <body>
-        <div id="menu">
-           <img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog">
-           <a href="index.html"><i class="bi bi-house-door-fill"></i> Home</a>
-           <a href="sobre.html"><i class="bi bi-person-rolodex"></i> Quem Somos</a>
-           <a href="produtos.html"><i class="bi bi-bag-fill"></i> produtos</a>
-           <a href="corrida.html"><i class="bi bi-taxi-front"></i> corrida</a>
-           <a href="carrinho.html"><i class="bi bi-cart4"></i> carrinho</a>
-           <a href="perfil.html"><i class="bi bi-person-fill"></i> Perfil</a>
+
+    <!-- MENU -->
+    <div id="menu">
+
+        <img src="img/TAXI-DOG.png"
+            alt="Logo Taxi-Dog"
+            title="Logo Taxi-Dog">
+
+        <a href="index.html">
+            <i class="bi bi-house-door-fill"></i> Home
+        </a>
+
+        <a href="sobre.html">
+            <i class="bi bi-person-rolodex"></i> Quem Somos
+        </a>
+
+        <a href="produtos.html">
+            <i class="bi bi-bag-fill"></i> produtos
+        </a>
+
+        <a href="corrida.html">
+            <i class="bi bi-taxi-front"></i> corrida
+        </a>
+
+        <a href="carrinho.html">
+            <i class="bi bi-cart4"></i> carrinho
+        </a>
+
+        <a href="perfil.html">
+            <i class="bi bi-person-fill"></i> Perfil
+        </a>
+
+    </div>
+
+
+    <!-- TÍTULO -->
+    <div class="titulo-carrinho">
+        Carrinho
+    </div>
+
+
+    <!-- CONTAINER -->
+    <div class="container">
+
+        <!-- COLUNA DOS PRODUTOS -->
+        <div class="coluna">
+
+            <!-- SELECIONAR TODOS -->
+            <div class="bloco1">
+
+                <input type="checkbox" id="todosProdutos">
+
+                <label for="todosProdutos">
+                    Todos os produtos
+                </label>
+
+            </div>
+
+
+            <!-- PRODUTOS -->
+            <div class="bloco2">
+
+                <!-- PRODUTO 1 -->
+                <div class="produto" data-preco="20">
+
+                    <input type="checkbox"
+                        class="produto-checkbox">
+
+                    <img src="img/produtos-pet-shop-revenda-01.jpg"
+                        alt="Imagem do produto">
+
+                    <div class="info-produto">
+
+                        <div class="nome-preco">
+
+                            <span>
+                                Tigela
+                            </span>
+
+                            <span>
+                                R$ 20,00
+                            </span>
+
+                        </div>
+
+                        <span class="local">
+                            Produto da petshop Cobasi
+                        </span>
+
+                        <div class="quantidade">
+
+                            <span>
+                                Quantidade:
+                            </span>
+
+                            <button class="menos">
+                                -
+                            </button>
+
+                            <span class="numero-quantidade">
+                                1
+                            </span>
+
+                            <button class="mais">
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUTO 2 -->
+                <div class="produto" data-preco="30">
+
+                    <input type="checkbox"
+                        class="produto-checkbox">
+
+                    <img src="img/kit banho.jpg"
+                        alt="Imagem do produto">
+
+                    <div class="info-produto">
+
+                        <div class="nome-preco">
+
+                            <span>
+                                Kit banho
+                            </span>
+
+                            <span>
+                                R$ 30,00
+                            </span>
+
+                        </div>
+
+                        <span class="local">
+                            Produto da petshop Cobasi
+                        </span>
+
+                        <div class="quantidade">
+
+                            <span>
+                                Quantidade:
+                            </span>
+
+                            <button class="menos">
+                                -
+                            </button>
+
+                            <span class="numero-quantidade">
+                                1
+                            </span>
+
+                            <button class="mais">
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
 
-        <div class="titulo-carrinho">
-            Carrinho
+        <!-- RESUMO -->
+        <div class="bloco3">
+
+            <h2>
+                Resumo da compra
+            </h2>
+
+
+            <div class="resumo-linha">
+
+                <span>
+                    Produtos:
+                </span>
+
+                <span id="quantidade-produtos">
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="resumo-linha">
+
+                <span>
+                    Subtotal:
+                </span>
+
+                <span id="subtotal">
+                    R$ 0,00
+                </span>
+
+            </div>
+
+
+            <div class="resumo-linha">
+
+                <span>
+                    Frete:
+                </span>
+
+                <span id="frete">
+                    R$ 0,00
+                </span>
+
+            </div>
+
+
+            <hr>
+
+
+            <div class="resumo-total">
+
+                <span>
+                    Total:
+                </span>
+
+                <span id="total">
+                    R$ 0,00
+                </span>
+
+            </div>
+
+
+            <!-- BOTÃO CONFIRMAR -->
+            <button class="confirmar-compra" id="confirmarCompra">
+                Confirmar compra
+            </button>
+
+
+            <button class="mais-opcoes">
+                Mais opções
+            </button>
+
+
+            <!-- MENSAGEM DE CONFIRMAÇÃO -->
+            <div id="mensagemCompra">
+                Compra confirmada!
+            </div>
+
         </div>
 
-        <div class="container">
-
-         <div class="coluna">
-             <div class="bloco1">
-                <input type="checkbox" id="todosprodutos">
-                <label for="todos-produtos">Todos os produtos</label>
-             </div>
-             <div class="bloco2">
-                <div class="produto">
-
-                    <input type="checkbox" class="produto-checkbox">
-            
-                    <img src="img/produtos-pet-shop-revenda-01.jpg" alt="Imagem do produto">
-            
-                    <div class="info-produto">
-            
-                        <div class="nome-preco">
-                            <span>Tigela</span>
-                            <span>R$ 20,00</span>
-                        </div>
-            
-                        <span class="local">Produto da petshop Cobasi</span>
-            
-                        <div class="quantidade">
-                            <span>Quantidade:</span>
-                            <button>-</button>
-                            <span>1</span>
-                            <button>+</button>
-                        </div>
-            
-                    </div>
-            
-                </div>
-
-
-                <div class="produto">
-
-                    <input type="checkbox" class="check-produto">
-            
-                    <img src="img/kit banho.jpg" alt="Imagem do produto">
-            
-                    <div class="info-produto">
-            
-                        <div class="nome-preco">
-                            <span>Kit banho</span>
-                            <span>R$ 30,00</span>
-                        </div>
-            
-                        <span class="local">Produto da petshop Cobasi</span>
-            
-                        <div class="quantidade">
-                            <span>Quantidade:</span>
-                            <button>-</button>
-                            <span>1</span>
-                            <button>+</button>
-                        </div>
-            
-                    </div>
-            
-                </div>
-             </div>
-         </div>
-     
-         <div class="bloco3">
-            <h2>Resumo da compra</h2>
-
-    <div class="resumo-linha">
-        <span>Produtos:</span>
-        <span>2</span>
     </div>
 
-    <div class="resumo-linha">
-        <span>Subtotal:</span>
-        <span>R$ 50,00</span>
+
+    <!-- RODAPÉ -->
+    <div id="rodape">
+
+        <img src="img/TAXI-DOG.png"
+            alt="Logo Taxi-Dog"
+            title="Logo Taxi-Dog">
+
+        <a href="contato.html">
+            Entre em contato
+        </a>
+
+        <br>
+
     </div>
 
-    <div class="resumo-linha">
-        <span>Frete:</span>
-        <span>R$ 10,00</span>
-    </div>
 
-    <hr>
-
-    <div class="resumo-total">
-        <span>Total:</span>
-        <span>R$ 60,00</span>
-    </div>
-
-    <button class="confirmar-compra">
-        Confirmar compra
-    </button>
-
-    <button class="mais-opcoes">
-        Mais opções
-    </button>
-
-         </div>
-     
-     </div>
-
-    
-
-        <div id="rodape">
-                <img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog">
-                <a href="contato.html"></i>Entre em contato</a><br>
-         </div>
-
-         <script src="carrinho.js"></script>
+    <!-- JAVASCRIPT -->
+    <script src="JavaScript/carrinho.js"></script>
 
 </body>
 

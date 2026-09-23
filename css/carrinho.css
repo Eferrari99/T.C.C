@@ -1,3 +1,4 @@
+
 .container {
     display: flex;
     justify-content: center;
@@ -6,12 +7,18 @@
     min-height: 100vh;
 }
 
+
+/* COLUNA DOS PRODUTOS */
+
 .coluna {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
 }
+
+
+/* BLOCOS */
 
 .bloco1,
 .bloco2,
@@ -22,14 +29,22 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
 }
 
+
+/* BLOCO 1 */
+
 .bloco1 {
     width: 300px;
     height: 50px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     gap: 10px;
 }
+
+
+/* CHECKBOX TODOS */
 
 .bloco1 input[type="checkbox"] {
     width: 20px;
@@ -37,148 +52,270 @@
     margin: 0;
 }
 
+
+/* BLOCO 2 */
+
 .bloco2 {
     width: 300px;
     height: 300px;
+
+    overflow-y: auto;
 }
 
-.bloco3 {
-    width: 300px;
-    height: 400px;
-}
+
+/* TÍTULO */
 
 .titulo-carrinho {
     width: 200px;
     height: 60px;
+
     background-color: #FFC800;
+
     border: 1px solid black;
     border-radius: 15px;
+
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    margin: 30px auto 0px;
+    margin: 30px auto 0;
 
     font-size: 24px;
     font-weight: bold;
 }
 
 
-
+/* PRODUTO */
 
 .produto {
     display: flex;
     align-items: center;
+
     gap: 10px;
+
     padding: 15px;
 }
 
-.check-produto {
+
+/* CHECKBOX PRODUTO */
+
+.produto-checkbox {
     width: 20px;
     height: 20px;
+
     margin: 0;
 }
+
+
+/* IMAGEM */
 
 .produto img {
     width: 90px;
     height: 90px;
+
     object-fit: cover;
+
     border-radius: 10px;
 }
+
+
+/* INFORMAÇÕES */
 
 .info-produto {
     display: flex;
     flex-direction: column;
+
     flex: 1;
+
+    min-width: 0;
 }
+
+
+/* NOME E PREÇO */
 
 .nome-preco {
     display: flex;
+
     justify-content: space-between;
+
     font-weight: bold;
+
     font-size: 16px;
+
+    gap: 5px;
 }
+
+
+/* LOCAL */
 
 .local {
     font-size: 12px;
+
     margin-top: 5px;
 }
 
+
+/* QUANTIDADE */
+
 .quantidade {
     display: flex;
+
     align-items: center;
+
     gap: 8px;
+
     margin-top: 10px;
+
     font-size: 13px;
 }
+
+
+/* BOTÕES + E - */
 
 .quantidade button {
     width: 25px;
     height: 25px;
+
     border: none;
+
     border-radius: 5px;
+
     background-color: #FFC800;
+
     font-size: 18px;
+
     cursor: pointer;
 }
 
 
+/* EFEITO DOS BOTÕES */
 
+.quantidade button:hover {
+    transform: scale(1.05);
+}
+
+
+/* BLOCO 3 */
 
 .bloco3 {
     width: 300px;
     height: 400px;
+
     padding: 20px;
+
     box-sizing: border-box;
 }
 
+
+/* TÍTULO DO RESUMO */
+
 .bloco3 h2 {
     text-align: center;
+
     margin-top: 0;
+
     margin-bottom: 30px;
 }
+
+
+/* LINHAS */
 
 .resumo-linha {
     display: flex;
+
     justify-content: space-between;
+
     margin-bottom: 20px;
+
     font-size: 16px;
 }
 
+
+/* LINHA */
+
 .bloco3 hr {
     border: none;
+
     border-top: 1px solid black;
+
     margin: 25px 0;
 }
 
+
+/* TOTAL */
+
 .resumo-total {
     display: flex;
+
     justify-content: space-between;
+
     font-size: 20px;
+
     font-weight: bold;
+
     margin-bottom: 30px;
 }
+
+
+/* BOTÕES DO RESUMO */
 
 .confirmar-compra,
 .mais-opcoes {
     width: 100%;
     height: 45px;
+
     border: none;
+
     border-radius: 20px;
+
     font-size: 16px;
+
     font-weight: bold;
+
     cursor: pointer;
 }
 
+
+/* CONFIRMAR */
+
 .confirmar-compra {
     background-color: #58B53D;
+
     color: white;
+
     margin-bottom: 15px;
 }
 
+
+/* MAIS OPÇÕES */
+
 .mais-opcoes {
     background-color: #FFC800;
+
     color: black;
+}
+
+
+/* MENSAGEM DE COMPRA */
+
+#mensagemCompra {
+    display: none;
+
+    margin-top: 20px;
+
+    padding: 12px;
+
+    background-color: #58B53D;
+
+    color: white;
+
+    text-align: center;
+
+    border-radius: 15px;
+
+    font-weight: bold;
+
+    font-size: 16px;
 }
