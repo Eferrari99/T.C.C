@@ -280,6 +280,70 @@
                 </select>
 
 
+                <!-- ======================================
+                     MEIO DE TRANSPORTE / SERVIÇO
+                ======================================= -->
+
+                <label for="Meio">
+                    <i class="bi bi-truck"></i>
+                    Meio de transporte / serviço
+                </label>
+
+                <select id="Meio">
+
+                    <option value="Corrida comum">
+                        Corrida com transporte comum
+                    </option>
+
+                    <option value="Carro eletrico">
+                        Solicitar carro elétrico
+                    </option>
+
+                    <option value="Outro">
+                        Outro
+                    </option>
+
+                </select>
+
+
+                <!-- ======================================
+                     TAREFAS
+                ======================================= -->
+
+                <div id="containerTarefas">
+
+                    <label for="Tarefas">
+                        <i class="bi bi-list-check"></i>
+                        Tipo de tarefa
+                    </label>
+
+                    <select id="Tarefas">
+
+                        <option value="">
+                            Selecione uma tarefa
+                        </option>
+
+                        <option value="Passeio">
+                            Passeio
+                        </option>
+
+                        <option value="Racao">
+                            Entrega de ração
+                        </option>
+
+                        <option value="Produtos">
+                            Entrega de produtos
+                        </option>
+
+                        <option value="Outro">
+                            Outra tarefa
+                        </option>
+
+                    </select>
+
+                </div>
+
+
                 <!-- OBSERVAÇÕES -->
 
                 <label for="observacoes">
@@ -414,6 +478,44 @@
                 </div>
 
 
+                <!-- NOVO: MEIO -->
+
+                <div class="item-resumo">
+
+                    <i class="bi bi-truck"></i>
+
+                    <div>
+                        <strong>Meio</strong>
+
+                        <span id="resumoMeio">
+                            Corrida com transporte comum
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <!-- NOVO: TAREFA -->
+
+                <div
+                    class="item-resumo"
+                    id="resumoTarefaContainer"
+                    style="display: none;"
+                >
+
+                    <i class="bi bi-list-check"></i>
+
+                    <div>
+                        <strong>Tarefa</strong>
+
+                        <span id="resumoTarefa">
+                            Não informada
+                        </span>
+                    </div>
+
+                </div>
+
+
                 <hr>
 
 
@@ -466,7 +568,6 @@
 
     <!-- JavaScript da página -->
     <script src="JavaScript/corrida.js"></script>
-
 
 </body>
 

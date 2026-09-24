@@ -5,6 +5,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
+
     /* =================================================
        ELEMENTOS
     ================================================= */
@@ -21,6 +22,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const data = document.getElementById("data");
     const horario = document.getElementById("horario");
     const tipo = document.getElementById("tipo");
+    const Meio = document.getElementById("Meio");
+    const Tarefas = document.getElementById("Tarefas");
+    const containerTarefas = document.getElementById("containerTarefas");
     const observacoes = document.getElementById("observacoes");
     const solicitarCorrida = document.getElementById("solicitarCorrida");
     const mensagemSolicitacao =
@@ -37,6 +41,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const resumoData = document.getElementById("resumoData");
     const resumoHorario = document.getElementById("resumoHorario");
     const resumoTipo = document.getElementById("resumoTipo");
+    const resumoMeio = document.getElementById("resumoMeio");
+    const resumoTarefa = document.getElementById("resumoTarefa");
+    const resumoTarefaContainer =
+        document.getElementById("resumoTarefaContainer");
     const valorCorrida = document.getElementById("valorCorrida");
 
 
@@ -163,8 +171,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        /* Remove marcador anterior */
-
         if (marcadorUsuario) {
 
             mapa.removeLayer(
@@ -173,8 +179,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-
-        /* Cria marcador */
 
         marcadorUsuario = L.marker(
             [
@@ -188,8 +192,6 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-        /* Remove círculo anterior */
-
         if (circuloBusca) {
 
             mapa.removeLayer(
@@ -198,8 +200,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-
-        /* Cria círculo */
 
         circuloBusca = L.circle(
             [
@@ -211,8 +211,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         ).addTo(mapa);
 
-
-        /* Centraliza mapa */
 
         mapa.setView(
             [
@@ -1312,6 +1310,69 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =================================================
+       MOSTRAR / ESCONDER TAREFAS
+    ================================================= */
+
+    function atualizarMeio() {
+
+        if (!Meio) {
+            return;
+        }
+
+
+        if (Meio.value === "Outro") {
+
+            if (containerTarefas) {
+                containerTarefas.style.display = "block";
+            }
+
+            if (resumoTarefaContainer) {
+                resumoTarefaContainer.style.display = "flex";
+            }
+
+        } else {
+
+            if (containerTarefas) {
+                containerTarefas.style.display = "none";
+            }
+
+            if (resumoTarefaContainer) {
+                resumoTarefaContainer.style.display = "none";
+            }
+
+            if (Tarefas) {
+                Tarefas.value = "";
+            }
+
+        }
+
+
+        atualizarResumo();
+
+    }
+
+
+    if (Meio) {
+
+        Meio.addEventListener(
+            "change",
+            atualizarMeio
+        );
+
+    }
+
+
+    if (Tarefas) {
+
+        Tarefas.addEventListener(
+            "change",
+            atualizarResumo
+        );
+
+    }
+
+
+    /* =================================================
        ATUALIZAR RESUMO
     ================================================= */
 
@@ -1386,6 +1447,50 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
+        /* =========================================
+           RESUMO DO MEIO
+        ========================================= */
+
+        if (resumoMeio) {
+
+            if (Meio && Meio.value) {
+
+                resumoMeio.textContent =
+                    Meio.options[
+                        Meio.selectedIndex
+                    ].text;
+
+            } else {
+
+                resumoMeio.textContent =
+                    "Não informado";
+
+            }
+
+        }
+
+
+        /* =========================================
+           RESUMO DA TAREFA
+        ========================================= */
+
+        if (
+            resumoTarefa &&
+            Tarefas &&
+            Meio &&
+            Meio.value === "Outro"
+        ) {
+
+            resumoTarefa.textContent =
+                Tarefas.value
+                    ? Tarefas.options[
+                        Tarefas.selectedIndex
+                    ].text
+                    : "Não informada";
+
+        }
+
+
         calcularValor();
 
     }
@@ -1425,8 +1530,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function calcularValor() {
 
+        /*
+            VALOR BASE DA CORRIDA
+        */
+
         let valor = 15;
 
+
+        /*
+            DESTINO PETSHOP
+        */
 
         if (
             petshop &&
@@ -1437,6 +1550,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
+
+        /*
+            TIPO DE CORRIDA
+        */
 
         if (
             tipo &&
@@ -1462,6 +1579,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
+
+        /*
+            MEIO DE TRANSPORTE / SERVIÇO
+
+            Transporte comum = + R$ 10,00
+            Carro elétrico   = + R$ 5,00
+            Tarefas          = + R$ 3,00
+
+            Dessa forma, o carro elétrico
+            fica mais barato.
+        */
+
+        if (
+            Meio &&
+            Meio.value
+        ) {
+
+            if (
+                Meio.value === "Corrida comum"
+            ) {
+
+                valor += 10;
+
+            }
+
+
+            else if (
+                Meio.value === "Carro eletrico"
+            ) {
+
+                valor += 5;
+
+            }
+
+
+            else if (
+                Meio.value === "Outro"
+            ) {
+
+                valor += 3;
+
+            }
+
+        }
+
+
+        /*
+            MOSTRAR VALOR
+        */
 
         if (valorCorrida) {
 
@@ -1634,6 +1800,29 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                /*
+                    SE ESCOLHER OUTRO,
+                    É OBRIGATÓRIO ESCOLHER UMA TAREFA.
+                */
+
+                if (
+                    Meio &&
+                    Meio.value === "Outro" &&
+                    Tarefas &&
+                    !Tarefas.value
+                ) {
+
+                    mostrarMensagemSolicitacao(
+                        "Selecione o tipo de tarefa."
+                    );
+
+                    Tarefas.focus();
+
+                    return;
+
+                }
+
+
                 const valor =
                     calcularValor();
 
@@ -1720,6 +1909,8 @@ document.addEventListener("DOMContentLoaded", function () {
     ================================================= */
 
     iniciarMapa();
+
+    atualizarMeio();
 
     atualizarResumo();
 
