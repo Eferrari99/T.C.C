@@ -1066,7 +1066,17 @@ function mostrarLocais(locais) {
                         Ver rota
 
                     </a>
+                    <a
+                        class="btn-rota"
+                        href="${rota}"
+                        target="_blank"
+                    >
 
+                        <i class="bi bi-map"></i>
+
+                        Solicitar corrida
+
+                    </a>
                 `;
 
 
