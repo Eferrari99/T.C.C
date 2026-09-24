@@ -1068,7 +1068,7 @@ function mostrarLocais(locais) {
                     </a>
                     <a
                         class="btn-rota"
-                        href="${rota}"
+                    
                         target="_blank"
                     >
 
