@@ -3,24 +3,40 @@
 
 <head>
 
-   <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-   <title>Taxi-Dog - Emergência</title>
+    <title>Taxi-Dog - Emergência</title>
 
-   <!-- Favicon / Shorticon -->
-   <link rel="shortcut icon" href="img/TAXI-DOG.png" type="image/x-icon">
+    <!-- Favicon -->
+    <link
+        rel="shortcut icon"
+        href="img/TAXI-DOG.png"
+        type="image/x-icon"
+    >
 
-   <!-- Bootstrap Icons -->
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    >
 
-   <!-- Leaflet - Biblioteca do mapa -->
-   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <!-- Leaflet CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
 
-   <!-- CSS do site -->
-   <link rel="stylesheet" href="css/estilo.css">
+    <!-- CSS principal -->
+    <link
+        rel="stylesheet"
+        href="css/estilo.css"
+    >
 
-   <!-- CSS da página de emergência -->
-   <link rel="stylesheet" href="css/SOS.css">
+    <!-- CSS da página SOS -->
+    <link
+        rel="stylesheet"
+        href="css/SOS.css"
+    >
 
 </head>
 
@@ -28,239 +44,1381 @@
 <body>
 
 
-   <!-- =========================
-         CABEÇALHO
-    ========================== -->
+    <!-- ==========================================
+         MENU
+    =========================================== -->
 
-   <div id="menu">
+    <div id="menu">
 
-      <img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog">
+        <img
+            src="img/TAXI-DOG.png"
+            alt="Logo Taxi-Dog"
+            title="Logo Taxi-Dog"
+        >
 
-      <a href="index.html">
-         <i class="bi bi-house-door-fill"></i>
-         Home
-      </a>
+        <a href="index.html">
+            <i class="bi bi-house-door-fill"></i>
+            Home
+        </a>
 
-      <a href="sobre.html">
-         <i class="bi bi-person-rolodex"></i>
-         Quem Somos
-      </a>
+        <a href="sobre.html">
+            <i class="bi bi-person-rolodex"></i>
+            Quem Somos
+        </a>
 
-      <a href="produtos.html">
-         <i class="bi bi-bag-fill"></i>
-         produtos
-      </a>
+        <a href="produtos.html">
+            <i class="bi bi-bag-fill"></i>
+            produtos
+        </a>
 
-      <a href="corrida.html">
-         <i class="bi bi-taxi-front"></i>
-         corrida
-      </a>
+        <a href="corrida.html">
+            <i class="bi bi-taxi-front"></i>
+            corrida
+        </a>
 
-      <a href="carrinho.html">
-         <i class="bi bi-cart4"></i>
-         carrinho
-      </a>
+        <a href="carrinho.html">
+            <i class="bi bi-cart4"></i>
+            carrinho
+        </a>
 
-      <a href="perfil.html">
-         <i class="bi bi-person-fill"></i>
-         Perfil
-      </a>
+        <a href="perfil.html">
+            <i class="bi bi-person-fill"></i>
+            Perfil
+        </a>
 
-   </div>
+    </div>
 
 
-
-   <!-- =========================
+    <!-- ==========================================
          TÍTULO
-    ========================== -->
+    =========================================== -->
 
-   <div id="titulo">
-      EMERGÊNCIA
-   </div>
-
-
-
-   <!-- =========================
-         MAPA + ÁREA DE EMERGÊNCIA
-    ========================== -->
-
-   <div class="area-emergencia">
+    <div id="titulo">
+        EMERGÊNCIA
+    </div>
 
 
-      <!-- MAPA -->
+    <!-- ==========================================
+         MAPA + PAINEL
+    =========================================== -->
 
-      <div id="mapa"></div>
-
-
-
-      <!-- PAINEL DE EMERGÊNCIA -->
-
-      <div id="SOS">
+    <div class="area-emergencia">
 
 
-         <div class="sos-cabecalho">
+        <!-- MAPA -->
 
-            <i class="bi bi-exclamation-triangle-fill"></i>
-
-            <h2>
-               Precisa de ajuda?
-            </h2>
-
-            <p>
-               Informe sua localização para encontrarmos
-               atendimento para seu pet.
-            </p>
-
-         </div>
+        <div id="mapa"></div>
 
 
+        <!-- PAINEL SOS -->
 
-         <!-- LOCALIZAÇÃO -->
+        <div id="SOS">
 
-         <div class="localizacao-box">
+            <div class="sos-cabecalho">
 
-            <label for="inputlocal">
+                <i class="bi bi-exclamation-triangle-fill"></i>
 
-               <i class="bi bi-geo-alt-fill"></i>
+                <h2>
+                    Precisa de ajuda?
+                </h2>
 
-               Sua localização
-
-            </label>
-
-
-            <div class="campo-localizacao">
-
-
-               <input id="inputlocal" type="text" placeholder="Digite seu endereço..." autocomplete="off">
-
-
-               <button id="btnLocalizacao" title="Usar minha localização">
-
-                  <i class="bi bi-crosshair"></i>
-
-               </button>
-
+                <p>
+                    Informe sua localização para encontrarmos
+                    atendimento próximo para seu pet.
+                </p>
 
             </div>
 
 
-            <!-- Sugestões de endereço -->
+            <!-- ======================================
+                 LOCALIZAÇÃO
+            ======================================= -->
 
-            <div id="sugestoes"></div>
+            <div class="localizacao-box">
 
+                <label for="inputlocal">
 
-            <!-- Mensagem de status -->
+                    <i class="bi bi-geo-alt-fill"></i>
 
-            <p id="statusLocalizacao"></p>
+                    Sua localização
 
-
-         </div>
-
-
-
-         <!-- CONFIRMAR LOCALIZAÇÃO -->
-
-         <button id="btnConfirmar" class="btn-confirmar">
-
-            <i class="bi bi-check-circle-fill"></i>
-
-            Confirmar localização
-
-         </button>
+                </label>
 
 
-      </div>
+                <div class="campo-localizacao">
 
-   </div>
+                    <input
+                        id="inputlocal"
+                        type="text"
+                        placeholder="Digite seu endereço..."
+                        autocomplete="off"
+                    >
 
 
+                    <button
+                        id="btnLocalizacao"
+                        type="button"
+                        title="Usar minha localização"
+                    >
 
-   <!-- =========================
+                        <i class="bi bi-crosshair"></i>
+
+                    </button>
+
+                </div>
+
+
+                <!-- SUGESTÕES -->
+
+                <div id="sugestoes"></div>
+
+
+                <!-- STATUS -->
+
+                <p id="statusLocalizacao"></p>
+
+            </div>
+
+
+            <!-- ======================================
+                 CONFIRMAR LOCALIZAÇÃO
+            ======================================= -->
+
+            <button
+                id="btnConfirmar"
+                class="btn-confirmar"
+                type="button"
+            >
+
+                <i class="bi bi-search"></i>
+
+                Encontrar atendimento
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
          RESULTADOS
-    ========================== -->
+    =========================================== -->
 
-   <div id="resultados">
+    <div id="resultados">
 
+        <div class="resultados-titulo">
 
-      <div class="resultados-titulo">
+            <h2>
 
-         <h2>
+                <i class="bi bi-hospital-fill"></i>
 
-            <i class="bi bi-hospital-fill"></i>
+                Atendimento próximo
 
-            Atendimento próximo
-
-         </h2>
-
-
-         <p>
-
-            Clínicas veterinárias e petshops encontrados
-            perto da sua localização.
-
-         </p>
-
-      </div>
-
-
-
-      <!-- LISTA DOS ESTABELECIMENTOS -->
-
-      <div id="listaLocais">
-
-
-         <div class="mensagem-inicial">
-
-            <i class="bi bi-geo-alt"></i>
+            </h2>
 
             <p>
 
-               Informe sua localização para encontrar
-               clínicas e petshops próximos.
+                Escolha a clínica veterinária ou petshop
+                para onde deseja levar seu pet.
 
             </p>
 
-         </div>
+        </div>
 
 
-      </div>
+        <!-- LISTA -->
+
+        <div id="listaLocais">
+
+            <div class="mensagem-inicial">
+
+                <i class="bi bi-geo-alt"></i>
+
+                <p>
+
+                    Informe sua localização para encontrar
+                    clínicas e petshops próximos.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
 
 
-   </div>
-
-
-
-   <!-- =========================
+    <!-- ==========================================
          RODAPÉ
-    ========================== -->
+    =========================================== -->
 
-   <div id="rodape">
+    <div id="rodape">
 
-      <img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog">
+        <img
+            src="img/TAXI-DOG.png"
+            alt="Logo Taxi-Dog"
+            title="Logo Taxi-Dog"
+        >
 
-      <a href="contato.html">
-         Entre em contato
-      </a>
+        <a href="contato.html">
+            Entre em contato
+        </a>
 
-      <br>
-
-   </div>
-
-
-
-   <!-- =========================
-         LEAFLET JAVASCRIPT
-    ========================== -->
-
-   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-   </script>
+    </div>
 
 
-   <!-- =========================
-         JAVASCRIPT DA EMERGÊNCIA
-    ========================== -->
+    <!-- ==========================================
+         LEAFLET
+    =========================================== -->
 
-   <script src="JavaScript/sos.js"></script>
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+
+
+    <!-- ==========================================
+         JAVASCRIPT DA SOS
+    =========================================== -->
+
+    <script>
+
+        /* =====================================================
+           VARIÁVEIS
+        ===================================================== */
+
+        let latitudeAtual = null;
+        let longitudeAtual = null;
+
+        let mapa = null;
+
+        let marcadorUsuario = null;
+        let circuloBusca = null;
+
+        let marcadoresLocais = [];
+
+        let timerBusca = null;
+
+
+        /* =====================================================
+           ELEMENTOS
+        ===================================================== */
+
+        const input =
+            document.getElementById("inputlocal");
+
+        const sugestoes =
+            document.getElementById("sugestoes");
+
+        const status =
+            document.getElementById("statusLocalizacao");
+
+        const listaLocais =
+            document.getElementById("listaLocais");
+
+        const btnLocalizacao =
+            document.getElementById("btnLocalizacao");
+
+        const btnConfirmar =
+            document.getElementById("btnConfirmar");
+
+
+        /* =====================================================
+           INICIAR MAPA
+        ===================================================== */
+
+        mapa = L.map("mapa").setView(
+            [-23.5505, -46.6333],
+            13
+        );
+
+
+        L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+                maxZoom: 19,
+                attribution:
+                    "&copy; OpenStreetMap contributors"
+            }
+        ).addTo(mapa);
+
+
+        /* =====================================================
+           ATUALIZAR MAPA
+        ===================================================== */
+
+        function atualizarMapa(lat, lon) {
+
+            if (marcadorUsuario) {
+
+                mapa.removeLayer(
+                    marcadorUsuario
+                );
+
+            }
+
+
+            if (circuloBusca) {
+
+                mapa.removeLayer(
+                    circuloBusca
+                );
+
+            }
+
+
+            marcadorUsuario =
+                L.marker([lat, lon])
+                    .addTo(mapa)
+                    .bindPopup(
+                        "<strong>📍 Local do socorro</strong>"
+                    )
+                    .openPopup();
+
+
+            circuloBusca =
+                L.circle(
+                    [lat, lon],
+                    {
+                        radius: 5000,
+                        color: "#d60000",
+                        fillOpacity: 0.08
+                    }
+                )
+                .addTo(mapa);
+
+
+            mapa.setView(
+                [lat, lon],
+                14
+            );
+
+        }
+
+
+        /* =====================================================
+           BUSCAR ENDEREÇOS AUTOMATICAMENTE
+        ===================================================== */
+
+        input.addEventListener(
+            "input",
+            function () {
+
+                clearTimeout(timerBusca);
+
+                const texto =
+                    input.value.trim();
+
+
+                if (texto.length < 3) {
+
+                    sugestoes.innerHTML = "";
+
+                    return;
+
+                }
+
+
+                timerBusca =
+                    setTimeout(
+                        function () {
+
+                            buscarEnderecos(texto);
+
+                        },
+                        600
+                    );
+
+            }
+        );
+
+
+        /* =====================================================
+           BUSCAR ENDEREÇOS
+        ===================================================== */
+
+        async function buscarEnderecos(texto) {
+
+            sugestoes.innerHTML = `
+                <div class="sugestao">
+                    <i class="bi bi-hourglass-split"></i>
+                    Procurando endereço...
+                </div>
+            `;
+
+
+            try {
+
+                const url =
+                    "https://nominatim.openstreetmap.org/search" +
+                    "?format=json" +
+                    "&addressdetails=1" +
+                    "&limit=5" +
+                    "&countrycodes=br" +
+                    "&q=" +
+                    encodeURIComponent(texto);
+
+
+                const resposta =
+                    await fetch(
+                        url,
+                        {
+                            headers: {
+                                "Accept-Language":
+                                    "pt-BR"
+                            }
+                        }
+                    );
+
+
+                if (!resposta.ok) {
+
+                    throw new Error(
+                        "Erro ao pesquisar endereço."
+                    );
+
+                }
+
+
+                const dados =
+                    await resposta.json();
+
+
+                sugestoes.innerHTML = "";
+
+
+                if (!dados.length) {
+
+                    sugestoes.innerHTML = `
+                        <div class="sugestao">
+                            Nenhum endereço encontrado.
+                        </div>
+                    `;
+
+                    return;
+
+                }
+
+
+                dados.forEach(
+                    function (local) {
+
+                        const div =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        div.className =
+                            "sugestao";
+
+
+                        const icone =
+                            document.createElement(
+                                "i"
+                            );
+
+
+                        icone.className =
+                            "bi bi-geo-alt-fill";
+
+
+                        div.appendChild(
+                            icone
+                        );
+
+
+                        div.appendChild(
+                            document.createTextNode(
+                                " " +
+                                local.display_name
+                            )
+                        );
+
+
+                        div.addEventListener(
+                            "click",
+                            function () {
+
+                                selecionarEndereco(
+                                    local
+                                );
+
+                            }
+                        );
+
+
+                        sugestoes.appendChild(
+                            div
+                        );
+
+                    }
+                );
+
+
+            }
+            catch (erro) {
+
+                console.error(
+                    erro
+                );
+
+
+                sugestoes.innerHTML = `
+                    <div class="sugestao">
+                        Não foi possível buscar o endereço.
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SELECIONAR ENDEREÇO
+        ===================================================== */
+
+        function selecionarEndereco(local) {
+
+            latitudeAtual =
+                parseFloat(local.lat);
+
+            longitudeAtual =
+                parseFloat(local.lon);
+
+
+            input.value =
+                local.display_name;
+
+
+            sugestoes.innerHTML = "";
+
+
+            atualizarMapa(
+                latitudeAtual,
+                longitudeAtual
+            );
+
+
+            status.innerHTML = `
+                <i class="bi bi-check-circle-fill"></i>
+                Localização selecionada.
+            `;
+
+        }
+
+
+        /* =====================================================
+           GPS
+        ===================================================== */
+
+        btnLocalizacao.addEventListener(
+            "click",
+            function () {
+
+                if (!navigator.geolocation) {
+
+                    status.textContent =
+                        "Seu navegador não suporta localização.";
+
+                    return;
+
+                }
+
+
+                status.innerHTML = `
+                    <i class="bi bi-hourglass-split"></i>
+                    Obtendo sua localização...
+                `;
+
+
+                btnLocalizacao.disabled = true;
+
+
+                navigator.geolocation.getCurrentPosition(
+
+                    async function (posicao) {
+
+                        latitudeAtual =
+                            posicao.coords.latitude;
+
+                        longitudeAtual =
+                            posicao.coords.longitude;
+
+
+                        atualizarMapa(
+                            latitudeAtual,
+                            longitudeAtual
+                        );
+
+
+                        await obterEnderecoAtual();
+
+
+                        status.innerHTML = `
+                            <i class="bi bi-check-circle-fill"></i>
+                            Localização atual encontrada.
+                        `;
+
+
+                        btnLocalizacao.disabled =
+                            false;
+
+                    },
+
+
+                    function (erro) {
+
+                        console.error(
+                            erro
+                        );
+
+
+                        btnLocalizacao.disabled =
+                            false;
+
+
+                        status.innerHTML = `
+                            <i class="bi bi-exclamation-circle"></i>
+                            Não foi possível acessar sua localização.
+                            Verifique a permissão do navegador.
+                        `;
+
+                    },
+
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 15000,
+                        maximumAge: 0
+                    }
+
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           ENDEREÇO DO GPS
+        ===================================================== */
+
+        async function obterEnderecoAtual() {
+
+            try {
+
+                const url =
+                    "https://nominatim.openstreetmap.org/reverse" +
+                    "?format=json" +
+                    "&lat=" +
+                    latitudeAtual +
+                    "&lon=" +
+                    longitudeAtual +
+                    "&zoom=18" +
+                    "&addressdetails=1";
+
+
+                const resposta =
+                    await fetch(url);
+
+
+                if (!resposta.ok) {
+
+                    throw new Error(
+                        "Erro no endereço."
+                    );
+
+                }
+
+
+                const dados =
+                    await resposta.json();
+
+
+                if (dados.display_name) {
+
+                    input.value =
+                        dados.display_name;
+
+                }
+                else {
+
+                    input.value =
+                        "Minha localização atual";
+
+                }
+
+            }
+            catch (erro) {
+
+                console.error(
+                    erro
+                );
+
+
+                input.value =
+                    "Minha localização atual";
+
+            }
+
+        }
+
+
+        /* =====================================================
+           CONFIRMAR LOCALIZAÇÃO
+        ===================================================== */
+
+        btnConfirmar.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    latitudeAtual === null ||
+                    longitudeAtual === null
+                ) {
+
+                    status.innerHTML = `
+                        <i class="bi bi-exclamation-circle"></i>
+                        Primeiro escolha seu endereço
+                        ou use sua localização.
+                    `;
+
+                    return;
+
+                }
+
+
+                status.innerHTML = `
+                    <i class="bi bi-hourglass-split"></i>
+                    Procurando atendimento próximo...
+                `;
+
+
+                buscarLocaisProximos();
+
+            }
+        );
+
+
+        /* =====================================================
+           BUSCAR CLÍNICAS E PETSHOPS
+        ===================================================== */
+
+        async function buscarLocaisProximos() {
+
+            listaLocais.innerHTML = `
+                <div class="mensagem-inicial">
+
+                    <i class="bi bi-hourglass-split"></i>
+
+                    <p>
+                        Procurando estabelecimentos próximos...
+                    </p>
+
+                </div>
+            `;
+
+
+            const raio = 5000;
+
+
+            const query = `
+
+                [out:json][timeout:25];
+
+                (
+
+                    node["amenity"="veterinary"]
+                    (around:${raio},${latitudeAtual},${longitudeAtual});
+
+                    way["amenity"="veterinary"]
+                    (around:${raio},${latitudeAtual},${longitudeAtual});
+
+                    node["shop"="pet"]
+                    (around:${raio},${latitudeAtual},${longitudeAtual});
+
+                    way["shop"="pet"]
+                    (around:${raio},${latitudeAtual},${longitudeAtual});
+
+                );
+
+                out center;
+
+            `;
+
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        "https://overpass-api.de/api/interpreter",
+                        {
+                            method: "POST",
+                            body: query
+                        }
+                    );
+
+
+                if (!resposta.ok) {
+
+                    throw new Error(
+                        "Erro no servidor Overpass."
+                    );
+
+                }
+
+
+                const dados =
+                    await resposta.json();
+
+
+                const locais = [];
+
+
+                dados.elements.forEach(
+                    function (local) {
+
+                        let lat =
+                            local.lat;
+
+                        let lon =
+                            local.lon;
+
+
+                        if (local.center) {
+
+                            lat =
+                                local.center.lat;
+
+                            lon =
+                                local.center.lon;
+
+                        }
+
+
+                        if (
+                            typeof lat !== "number" ||
+                            typeof lon !== "number"
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        const nome =
+                            local.tags?.name ||
+                            "Estabelecimento veterinário";
+
+
+                        const tipo =
+                            local.tags?.amenity ===
+                            "veterinary"
+
+                                ? "Clínica veterinária"
+
+                                : "Petshop";
+
+
+                        const distancia =
+                            calcularDistancia(
+                                latitudeAtual,
+                                longitudeAtual,
+                                lat,
+                                lon
+                            );
+
+
+                        const endereco =
+                            local.tags?.["addr:street"] ||
+                            "Endereço não informado";
+
+
+                        locais.push({
+
+                            nome: nome,
+
+                            tipo: tipo,
+
+                            lat: lat,
+
+                            lon: lon,
+
+                            distancia: distancia,
+
+                            endereco: endereco
+
+                        });
+
+                    }
+                );
+
+
+                locais.sort(
+                    function (a, b) {
+
+                        return (
+                            a.distancia -
+                            b.distancia
+                        );
+
+                    }
+                );
+
+
+                mostrarLocais(
+                    locais
+                );
+
+
+                mostrarLocaisNoMapa(
+                    locais
+                );
+
+
+                status.innerHTML = `
+                    <i class="bi bi-check-circle-fill"></i>
+                    Escolha um local de atendimento.
+                `;
+
+            }
+            catch (erro) {
+
+                console.error(
+                    erro
+                );
+
+
+                listaLocais.innerHTML = `
+                    <div class="mensagem-inicial">
+
+                        <i class="bi bi-wifi-off"></i>
+
+                        <p>
+                            Não foi possível buscar os
+                            estabelecimentos.
+                            Verifique sua conexão.
+                        </p>
+
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           DISTÂNCIA
+        ===================================================== */
+
+        function calcularDistancia(
+            lat1,
+            lon1,
+            lat2,
+            lon2
+        ) {
+
+            const R = 6371;
+
+
+            const dLat =
+                (lat2 - lat1) *
+                Math.PI / 180;
+
+
+            const dLon =
+                (lon2 - lon1) *
+                Math.PI / 180;
+
+
+            const a =
+                Math.sin(dLat / 2) *
+                Math.sin(dLat / 2) +
+
+                Math.cos(
+                    lat1 * Math.PI / 180
+                ) *
+
+                Math.cos(
+                    lat2 * Math.PI / 180
+                ) *
+
+                Math.sin(dLon / 2) *
+                Math.sin(dLon / 2);
+
+
+            const c =
+                2 *
+                Math.atan2(
+                    Math.sqrt(a),
+                    Math.sqrt(1 - a)
+                );
+
+
+            return R * c;
+
+        }
+
+
+        /* =====================================================
+           ESCAPAR TEXTO
+        ===================================================== */
+
+        function escaparHTML(texto) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.textContent =
+                texto;
+
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =====================================================
+           MOSTRAR LOCAIS
+        ===================================================== */
+
+        function mostrarLocais(locais) {
+
+            listaLocais.innerHTML = "";
+
+
+            if (locais.length === 0) {
+
+                listaLocais.innerHTML = `
+
+                    <div class="mensagem-inicial">
+
+                        <i class="bi bi-search"></i>
+
+                        <p>
+                            Não encontramos clínicas ou
+                            petshops próximos dessa localização.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            locais
+                .slice(0, 10)
+                .forEach(
+                    function (local) {
+
+                        const distancia =
+                            local.distancia < 1
+
+                                ? Math.round(
+                                    local.distancia * 1000
+                                ) + " metros"
+
+                                : local.distancia.toFixed(1) +
+                                  " km";
+
+
+                        const card =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        card.className =
+                            "card-local";
+
+
+                        card.innerHTML = `
+
+                            <span class="tipo-local">
+                                ${escaparHTML(local.tipo)}
+                            </span>
+
+
+                            <h3>
+                                <i class="bi bi-hospital"></i>
+                                ${escaparHTML(local.nome)}
+                            </h3>
+
+
+                            <div class="endereco">
+
+                                <i class="bi bi-geo-alt"></i>
+
+                                ${escaparHTML(local.endereco)}
+
+                            </div>
+
+
+                            <div class="distancia">
+
+                                <i class="bi bi-signpost-2"></i>
+
+                                ${distancia}
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="btn-rota"
+                                data-lat="${local.lat}"
+                                data-lon="${local.lon}"
+                                data-nome="${encodeURIComponent(local.nome)}"
+                                data-tipo="${encodeURIComponent(local.tipo)}"
+                            >
+
+                                <i class="bi bi-taxi-front"></i>
+
+                                Solicitar corrida
+
+                            </button>
+
+                        `;
+
+
+                        listaLocais.appendChild(
+                            card
+                        );
+
+                    }
+                );
+
+
+            /* ==========================================
+               EVENTOS DOS BOTÕES
+            =========================================== */
+
+            const botoes =
+                document.querySelectorAll(
+                    ".btn-rota"
+                );
+
+
+            botoes.forEach(
+                function (botao) {
+
+                    botao.addEventListener(
+                        "click",
+                        function () {
+
+                            abrirSOS2(
+                                botao
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           ABRIR SOS2 COM ORIGEM E DESTINO
+        ===================================================== */
+
+        function abrirSOS2(botao) {
+
+            if (
+                latitudeAtual === null ||
+                longitudeAtual === null
+            ) {
+
+                status.innerHTML = `
+                    <i class="bi bi-exclamation-circle"></i>
+                    Selecione sua localização primeiro.
+                `;
+
+                return;
+
+            }
+
+
+            const destinoLat =
+                botao.dataset.lat;
+
+
+            const destinoLon =
+                botao.dataset.lon;
+
+
+            const destinoNome =
+                decodeURIComponent(
+                    botao.dataset.nome
+                );
+
+
+            const destinoTipo =
+                decodeURIComponent(
+                    botao.dataset.tipo
+                );
+
+
+            const origemTexto =
+                input.value.trim() ||
+                "Minha localização atual";
+
+
+            const parametros =
+                new URLSearchParams();
+
+
+            parametros.set(
+                "origem",
+                origemTexto
+            );
+
+
+            parametros.set(
+                "latOrigem",
+                latitudeAtual
+            );
+
+
+            parametros.set(
+                "lonOrigem",
+                longitudeAtual
+            );
+
+
+            parametros.set(
+                "destino",
+                destinoNome
+            );
+
+
+            parametros.set(
+                "tipoDestino",
+                destinoTipo
+            );
+
+
+            parametros.set(
+                "latDestino",
+                destinoLat
+            );
+
+
+            parametros.set(
+                "lonDestino",
+                destinoLon
+            );
+
+
+            window.location.href =
+                "SOS2.html?" +
+                parametros.toString();
+
+        }
+
+
+        /* =====================================================
+           MARCADORES DOS LOCAIS
+        ===================================================== */
+
+        function mostrarLocaisNoMapa(locais) {
+
+            marcadoresLocais.forEach(
+                function (marcador) {
+
+                    mapa.removeLayer(
+                        marcador
+                    );
+
+                }
+            );
+
+
+            marcadoresLocais = [];
+
+
+            locais
+                .slice(0, 20)
+                .forEach(
+                    function (local) {
+
+                        const icone =
+                            local.tipo ===
+                            "Clínica veterinária"
+                                ? "🏥"
+                                : "🐶";
+
+
+                        const marcador =
+                            L.marker(
+                                [
+                                    local.lat,
+                                    local.lon
+                                ]
+                            )
+                            .addTo(mapa);
+
+
+                        marcador.bindPopup(`
+
+                            <strong>
+                                ${icone}
+                                ${escaparHTML(local.nome)}
+                            </strong>
+
+                            <br>
+
+                            ${escaparHTML(local.tipo)}
+
+                            <br><br>
+
+                            ${local.distancia.toFixed(1)}
+                            km de distância
+
+                        `);
+
+
+                        marcadoresLocais.push(
+                            marcador
+                        );
+
+                    }
+                );
+
+        }
+
+
+        /* =====================================================
+           FECHAR SUGESTÕES
+        ===================================================== */
+
+        document.addEventListener(
+            "click",
+            function (evento) {
+
+                if (
+                    evento.target !== input &&
+                    !sugestoes.contains(
+                        evento.target
+                    )
+                ) {
+
+                    sugestoes.innerHTML = "";
+
+                }
+
+            }
+        );
+
+    </script>
 
 
 </body>
