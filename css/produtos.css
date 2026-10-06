@@ -1,0 +1,25 @@
+/* =========================
+   BARRA DE PESQUISA
+========================= */
+
+#Barra_de_pesquisa {
+    margin: 20px auto 0;
+    width: 60%;
+    position: relative;
+}
+
+#Barra_de_pesquisa input {
+    width: 100%;
+    padding: 15px 15px 15px 50px;
+    border-radius: 50px;
+    font-size: 18px;
+    box-sizing: border-box;
+}
+
+#Barra_de_pesquisa i {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
