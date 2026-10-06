@@ -1068,8 +1068,8 @@ function mostrarLocais(locais) {
                     </a>
                     <a
                         class="btn-rota"
-                    
-                        target="_blank"
+                        href="SOS2.html"
+                       
                     >
 
                         <i class="bi bi-map"></i>

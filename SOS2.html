@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Taxi-Dog - Solicitar Socorro</title>
+
+    <!-- Favicon -->
+    <link
+        rel="shortcut icon"
+        href="img/TAXI-DOG.png"
+        type="image/x-icon"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    >
+
+    <!-- CSS principal -->
+    <link
+        rel="stylesheet"
+        href="css/estilo.css"
+    >
+
+    <!-- CSS da página -->
+    <link
+        rel="stylesheet"
+        href="css/SOS2.css"
+    >
+
+    <!-- Leaflet -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         MENU
+    =========================================== -->
+
+    <div id="menu">
+
+        <img
+            src="img/TAXI-DOG.png"
+            alt="Logo Taxi-Dog"
+            title="Logo Taxi-Dog"
+        >
+
+        <a href="index.html">
+            <i class="bi bi-house-door-fill"></i>
+            Home
+        </a>
+
+        <a href="sobre.html">
+            <i class="bi bi-person-rolodex"></i>
+            Quem Somos
+        </a>
+
+        <a href="produtos.html">
+            <i class="bi bi-bag-fill"></i>
+            produtos
+        </a>
+
+        <a href="corrida.html">
+            <i class="bi bi-taxi-front"></i>
+            corrida
+        </a>
+
+        <a href="carrinho.html">
+            <i class="bi bi-cart4"></i>
+            carrinho
+        </a>
+
+        <a href="perfil.html">
+            <i class="bi bi-person-fill"></i>
+            Perfil
+        </a>
+
+    </div>
+
+
+    <!-- ==========================================
+         CONTEÚDO
+    =========================================== -->
+
+    <main class="corrida">
+
+
+        <!-- ======================================
+             TÍTULO
+        ======================================= -->
+
+        <h1>
+
+            <i class="bi bi-exclamation-triangle-fill"></i>
+
+            Solicitar Socorro
+
+        </h1>
+
+
+        <p class="descricao-corrida">
+
+            Confira os dados abaixo e solicite
+            o atendimento de emergência.
+
+        </p>
+
+
+        <div class="conteudo-corrida">
+
+
+            <!-- ======================================
+                 FORMULÁRIO SIMPLIFICADO
+            ======================================= -->
+
+            <section class="formulario-corrida">
+
+
+                <h2>
+
+                    <i class="bi bi-clipboard-check"></i>
+
+                    Dados do socorro
+
+                </h2>
+
+
+                <!-- ==================================
+                     PET
+                =================================== -->
+
+                <label for="pet">
+
+                    <i class="bi bi-heart-fill"></i>
+
+                    Selecione o pet
+
+                </label>
+
+
+                <select id="pet">
+
+                    <option value="">
+                        Selecione seu pet
+                    </option>
+
+                    <option value="pet1">
+                        Princesa Cupcake
+                    </option>
+
+                    <option value="pet2">
+                        Laika
+                    </option>
+
+                </select>
+
+
+                <!-- ==================================
+                     ORIGEM
+                =================================== -->
+
+                <label for="origem">
+
+                    <i class="bi bi-geo-alt-fill"></i>
+
+                    Local de partida
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="origem"
+                    readonly
+                    placeholder="Local escolhido na emergência"
+                >
+
+
+                <!-- ==================================
+                     DESTINO
+                =================================== -->
+
+                <label for="destino">
+
+                    <i class="bi bi-hospital-fill"></i>
+
+                    Destino
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="destino"
+                    readonly
+                    placeholder="Atendimento escolhido"
+                >
+
+
+                <!-- TIPO DO DESTINO -->
+
+                <p
+                    id="tipoDestino"
+                    class="tipo-destino"
+                ></p>
+
+
+                <!-- ==================================
+                     MAPA
+                =================================== -->
+
+                <div id="mapa"></div>
+
+
+                <!-- ==================================
+                     VALOR
+                =================================== -->
+
+                <div class="valor-emergencia">
+
+                    <span>
+
+                        <i class="bi bi-cash-coin"></i>
+
+                        Valor estimado
+
+                    </span>
+
+
+                    <strong id="valorCorrida">
+
+                        R$ 15,00
+
+                    </strong>
+
+                </div>
+
+
+                <!-- ==================================
+                     BOTÃO
+                =================================== -->
+
+                <button
+                    type="button"
+                    class="botao-corrida"
+                    id="solicitarCorrida"
+                >
+
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+
+                    Solicitar socorro
+
+                </button>
+
+
+                <!-- ==================================
+                     MENSAGEM
+                =================================== -->
+
+                <p
+                    id="mensagemSolicitacao"
+                    class="mensagem-solicitacao"
+                ></p>
+
+
+            </section>
+
+
+            <!-- ======================================
+                 RESUMO
+            ======================================= -->
+
+            <section class="resumo-corrida">
+
+
+                <h2>
+
+                    <i class="bi bi-receipt"></i>
+
+                    Resumo
+
+                </h2>
+
+
+                <!-- PET -->
+
+                <div class="item-resumo">
+
+                    <i class="bi bi-heart-fill"></i>
+
+                    <div>
+
+                        <strong>
+                            Pet
+                        </strong>
+
+                        <span id="resumoPet">
+                            Não informado
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ORIGEM -->
+
+                <div class="item-resumo">
+
+                    <i class="bi bi-geo-alt-fill"></i>
+
+                    <div>
+
+                        <strong>
+                            Partida
+                        </strong>
+
+                        <span id="resumoOrigem">
+                            Não informado
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DESTINO -->
+
+                <div class="item-resumo">
+
+                    <i class="bi bi-hospital-fill"></i>
+
+                    <div>
+
+                        <strong>
+                            Destino
+                        </strong>
+
+                        <span id="resumoDestino">
+                            Não informado
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <hr>
+
+
+                <!-- VALOR -->
+
+                <div class="preco">
+
+                    <span>
+                        Valor estimado
+                    </span>
+
+                    <strong id="valorResumo">
+                        R$ 15,00
+                    </strong>
+
+                </div>
+
+
+            </section>
+
+
+        </div>
+
+
+    </main>
+
+
+    <!-- ==========================================
+         RODAPÉ
+    =========================================== -->
+
+    <div id="rodape">
+
+        <img
+            src="img/TAXI-DOG.png"
+            alt="Logo Taxi-Dog"
+            title="Logo Taxi-Dog"
+        >
+
+        <a href="contato.html">
+            Entre em contato
+        </a>
+
+    </div>
+
+
+    <!-- ==========================================
+         LEAFLET JS
+    =========================================== -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+
+
+    <!-- ==========================================
+         JAVASCRIPT SOS2
+    =========================================== -->
+
+    <script src="JavaScript/SOS2.js"></script>
+
+
+</body>
+
+</html>
