@@ -67,13 +67,44 @@ body {
 }
 
 /* =========================
+   CONTAINER PESQUISA SOS
+========================= */
+
+.container_pesquisa_sos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 70px;
+    margin-top: 20px;
+}
+
+.botao_sos {
+    background-color: hwb(0 20% 7%);
+    color: white;
+    font-size: 17px;
+    width: 80px;
+    height: 80px;
+    border: 4px solid rgb(151, 9, 9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-sizing: border-box;
+    transform: translateY(10px);
+    
+}
+
+/* =========================
    BARRA DE PESQUISA
 ========================= */
 
 #Barra_de_pesquisa {
-    margin: 20px auto 0;
-    width: 60%;
+    margin: 20px 0 0;
+    width: 80%;
     position: relative;
+    flex: 1;
+    max-width: 1000px;
 }
 
 #Barra_de_pesquisa input {
