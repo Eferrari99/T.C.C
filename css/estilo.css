@@ -66,6 +66,31 @@ body {
 
 }
 
+/* =========================
+   BARRA DE PESQUISA
+========================= */
+
+#Barra_de_pesquisa {
+    margin: 20px auto 0;
+    width: 60%;
+    position: relative;
+}
+
+#Barra_de_pesquisa input {
+    width: 100%;
+    padding: 15px 15px 15px 50px;
+    border-radius: 50px;
+    font-size: 18px;
+    box-sizing: border-box;
+}
+
+#Barra_de_pesquisa i {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
 
 /* =========================
    CARROSSEL DO BANNER
@@ -76,7 +101,7 @@ body {
     height: 300px;
 
     position: relative;
-    margin: 30px ;
+    margin: 30px;
 }
 
 .imagens {
@@ -353,11 +378,11 @@ body {
     margin: 0 auto;
     width: 150px;
     padding: 5px;
-    
+
     border-radius: 10px;
     /*coloca borda e cor na borda*/
     border: #3A2603 solid;
-    
+
     /*alinha itens no centro*/
     text-align: center;
     /*coloca um quadrado cinza de funda da div*/
@@ -371,7 +396,7 @@ body {
     width: 50%;
     padding: 20px;
 
-    
+
     border-radius: 5px;
     /*alinha itens no centro*/
     text-align: center;
@@ -382,11 +407,11 @@ body {
     margin: 0 auto;
     width: 170px;
     padding: 5px;
-    
+
     border-radius: 10px;
     /*coloca borda e cor na borda*/
     border: #3A2603 solid;
-    
+
     /*alinha itens no centro*/
     text-align: center;
     /*coloca um quadrado cinza de funda da div*/
@@ -400,7 +425,7 @@ body {
     width: 50%;
     padding: 20px;
 
-    
+
     border-radius: 5px;
     /*alinha itens no centro*/
     text-align: center;
