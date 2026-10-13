@@ -92,7 +92,22 @@ body {
     padding: 0;
     box-sizing: border-box;
     transform: translateY(10px);
-    
+
+    /* Remove o sublinhado do link */
+    text-decoration: none;
+
+    /* Mostra o cursor de link ao passar o mouse */
+    cursor: pointer;
+}
+
+.link_sos {
+    text-decoration: none;
+    display: inline-block;
+}
+
+.link_sos .botao_sos {
+    cursor: pointer;
+    text-decoration: none;
 }
 
 /* =========================
