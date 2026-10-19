@@ -1,3 +1,4 @@
+
 /* =====================================================
    TAXI-DOG
    SOS2 - SOLICITAÇÃO DE SOCORRO
@@ -6,7 +7,6 @@
 document.addEventListener(
     "DOMContentLoaded",
     function () {
-
 
         /* =================================================
            ELEMENTOS
@@ -28,19 +28,13 @@ document.addEventListener(
             document.getElementById("mapa");
 
         const solicitarCorrida =
-            document.getElementById(
-                "solicitarCorrida"
-            );
+            document.getElementById("solicitarCorrida");
 
         const mensagemSolicitacao =
-            document.getElementById(
-                "mensagemSolicitacao"
-            );
+            document.getElementById("mensagemSolicitacao");
 
         const valorCorrida =
-            document.getElementById(
-                "valorCorrida"
-            );
+            document.getElementById("valorCorrida");
 
 
         /* =================================================
@@ -48,24 +42,16 @@ document.addEventListener(
         ================================================= */
 
         const resumoPet =
-            document.getElementById(
-                "resumoPet"
-            );
+            document.getElementById("resumoPet");
 
         const resumoOrigem =
-            document.getElementById(
-                "resumoOrigem"
-            );
+            document.getElementById("resumoOrigem");
 
         const resumoDestino =
-            document.getElementById(
-                "resumoDestino"
-            );
+            document.getElementById("resumoDestino");
 
         const valorResumo =
-            document.getElementById(
-                "valorResumo"
-            );
+            document.getElementById("valorResumo");
 
 
         /* =================================================
@@ -213,7 +199,6 @@ document.addEventListener(
 
         function atualizarResumo() {
 
-
             if (resumoPet) {
 
                 if (
@@ -258,8 +243,229 @@ document.addEventListener(
 
 
         /* =================================================
+           CALCULAR ROTA PELAS RUAS
+        ================================================= */
+
+        async function calcularRotaPelasRuas() {
+
+            if (
+                !origemValida ||
+                !destinoValido ||
+                !mapa
+            ) {
+
+                return;
+
+            }
+
+
+            /*
+                OSRM utiliza longitude,latitude.
+
+                Importante:
+                Leaflet utiliza [latitude, longitude],
+                mas a API do OSRM utiliza
+                longitude,latitude.
+            */
+
+            const url =
+                "https://router.project-osrm.org/route/v1/driving/" +
+                lonOrigem +
+                "," +
+                latOrigem +
+                ";" +
+                lonDestino +
+                "," +
+                latDestino +
+                "?overview=full&geometries=geojson";
+
+
+            try {
+
+                const resposta =
+                    await fetch(url);
+
+
+                if (!resposta.ok) {
+
+                    throw new Error(
+                        "Erro ao consultar a rota."
+                    );
+
+                }
+
+
+                const dados =
+                    await resposta.json();
+
+
+                if (
+                    !dados.routes ||
+                    dados.routes.length === 0
+                ) {
+
+                    throw new Error(
+                        "Nenhuma rota encontrada."
+                    );
+
+                }
+
+
+                const rota =
+                    dados.routes[0];
+
+
+                /*
+                    Remove a linha anterior,
+                    caso exista.
+                */
+
+                if (linhaRota) {
+
+                    mapa.removeLayer(
+                        linhaRota
+                    );
+
+                }
+
+
+                /*
+                    Converte as coordenadas
+                    recebidas pelo OSRM.
+
+                    OSRM:
+                    [longitude, latitude]
+
+                    Leaflet:
+                    [latitude, longitude]
+                */
+
+                const coordenadas =
+                    rota.geometry.coordinates.map(
+                        function (coordenada) {
+
+                            return [
+                                coordenada[1],
+                                coordenada[0]
+                            ];
+
+                        }
+                    );
+
+
+                /*
+                    Desenha a rota seguindo
+                    as ruas.
+                */
+
+                linhaRota =
+                    L.polyline(
+                        coordenadas,
+                        {
+                            color: "red",
+                            weight: 3,
+                            opacity: 0.9
+                        }
+                    )
+                    .addTo(mapa);
+
+
+                /*
+                    Enquadra a rota inteira
+                    dentro do mapa.
+                */
+
+                mapa.fitBounds(
+                    linhaRota.getBounds(),
+                    {
+                        padding: [
+                            40,
+                            40
+                        ]
+                    }
+                );
+
+
+                /*
+                    Mostra a distância
+                    aproximada da rota.
+                */
+
+                const distanciaKm =
+                    (
+                        rota.distance /
+                        1000
+                    ).toFixed(2);
+
+
+                console.log(
+                    "Distância da rota:",
+                    distanciaKm,
+                    "km"
+                );
+
+
+            }
+            catch (erro) {
+
+                console.error(
+                    "Erro ao calcular rota:",
+                    erro
+                );
+
+
+                /*
+                    Caso o serviço de rota
+                    não esteja disponível,
+                    mantém uma linha reta
+                    como alternativa.
+                */
+
+                if (linhaRota) {
+
+                    mapa.removeLayer(
+                        linhaRota
+                    );
+
+                }
+
+
+                linhaRota =
+                    L.polyline(
+                        [
+                            [
+                                latOrigem,
+                                lonOrigem
+                            ],
+
+                            [
+                                latDestino,
+                                lonDestino
+                            ]
+                        ],
+                        {
+                            color: "red",
+                            weight: 5,
+                            opacity: 0.8,
+                            dashArray: "10, 10"
+                        }
+                    )
+                    .addTo(mapa);
+
+
+                mostrarMensagem(
+                    "Não foi possível calcular a rota pelas ruas."
+                );
+
+            }
+
+        }
+
+
+        /* =================================================
            INICIAR MAPA
         ================================================= */
+        
 
         function iniciarMapa() {
 
@@ -297,7 +503,6 @@ document.addEventListener(
                 destinoValido
             ) {
 
-
                 marcadorOrigem =
                     L.marker(
                         [
@@ -328,33 +533,10 @@ document.addEventListener(
                     );
 
 
-                /* ==================================
-                   LINHA ENTRE OS PONTOS
-                =================================== */
-
-                linhaRota =
-                    L.polyline(
-                        [
-                            [
-                                latOrigem,
-                                lonOrigem
-                            ],
-
-                            [
-                                latDestino,
-                                lonDestino
-                            ]
-                        ],
-                        {
-                            weight: 5
-                        }
-                    )
-                    .addTo(mapa);
-
-
-                /* ==================================
-                   ENQUADRAR OS DOIS PONTOS
-                =================================== */
+                /*
+                    Primeiro enquadra os dois
+                    pontos no mapa.
+                */
 
                 const limites =
                     L.latLngBounds(
@@ -382,6 +564,14 @@ document.addEventListener(
                     }
                 );
 
+
+                /*
+                    Depois calcula a rota real
+                    seguindo as ruas.
+                */
+
+                calcularRotaPelasRuas();
+
             }
 
 
@@ -390,7 +580,6 @@ document.addEventListener(
             =========================================== */
 
             else if (origemValida) {
-
 
                 marcadorOrigem =
                     L.marker(
@@ -423,13 +612,15 @@ document.addEventListener(
 
             else if (destinoValido) {
 
-
                 marcadorDestino =
                     L.marker(
-                        [
-                            latDestino,
-                            lonDestino
-                        ]
+                    [
+                        latDestino,
+                        lonDestino
+                    ],
+                    {
+            icon: iconeDestinoVermelho
+                    }
                     )
                     .addTo(mapa)
                     .bindPopup(
@@ -641,6 +832,38 @@ document.addEventListener(
             return div.innerHTML;
 
         }
+        /* =================================================
+   ÍCONE VERMELHO DO DESTINO
+================================================= */
+
+const iconeDestinoVermelho =
+L.icon({
+    iconUrl:
+        "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png",
+
+    shadowUrl:
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+
+    iconSize: [
+        41,
+        41
+    ],
+
+    iconAnchor: [
+        12,
+        41
+    ],
+
+    popupAnchor: [
+        1,
+        -34
+    ],
+
+    shadowSize: [
+        41,
+        41
+    ]
+});
 
 
         /* =================================================
@@ -670,7 +893,6 @@ document.addEventListener(
             solicitarCorrida.addEventListener(
                 "click",
                 function () {
-
 
                     mostrarMensagem("");
 
@@ -789,7 +1011,7 @@ document.addEventListener(
         atualizarResumo();
 
         mostrarValor();
-
+        
         iniciarMapa();
 
 
