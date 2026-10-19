@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Taxi-Dog | Cadastro</title>
   <link rel="shortcut icon" href="img/TAXI-DOG.png" type="image/x-icon">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/estilo.css"><link rel="stylesheet" href="css/cadastro.css">
+  <link rel="stylesheet" href="css/estilo2.css">
+  <link rel="stylesheet" href="css/estilo.css">
+  <link rel="stylesheet" href="css/cadastro.css">
 </head>
+
 <body>
-  <div class="menu"><a href="login.html" aria-label="Voltar ao login"><img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog"></a></div>
+  <div class="menu"><a href="login.html" aria-label="Voltar ao login"><img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog"
+        title="Logo Taxi-Dog"></a></div>
   <main class="cadastro">
     <div class="titulo">Cadastro-usuário</div>
     <form id="formCadastro" class="caixa-formulario" novalidate>
@@ -16,18 +22,23 @@
         <legend class="visualmente-oculto">Dados do usuário</legend>
         <input id="nome" name="name" type="text" placeholder="Nome completo" autocomplete="name" required>
         <input id="nascimento" name="birthDate" type="date" aria-label="Data de nascimento" required>
-        <input id="cpf" name="cpf" type="text" placeholder="CPF (11 dígitos)" inputmode="numeric" maxlength="14" required>
+        <input id="cpf" name="cpf" type="text" placeholder="CPF (11 dígitos)" inputmode="numeric" maxlength="14"
+          required>
         <input id="telefone" name="phone" type="tel" placeholder="Telefone" autocomplete="tel" required>
         <input id="email" name="email" type="email" placeholder="E-mail" autocomplete="email" required>
-        <input id="senha" name="password" type="password" placeholder="Senha (mínimo 8 caracteres)" autocomplete="new-password" minlength="8" required>
-        <input id="confirmarSenha" name="confirmPassword" type="password" placeholder="Confirmar senha" autocomplete="new-password" required>
+        <input id="senha" name="password" type="password" placeholder="Senha (mínimo 8 caracteres)"
+          autocomplete="new-password" minlength="8" required>
+        <input id="confirmarSenha" name="confirmPassword" type="password" placeholder="Confirmar senha"
+          autocomplete="new-password" required>
         <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
         <button class="btn_cadastro" type="submit">Cadastrar</button>
       </fieldset>
     </form>
     <p class="login"><a href="login.html">Já tem uma conta?<br>realize o login</a></p>
   </main>
-  <div id="rodape"><img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog"><a href="contato.html">Entre em contato</a></div>
+  <div id="rodape"><img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog"><a href="contato.html">Entre em
+      contato</a></div>
   <script src="JavaScript/cadastro.js" defer></script>
 </body>
+
 </html>

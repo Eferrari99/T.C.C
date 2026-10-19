@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Taxi-Dog | Cadastro de pet</title>
   <link rel="shortcut icon" href="img/TAXI-DOG.png" type="image/x-icon">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/estilo.css"><link rel="stylesheet" href="css/cadastro_pets.css">
+  <link rel="stylesheet" href="css/estilo.css">
+  <link rel="stylesheet" href="css/estilo2.css">
+  <link rel="stylesheet" href="css/cadastro_pets.css">
 </head>
+
 <body>
-  <div class="menu"><a href="perfil.html"><img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog"></a></div>
+  <div class="menu"><a href="perfil.html"><img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog"></a>
+  </div>
   <main class="cadastro">
     <div class="titulo">Cadastro-PET</div>
     <form id="formPet">
@@ -16,7 +22,9 @@
         <legend class="visualmente-oculto">Dados do pet</legend>
         <input id="nomePet" name="name" type="text" placeholder="Nome do pet" required>
         <select id="sexo" name="sex" required>
-          <option value="" disabled selected>Sexo: Selecione</option><option value="masculino">Macho</option><option value="feminino">Fêmea</option>
+          <option value="" disabled selected>Sexo: Selecione</option>
+          <option value="masculino">Macho</option>
+          <option value="feminino">Fêmea</option>
         </select>
         <input id="especie" name="species" type="text" placeholder="Espécie (ex.: cão, gato)" required>
         <input id="raca" name="breed" type="text" placeholder="Raça" required>
@@ -28,7 +36,9 @@
       </fieldset>
     </form>
   </main>
-  <div id="rodape"><img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog"><a href="contato.html">Entre em contato</a></div>
+  <div id="rodape"><img src="img/TAXI-DOG.png" alt="Logo Taxi-Dog" title="Logo Taxi-Dog"><a href="contato.html">Entre em
+      contato</a></div>
   <script src="JavaScript/cadastro_pet.js" defer></script>
 </body>
+
 </html>

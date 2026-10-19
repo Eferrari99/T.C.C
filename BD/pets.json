@@ -1,1 +1,28 @@
-[]
+[
+  {
+    "id": "pet_e39c9178-ae85-41fe-83f1-7b3e45f21349",
+    "userId": "usr_4864ab87-0d1e-4b7e-9ba0-8e1db18682a0",
+    "name": "Maia",
+    "sex": "feminino",
+    "species": "cão",
+    "breed": "beagle",
+    "age": 9,
+    "weight": 30,
+    "comorbidities": "",
+    "photoUrl": "/uploads/9105b759-e46d-4bcf-91cf-c2808928db13.jpg",
+    "createdAt": "2026-10-19T18:42:34.099Z"
+  },
+  {
+    "id": "pet_15dc487c-ea32-47e3-9f96-8c8bee7a83f4",
+    "userId": "usr_4864ab87-0d1e-4b7e-9ba0-8e1db18682a0",
+    "name": "a",
+    "sex": "masculino",
+    "species": "a",
+    "breed": "w",
+    "age": 2,
+    "weight": 2,
+    "comorbidities": "",
+    "photoUrl": "",
+    "createdAt": "2026-10-19T18:45:14.187Z"
+  }
+]

@@ -1,1 +1,87 @@
-.cadastro{display:flex;flex-direction:column;justify-content:center;align-items:center;flex:1;min-height:70vh;padding:35px 16px}.titulo{width:180px;margin:0 auto -12px;background:#D9D9D9;border:1px solid #333;border-radius:20px;padding:6px;text-align:center;font-weight:bold;z-index:2;position:relative}#formPet{width:min(100%,360px)}#caixa_cadastro{width:100%;background:#D8B07A;border:1px solid #6B4A20;border-radius:20px;padding:28px 18px 20px;box-shadow:0 3px 6px #0003}#caixa_cadastro input,#caixa_cadastro select{display:block;color:#222;width:100%;height:42px;margin-bottom:14px;border:2px solid transparent;outline:none;border-radius:20px;background:#E5E5E5;padding:0 15px;font-size:15px}#caixa_cadastro input::placeholder{color:#777}#caixa_cadastro input:focus,#caixa_cadastro select:focus{border-color:#3A2603}#sexo{color:#777}#sexo:valid{color:#222}.btn_confirmar{display:flex;margin:12px auto 0;justify-content:center;align-items:center;width:65%;min-height:40px;border:0;border-radius:20px;background:#58B53D;color:#fff;font-size:18px;font-weight:bold;cursor:pointer}.btn_confirmar:hover{background:#469A30}
+.cadastro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    min-height: 100vh;
+    padding: 35px 16px
+}
+
+.titulo {
+    width: 180px;
+    margin: 0 auto -12px;
+    background: #D9D9D9;
+    border: 1px solid #333;
+    border-radius: 20px;
+    padding: 6px;
+    text-align: center;
+    font-weight: bold;
+    z-index: 2;
+    position: relative
+}
+
+#formPet {
+    width: min(100%, 360px)
+}
+
+#caixa_cadastro {
+    width: 100%;
+    background: #D8B07A;
+    border: 1px solid #6B4A20;
+    border-radius: 20px;
+    padding: 28px 18px 20px;
+    box-shadow: 0 3px 6px #0003
+}
+
+#caixa_cadastro input,
+#caixa_cadastro select {
+    display: block;
+    color: #222;
+    width: 100%;
+    height: 42px;
+    margin-bottom: 14px;
+    border: 2px solid transparent;
+    outline: none;
+    border-radius: 20px;
+    background: #E5E5E5;
+    padding: 0 15px;
+    font-size: 15px
+}
+
+#caixa_cadastro input::placeholder {
+    color: #777
+}
+
+#caixa_cadastro input:focus,
+#caixa_cadastro select:focus {
+    border-color: #3A2603
+}
+
+#sexo {
+    color: #777
+}
+
+#sexo:valid {
+    color: #222
+}
+
+.btn_confirmar {
+    display: flex;
+    margin: 12px auto 0;
+    justify-content: center;
+    align-items: center;
+    width: 65%;
+    min-height: 40px;
+    border: 0;
+    border-radius: 20px;
+    background: #58B53D;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer
+}
+
+.btn_confirmar:hover {
+    background: #469A30
+}

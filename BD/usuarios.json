@@ -8,7 +8,19 @@
     "email": "luccaserantonipinto@gmail.com",
     "passwordHash": "$2a$10$TbZmLfGHRobPKM.J9ESAV.shs2VEpVG7sc0uRft4L/kXV83eVEh16",
     "provider": "local",
-    "photoUrl": "/uploads/ca285e1e-323d-485e-b93e-881f1ab65c27.jpg",
+    "photoUrl": "/uploads/97255ae2-2e47-4ccb-a2b1-948566c02308.png",
     "createdAt": "2026-10-19T15:17:45.393Z"
+  },
+  {
+    "id": "usr_24497bfe-86e5-49f5-87ab-a74918ed7d5e",
+    "name": "enzo",
+    "birthDate": "1111-11-22",
+    "cpf": "23333333333",
+    "phone": "2221111111111111111111",
+    "email": "eferrari200109@gmail.com",
+    "passwordHash": "$2a$10$fOtNLp1P0pIGkhPP9hE14e7CLo527KvKQAvjU3n5plFMqODFtHUdW",
+    "provider": "local",
+    "photoUrl": "/uploads/c9e0f790-f3f1-4b89-9b09-807968831106.webp",
+    "createdAt": "2026-10-19T18:51:36.141Z"
   }
 ]

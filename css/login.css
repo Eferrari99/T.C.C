@@ -1,2 +1,114 @@
-.blocao{width:min(92%,600px);margin:45px auto 25px;padding:28px 28px 25px;background:#E1B982;border:1px solid #3A2603;border-radius:15px;display:flex;flex-direction:column;align-items:center}.blocao>.login{width:min(100%,320px);min-height:32px;background:#D9D9D9;border:1px solid #333;border-radius:20px;margin:-45px auto 12px;position:relative;text-align:center;color:#000;padding:4px}.login h3{font-size:20px}.form-login{width:100%}.email input,.senha input{display:block;background:#E5E5E5;color:#222;width:100%;height:45px;margin-top:18px;border:2px solid transparent;border-radius:25px;padding:0 20px;font-size:16px}.email input:focus,.senha input:focus{outline:none;border-color:#3A2603}.confirmar{display:flex;justify-content:center;margin:25px 0 10px}.confirmar button{width:min(100%,300px);height:45px;border:0;border-radius:25px;background:#58B53D;color:white;font-size:18px;font-weight:bold;cursor:pointer;transition:.2s}.confirmar button:hover{background:#469A30}.separador{margin:8px 0;color:#493719}.google-button{display:flex;justify-content:center;min-height:42px}.faca-cadastro{color:#777;text-align:center;margin:0 auto 30px;padding:0 12px;font-size:18px}.faca-cadastro a{margin-left:6px;color:#4b6e25;font-weight:bold}.blocao .mensagem{width:100%}
-@media(max-width:500px){.blocao{padding:28px 18px 22px}.faca-cadastro{font-size:16px}}
+.blocao {
+    width: min(92%, 600px);
+    margin: 45px auto 25px;
+    padding: 28px 28px 25px;
+    background: #E1B982;
+    border: 1px solid #3A2603;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+
+.blocao>.login {
+    width: min(100%, 320px);
+    min-height: 32px;
+    background: #D9D9D9;
+    border: 1px solid #333;
+    border-radius: 20px;
+    margin: -45px auto 12px;
+    position: relative;
+    text-align: center;
+    color: #000;
+    padding: 4px
+}
+
+.login h3 {
+    font-size: 20px
+}
+
+.form-login {
+    width: 100%
+}
+
+.email input,
+.senha input {
+    display: block;
+    background: #E5E5E5;
+    color: #222;
+    width: 100%;
+    height: 45px;
+    margin-top: 18px;
+    border: 2px solid transparent;
+    border-radius: 25px;
+    padding: 0 20px;
+    font-size: 16px
+}
+
+.email input:focus,
+.senha input:focus {
+    outline: none;
+    border-color: #3A2603
+}
+
+.confirmar {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0 10px
+}
+
+.confirmar button {
+    width: min(100%, 300px);
+    height: 45px;
+    border: 0;
+    border-radius: 25px;
+    background: #58B53D;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s
+}
+
+.confirmar button:hover {
+    background: #469A30
+}
+
+.separador {
+    margin: 8px 0;
+    color: #493719
+}
+
+.google-button {
+    display: flex;
+    justify-content: center;
+    min-height: 42px
+}
+
+.faca-cadastro {
+    color: #777;
+    text-align: center;
+    margin: 0 auto 30px;
+    padding: 0 12px;
+    font-size: 18px
+}
+
+.faca-cadastro a {
+    margin-left: 6px;
+    color: #4b6e25;
+    font-weight: bold
+}
+
+.blocao .mensagem {
+    width: 100%
+}
+
+@media(max-width:500px) {
+    .blocao {
+        padding: 28px 18px 22px
+    }
+
+    .faca-cadastro {
+        font-size: 16px
+    }
+}
