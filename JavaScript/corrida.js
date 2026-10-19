@@ -1,10 +1,11 @@
+
 /* =====================================================
    TAXI-DOG
    SISTEMA DE SOLICITAÇÃO DE CORRIDA
+   COM ROTA VERMELHA PELAS RUAS
 ===================================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
-
 
     /* =================================================
        ELEMENTOS
@@ -27,9 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const containerTarefas = document.getElementById("containerTarefas");
     const observacoes = document.getElementById("observacoes");
     const solicitarCorrida = document.getElementById("solicitarCorrida");
-    const mensagemSolicitacao =
-        document.getElementById("mensagemSolicitacao");
-
+    const mensagemSolicitacao = document.getElementById("mensagemSolicitacao");
 
     /* =================================================
        RESUMO
@@ -47,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("resumoTarefaContainer");
     const valorCorrida = document.getElementById("valorCorrida");
 
-
     /* =================================================
        VARIÁVEIS
     ================================================= */
@@ -57,40 +55,37 @@ document.addEventListener("DOMContentLoaded", function () {
     let circuloBusca = null;
     let marcadoresPetshops = [];
 
+    // Guarda a linha vermelha da rota
+    let camadaRota = null;
+
+    // Coordenadas do local de partida
     let latitudeAtual = null;
     let longitudeAtual = null;
 
     let temporizadorBusca = null;
-
+    let numeroRequisicaoRota = 0;
 
     /* =================================================
        MENSAGENS
     ================================================= */
 
     function mostrarMensagem(texto) {
-
         if (mensagemLocal) {
             mensagemLocal.textContent = texto;
         }
-
     }
 
-
     function mostrarMensagemSolicitacao(texto) {
-
         if (mensagemSolicitacao) {
             mensagemSolicitacao.textContent = texto;
         }
-
     }
-
 
     /* =================================================
        VERIFICA LEAFLET
     ================================================= */
 
     if (typeof L === "undefined") {
-
         console.error("Leaflet não foi carregado.");
 
         mostrarMensagem(
@@ -100,63 +95,46 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-
     /* =================================================
        INICIA MAPA
     ================================================= */
 
     function iniciarMapa() {
-
         if (!mapaElemento) {
             return;
         }
 
         try {
-
             mapa = L.map("mapa");
 
             L.tileLayer(
                 "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
                     maxZoom: 19,
-                    attribution:
-                        "&copy; OpenStreetMap contributors"
+                    attribution: "&copy; OpenStreetMap contributors"
                 }
             ).addTo(mapa);
 
-            mapa.setView(
-                [-23.5505, -46.6333],
-                12
-            );
+            mapa.setView([-23.5505, -46.6333], 12);
 
             setTimeout(function () {
-
                 if (mapa) {
                     mapa.invalidateSize();
                 }
-
             }, 500);
 
         } catch (erro) {
+            console.error("Erro ao iniciar mapa:", erro);
 
-            console.error(
-                "Erro ao iniciar mapa:",
-                erro
-            );
-
-            mostrarMensagem(
-                "Não foi possível iniciar o mapa."
-            );
+            mostrarMensagem("Não foi possível iniciar o mapa.");
         }
     }
-
 
     /* =================================================
        MOSTRAR LOCAL NO MAPA
     ================================================= */
 
     function mostrarLocalNoMapa(latitude, longitude) {
-
         if (!mapa) {
             return;
         }
@@ -170,102 +148,194 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         if (marcadorUsuario) {
-
-            mapa.removeLayer(
-                marcadorUsuario
-            );
-
+            mapa.removeLayer(marcadorUsuario);
         }
 
-
-        marcadorUsuario = L.marker(
-            [
-                latitude,
-                longitude
-            ]
-        )
+        marcadorUsuario = L.marker([
+            latitude,
+            longitude
+        ])
             .addTo(mapa)
-            .bindPopup(
-                "<strong>Local da corrida</strong>"
-            );
-
+            .bindPopup("<strong>Local da corrida</strong>");
 
         if (circuloBusca) {
-
-            mapa.removeLayer(
-                circuloBusca
-            );
-
+            mapa.removeLayer(circuloBusca);
         }
 
-
         circuloBusca = L.circle(
-            [
-                latitude,
-                longitude
-            ],
+            [latitude, longitude],
             {
-                radius: 5000
+                radius: 5000,
+                color: "#3388ff",
+                fillOpacity: 0.08
             }
         ).addTo(mapa);
 
-
-        mapa.setView(
-            [
-                latitude,
-                longitude
-            ],
-            15
-        );
-
+        mapa.setView([latitude, longitude], 15);
     }
 
+    /* =================================================
+       REMOVER ROTA ATUAL
+    ================================================= */
+
+    function limparRota() {
+        // Invalida qualquer pedido de rota anterior
+        numeroRequisicaoRota++;
+
+        if (camadaRota && mapa) {
+            mapa.removeLayer(camadaRota);
+            camadaRota = null;
+        }
+    }
+
+    /* =================================================
+       DESENHAR ROTA VERMELHA PELAS RUAS
+    ================================================= */
+
+    async function desenharRota(latDestino, lonDestino) {
+        if (
+            !mapa ||
+            latitudeAtual === null ||
+            longitudeAtual === null
+        ) {
+            mostrarMensagem(
+                "Informe o endereço de partida primeiro."
+            );
+            return;
+        }
+
+        if (
+            !Number.isFinite(latDestino) ||
+            !Number.isFinite(lonDestino)
+        ) {
+            mostrarMensagem("O destino possui coordenadas inválidas.");
+            return;
+        }
+
+        // Identifica esta solicitação para evitar rotas antigas
+        const requisicaoAtual = ++numeroRequisicaoRota;
+
+        // Retira a rota anterior do mapa
+        if (camadaRota) {
+            mapa.removeLayer(camadaRota);
+            camadaRota = null;
+        }
+
+        mostrarMensagem("Calculando a rota pelas ruas...");
+
+        try {
+            /*
+              O OSRM recebe as coordenadas no formato:
+              longitude,latitude
+              origem;destino
+            */
+
+            const url =
+                "https://router.project-osrm.org/route/v1/driving/" +
+                longitudeAtual + "," + latitudeAtual + ";" +
+                lonDestino + "," + latDestino +
+                "?overview=full&geometries=geojson&steps=true";
+
+            const resposta = await fetch(url);
+
+            if (!resposta.ok) {
+                throw new Error(
+                    "Erro HTTP ao consultar o serviço de rotas."
+                );
+            }
+
+            const dados = await resposta.json();
+
+            // Ignora uma resposta antiga
+            if (requisicaoAtual !== numeroRequisicaoRota) {
+                return;
+            }
+
+            if (
+                dados.code !== "Ok" ||
+                !dados.routes ||
+                dados.routes.length === 0
+            ) {
+                throw new Error("Nenhuma rota encontrada.");
+            }
+
+            const rota = dados.routes[0];
+
+            // Desenha o caminho real pelas ruas
+            camadaRota = L.geoJSON(
+                rota.geometry,
+                {
+                    style: {
+                        color: "#ff0000",
+                        weight: 3,
+                        opacity: 0.9,
+                        lineCap: "round",
+                        lineJoin: "round"
+                    }
+                }
+            ).addTo(mapa);
+
+            // Ajusta o mapa para exibir o trajeto inteiro
+            mapa.fitBounds(
+                camadaRota.getBounds(),
+                {
+                    padding: [35, 35],
+                    maxZoom: 16
+                }
+            );
+
+            // Mostra distância e duração estimadas
+            const distanciaKm = rota.distance / 1000;
+            const duracaoMinutos = Math.round(rota.duration / 60);
+
+            mostrarMensagem(
+                "Rota encontrada! Distância aproximada: " +
+                distanciaKm.toFixed(2).replace(".", ",") +
+                " km. Tempo estimado de carro: " +
+                duracaoMinutos + " minutos."
+            );
+
+        } catch (erro) {
+            if (requisicaoAtual !== numeroRequisicaoRota) {
+                return;
+            }
+
+            console.error("Erro ao calcular a rota:", erro);
+
+            mostrarMensagem(
+                "Não foi possível calcular a rota. Tente novamente."
+            );
+        }
+    }
 
     /* =================================================
        BUSCAR ENDEREÇO
     ================================================= */
 
     async function procurarEndereco(endereco) {
-
         if (!endereco || endereco.length < 3) {
-
-            mostrarMensagem(
-                "Digite pelo menos 3 caracteres."
-            );
-
+            mostrarMensagem("Digite pelo menos 3 caracteres.");
             return;
         }
 
-
-        mostrarMensagem(
-            "Procurando endereço..."
-        );
-
+        mostrarMensagem("Procurando endereço...");
 
         if (sugestoes) {
-
             sugestoes.innerHTML =
                 '<div class="sugestao">' +
-                '<i class="bi bi-search"></i>' +
-                ' Procurando endereço...' +
+                '<i class="bi bi-search"></i> Procurando endereço...' +
                 '</div>';
-
         }
 
-
         try {
-
             const url =
                 "https://nominatim.openstreetmap.org/search" +
                 "?format=json" +
-                "&q=" +
-                encodeURIComponent(endereco) +
+                "&q=" + encodeURIComponent(endereco) +
                 "&limit=5" +
                 "&countrycodes=br" +
                 "&addressdetails=1";
-
 
             const resposta = await fetch(url, {
                 headers: {
@@ -273,52 +343,27 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
 
-
             if (!resposta.ok) {
-
-                throw new Error(
-                    "Erro HTTP " + resposta.status
-                );
-
+                throw new Error("Erro HTTP " + resposta.status);
             }
 
-
-            const resultados =
-                await resposta.json();
-
+            const resultados = await resposta.json();
 
             if (sugestoes) {
                 sugestoes.innerHTML = "";
             }
 
-
-            if (
-                !resultados ||
-                resultados.length === 0
-            ) {
-
-                mostrarMensagem(
-                    "Nenhum endereço encontrado."
-                );
-
+            if (!resultados || resultados.length === 0) {
+                mostrarMensagem("Nenhum endereço encontrado.");
                 return;
             }
 
-
             resultados.forEach(function (resultado) {
-
-                const div =
-                    document.createElement("div");
-
+                const div = document.createElement("div");
                 div.className = "sugestao";
 
-
-                const icone =
-                    document.createElement("i");
-
-                icone.className =
-                    "bi bi-geo-alt-fill";
-
+                const icone = document.createElement("i");
+                icone.className = "bi bi-geo-alt-fill";
 
                 div.appendChild(icone);
 
@@ -328,1000 +373,574 @@ document.addEventListener("DOMContentLoaded", function () {
                     )
                 );
 
-
-                div.addEventListener(
-                    "click",
-                    function () {
-
-                        selecionarEndereco(
-                            resultado
-                        );
-
-                    }
-                );
-
+                div.addEventListener("click", function () {
+                    selecionarEndereco(resultado);
+                });
 
                 if (sugestoes) {
-
-                    sugestoes.appendChild(
-                        div
-                    );
-
+                    sugestoes.appendChild(div);
                 }
-
             });
-
 
             mostrarMensagem(
                 "Selecione um dos endereços encontrados."
             );
 
-
         } catch (erro) {
-
-            console.error(
-                "Erro ao procurar endereço:",
-                erro
-            );
+            console.error("Erro ao procurar endereço:", erro);
 
             mostrarMensagem(
                 "Não foi possível buscar o endereço."
             );
-
         }
-
     }
-
 
     /* =================================================
        SELECIONAR ENDEREÇO
     ================================================= */
 
     function selecionarEndereco(resultado) {
-
-        latitudeAtual =
-            parseFloat(resultado.lat);
-
-        longitudeAtual =
-            parseFloat(resultado.lon);
-
+        latitudeAtual = parseFloat(resultado.lat);
+        longitudeAtual = parseFloat(resultado.lon);
 
         if (
             isNaN(latitudeAtual) ||
             isNaN(longitudeAtual)
         ) {
-
             mostrarMensagem(
                 "O endereço encontrado possui coordenadas inválidas."
             );
-
             return;
         }
 
-
         if (origem) {
-
-            origem.value =
-                resultado.display_name;
-
+            origem.value = resultado.display_name;
         }
-
 
         if (sugestoes) {
-
             sugestoes.innerHTML = "";
-
         }
 
+        // Limpa a rota anterior ao mudar o ponto de partida
+        limparRota();
 
-        mostrarLocalNoMapa(
-            latitudeAtual,
-            longitudeAtual
-        );
+        mostrarLocalNoMapa(latitudeAtual, longitudeAtual);
 
-
-        mostrarMensagem(
-            "Endereço localizado com sucesso."
-        );
-
+        mostrarMensagem("Endereço localizado com sucesso.");
 
         atualizarResumo();
 
-
-        buscarPetshops(
-            latitudeAtual,
-            longitudeAtual
-        );
-
+        // Procura estabelecimentos próximos.
+        // A rota será desenhada depois que os destinos forem carregados.
+        buscarPetshops(latitudeAtual, longitudeAtual);
     }
-
 
     /* =================================================
        BOTÃO BUSCAR ENDEREÇO
     ================================================= */
 
     if (buscarEndereco) {
-
-        buscarEndereco.addEventListener(
-            "click",
-            function () {
-
-                if (!origem) {
-                    return;
-                }
-
-
-                const endereco =
-                    origem.value.trim();
-
-
-                if (!endereco) {
-
-                    mostrarMensagem(
-                        "Digite um endereço primeiro."
-                    );
-
-                    origem.focus();
-
-                    return;
-                }
-
-
-                procurarEndereco(
-                    endereco
-                );
-
+        buscarEndereco.addEventListener("click", function () {
+            if (!origem) {
+                return;
             }
-        );
 
+            const endereco = origem.value.trim();
+
+            if (!endereco) {
+                mostrarMensagem("Digite um endereço primeiro.");
+                origem.focus();
+                return;
+            }
+
+            procurarEndereco(endereco);
+        });
     }
 
-
     /* =================================================
-       BUSCA AUTOMÁTICA
+       BUSCA AUTOMÁTICA DE ENDEREÇO
     ================================================= */
 
     if (origem) {
+        origem.addEventListener("input", function () {
+            clearTimeout(temporizadorBusca);
 
-        origem.addEventListener(
-            "input",
-            function () {
+            const texto = origem.value.trim();
 
-                clearTimeout(
-                    temporizadorBusca
-                );
+            // O texto mudou; a rota anterior não representa mais
+            // necessariamente o endereço digitado.
+            limparRota();
 
-
-                const texto =
-                    origem.value.trim();
-
-
-                if (texto.length < 3) {
-
-                    if (sugestoes) {
-                        sugestoes.innerHTML = "";
-                    }
-
-                    return;
+            if (texto.length < 3) {
+                if (sugestoes) {
+                    sugestoes.innerHTML = "";
                 }
 
-
-                temporizadorBusca =
-                    setTimeout(
-                        function () {
-
-                            procurarEndereco(
-                                texto
-                            );
-
-                        },
-                        800
-                    );
-
+                return;
             }
-        );
 
+            temporizadorBusca = setTimeout(function () {
+                procurarEndereco(texto);
+            }, 800);
+        });
     }
-
 
     /* =================================================
        GEOLOCALIZAÇÃO
     ================================================= */
 
     if (usarLocal) {
+        usarLocal.addEventListener("click", function () {
+            if (!navigator.geolocation) {
+                mostrarMensagem(
+                    "Seu navegador não possui suporte à localização."
+                );
+                return;
+            }
 
-        usarLocal.addEventListener(
-            "click",
-            function () {
+            mostrarMensagem("Obtendo sua localização...");
 
-                if (!navigator.geolocation) {
+            usarLocal.disabled = true;
 
-                    mostrarMensagem(
-                        "Seu navegador não possui suporte à localização."
+            navigator.geolocation.getCurrentPosition(
+                async function (posicao) {
+                    latitudeAtual = posicao.coords.latitude;
+                    longitudeAtual = posicao.coords.longitude;
+
+                    limparRota();
+
+                    mostrarLocalNoMapa(
+                        latitudeAtual,
+                        longitudeAtual
                     );
 
-                    return;
-                }
+                    mostrarMensagem(
+                        "Localização encontrada. Buscando endereço..."
+                    );
 
+                    await obterEnderecoGPS(
+                        latitudeAtual,
+                        longitudeAtual
+                    );
 
-                mostrarMensagem(
-                    "Obtendo sua localização..."
-                );
+                    buscarPetshops(
+                        latitudeAtual,
+                        longitudeAtual
+                    );
 
+                    usarLocal.disabled = false;
+                },
 
-                usarLocal.disabled = true;
+                function (erro) {
+                    console.error("Erro GPS:", erro);
 
+                    usarLocal.disabled = false;
 
-                navigator.geolocation.getCurrentPosition(
-
-                    async function (posicao) {
-
-                        latitudeAtual =
-                            posicao.coords.latitude;
-
-                        longitudeAtual =
-                            posicao.coords.longitude;
-
-
-                        mostrarLocalNoMapa(
-                            latitudeAtual,
-                            longitudeAtual
-                        );
-
-
+                    if (erro.code === 1) {
                         mostrarMensagem(
-                            "Localização encontrada. Buscando endereço..."
+                            "Permissão de localização recusada."
                         );
-
-
-                        await obterEnderecoGPS(
-                            latitudeAtual,
-                            longitudeAtual
+                    } else if (erro.code === 2) {
+                        mostrarMensagem(
+                            "Não foi possível encontrar sua localização."
                         );
-
-
-                        buscarPetshops(
-                            latitudeAtual,
-                            longitudeAtual
+                    } else if (erro.code === 3) {
+                        mostrarMensagem(
+                            "A localização demorou demais para responder."
                         );
-
-
-                        usarLocal.disabled = false;
-
-                    },
-
-
-                    function (erro) {
-
-                        console.error(
-                            "Erro GPS:",
-                            erro
+                    } else {
+                        mostrarMensagem(
+                            "Erro ao obter localização."
                         );
-
-
-                        usarLocal.disabled = false;
-
-
-                        if (erro.code === 1) {
-
-                            mostrarMensagem(
-                                "Permissão de localização recusada."
-                            );
-
-                        } else if (erro.code === 2) {
-
-                            mostrarMensagem(
-                                "Não foi possível encontrar sua localização."
-                            );
-
-                        } else if (erro.code === 3) {
-
-                            mostrarMensagem(
-                                "A localização demorou demais para responder."
-                            );
-
-                        } else {
-
-                            mostrarMensagem(
-                                "Erro ao obter localização."
-                            );
-
-                        }
-
-                    },
-
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 15000,
-                        maximumAge: 0
                     }
+                },
 
-                );
-
-            }
-        );
-
+                {
+                    enableHighAccuracy: true,
+                    timeout: 30000,
+                    maximumAge: 0
+                }
+            );
+        });
     }
-
 
     /* =================================================
        ENDEREÇO PELO GPS
     ================================================= */
 
-    async function obterEnderecoGPS(
-        latitude,
-        longitude
-    ) {
-
+    async function obterEnderecoGPS(latitude, longitude) {
         try {
-
             const url =
                 "https://nominatim.openstreetmap.org/reverse" +
                 "?format=json" +
-                "&lat=" +
-                latitude +
-                "&lon=" +
-                longitude +
+                "&lat=" + latitude +
+                "&lon=" + longitude +
                 "&zoom=18" +
                 "&addressdetails=1";
 
-
-            const resposta =
-                await fetch(url, {
-                    headers: {
-                        "Accept": "application/json"
-                    }
-                });
-
+            const resposta = await fetch(url, {
+                headers: {
+                    "Accept": "application/json"
+                }
+            });
 
             if (!resposta.ok) {
-
-                throw new Error(
-                    "Erro no reverse geocoding."
-                );
-
+                throw new Error("Erro no reverse geocoding.");
             }
 
+            const resultado = await resposta.json();
 
-            const resultado =
-                await resposta.json();
-
-
-            if (
-                resultado &&
-                resultado.display_name
-            ) {
-
+            if (resultado && resultado.display_name) {
                 if (origem) {
-
-                    origem.value =
-                        resultado.display_name;
-
+                    origem.value = resultado.display_name;
                 }
 
-
-                mostrarMensagem(
-                    "Localização atual encontrada."
-                );
-
+                mostrarMensagem("Localização atual encontrada.");
 
                 atualizarResumo();
-
             } else {
-
                 mostrarMensagem(
                     "Localização encontrada, mas o endereço não foi identificado."
                 );
-
             }
 
-
         } catch (erro) {
-
-            console.error(
-                "Erro ao obter endereço:",
-                erro
-            );
+            console.error("Erro ao obter endereço:", erro);
 
             mostrarMensagem(
                 "Localização encontrada, mas não foi possível obter o endereço."
             );
-
         }
-
     }
 
-
     /* =================================================
-       CALCULAR DISTÂNCIA
+       CALCULAR DISTÂNCIA ENTRE DOIS PONTOS
     ================================================= */
 
-    function calcularDistancia(
-        lat1,
-        lon1,
-        lat2,
-        lon2
-    ) {
-
+    function calcularDistancia(lat1, lon1, lat2, lon2) {
         const R = 6371;
 
-
-        const dLat =
-            (lat2 - lat1) *
-            Math.PI / 180;
-
-
-        const dLon =
-            (lon2 - lon1) *
-            Math.PI / 180;
-
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
 
         const a =
-            Math.sin(dLat / 2) *
-            Math.sin(dLat / 2) +
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) *
+            Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
 
-            Math.cos(
-                lat1 * Math.PI / 180
-            ) *
-
-            Math.cos(
-                lat2 * Math.PI / 180
-            ) *
-
-            Math.sin(dLon / 2) *
-            Math.sin(dLon / 2);
-
-
-        const c =
-            2 *
-            Math.atan2(
-                Math.sqrt(a),
-                Math.sqrt(1 - a)
-            );
-
+        const c = 2 * Math.atan2(
+            Math.sqrt(a),
+            Math.sqrt(1 - a)
+        );
 
         return R * c;
-
     }
 
-
     /* =================================================
-       LIMPAR MARCADORES
+       LIMPAR MARCADORES DOS PETSHOPS
     ================================================= */
 
     function limparMarcadores() {
-
-        marcadoresPetshops.forEach(
-            function (marcador) {
-
-                if (mapa) {
-
-                    mapa.removeLayer(
-                        marcador
-                    );
-
-                }
-
+        marcadoresPetshops.forEach(function (marcador) {
+            if (mapa) {
+                mapa.removeLayer(marcador);
             }
-        );
-
+        });
 
         marcadoresPetshops = [];
-
     }
-
 
     /* =================================================
        BUSCAR PETSHOPS / VETERINÁRIOS
     ================================================= */
 
-    async function buscarPetshops(
-        latitude,
-        longitude
-    ) {
-
+    async function buscarPetshops(latitude, longitude) {
         if (
             latitude === null ||
             longitude === null
         ) {
-
             return;
-
         }
-
 
         if (petshop) {
-
             petshop.disabled = true;
-
             petshop.innerHTML =
-                '<option value="">' +
-                'Procurando locais próximos...' +
-                '</option>';
-
+                '<option value="">Procurando locais próximos...</option>';
         }
-
 
         if (distanciaPetshop) {
-
             distanciaPetshop.textContent =
                 "Procurando estabelecimentos próximos...";
-
         }
 
-
         limparMarcadores();
-
+        limparRota();
 
         try {
-
             const raio = 5000;
-
 
             const consulta = `
                 [out:json][timeout:25];
-
                 (
-                    node["shop"="pet"]
-                    (around:${raio},${latitude},${longitude});
-
-                    way["shop"="pet"]
-                    (around:${raio},${latitude},${longitude});
-
-                    node["amenity"="veterinary"]
-                    (around:${raio},${latitude},${longitude});
-
-                    way["amenity"="veterinary"]
-                    (around:${raio},${latitude},${longitude});
+                    node["shop"="pet"](around:${raio},${latitude},${longitude});
+                    way["shop"="pet"](around:${raio},${latitude},${longitude});
+                    node["amenity"="veterinary"](around:${raio},${latitude},${longitude});
+                    way["amenity"="veterinary"](around:${raio},${latitude},${longitude});
                 );
-
                 out center;
             `;
-
 
             const url =
                 "https://overpass-api.de/api/interpreter?data=" +
                 encodeURIComponent(consulta);
 
-
-            const resposta =
-                await fetch(url);
-
+            const resposta = await fetch(url);
 
             if (!resposta.ok) {
-
-                throw new Error(
-                    "Erro ao consultar Overpass."
-                );
-
+                throw new Error("Erro ao consultar Overpass.");
             }
 
-
-            const dados =
-                await resposta.json();
-
-
+            const dados = await resposta.json();
             const locais = [];
 
+            dados.elements.forEach(function (elemento) {
+                let lat = elemento.lat;
+                let lon = elemento.lon;
 
-            dados.elements.forEach(
-                function (elemento) {
-
-                    let lat =
-                        elemento.lat;
-
-                    let lon =
-                        elemento.lon;
-
-
-                    if (elemento.center) {
-
-                        lat =
-                            elemento.center.lat;
-
-                        lon =
-                            elemento.center.lon;
-
-                    }
-
-
-                    if (
-                        typeof lat !== "number" ||
-                        typeof lon !== "number"
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    const tags =
-                        elemento.tags || {};
-
-
-                    const nome =
-                        tags.name ||
-                        "Estabelecimento para pets";
-
-
-                    const distancia =
-                        calcularDistancia(
-                            latitude,
-                            longitude,
-                            lat,
-                            lon
-                        );
-
-
-                    const categoria =
-                        tags.amenity === "veterinary"
-                            ? "Clínica veterinária"
-                            : "Pet shop";
-
-
-                    locais.push({
-
-                        nome: nome,
-
-                        latitude: lat,
-
-                        longitude: lon,
-
-                        distancia: distancia,
-
-                        categoria: categoria
-
-                    });
-
+                if (elemento.center) {
+                    lat = elemento.center.lat;
+                    lon = elemento.center.lon;
                 }
-            );
 
-
-            locais.sort(
-                function (a, b) {
-
-                    return (
-                        a.distancia -
-                        b.distancia
-                    );
-
+                if (
+                    typeof lat !== "number" ||
+                    typeof lon !== "number"
+                ) {
+                    return;
                 }
-            );
 
+                const tags = elemento.tags || {};
 
-            preencherPetshops(
-                locais
-            );
+                const nome =
+                    tags.name || "Estabelecimento para pets";
 
+                const distancia = calcularDistancia(
+                    latitude,
+                    longitude,
+                    lat,
+                    lon
+                );
 
-            mostrarPetshopsNoMapa(
-                locais
-            );
+                const categoria =
+                    tags.amenity === "veterinary"
+                        ? "Clínica veterinária"
+                        : "Pet shop";
 
+                locais.push({
+                    nome: nome,
+                    latitude: lat,
+                    longitude: lon,
+                    distancia: distancia,
+                    categoria: categoria
+                });
+            });
+
+            // Ordena os estabelecimentos por distância em linha reta
+            locais.sort(function (a, b) {
+                return a.distancia - b.distancia;
+            });
+
+            preencherPetshops(locais);
+            mostrarPetshopsNoMapa(locais);
 
         } catch (erro) {
-
-            console.error(
-                "Erro ao buscar petshops:",
-                erro
-            );
-
+            console.error("Erro ao buscar petshops:", erro);
 
             if (petshop) {
-
                 petshop.disabled = false;
-
                 petshop.innerHTML =
-                    '<option value="">' +
-                    'Não foi possível buscar os locais' +
-                    '</option>';
-
+                    '<option value="">Não foi possível buscar os locais</option>';
             }
-
 
             if (distanciaPetshop) {
-
                 distanciaPetshop.textContent =
                     "Não foi possível buscar estabelecimentos próximos.";
-
             }
-
         }
-
     }
-
 
     /* =================================================
        PREENCHER PETSHOPS
     ================================================= */
 
     function preencherPetshops(locais) {
-
         if (!petshop) {
             return;
         }
 
-
         petshop.innerHTML = "";
 
-
         if (locais.length === 0) {
-
             petshop.innerHTML =
-                '<option value="">' +
-                'Nenhum local encontrado em até 5 km' +
-                '</option>';
-
+                '<option value="">Nenhum local encontrado em até 5 km</option>';
 
             petshop.disabled = false;
 
-
             if (distanciaPetshop) {
-
                 distanciaPetshop.textContent =
                     "Nenhum pet shop ou clínica veterinária foi encontrado próximo ao endereço.";
-
             }
 
-
             atualizarResumo();
-
             return;
         }
 
+        locais.forEach(function (local, indice) {
+            const option = document.createElement("option");
 
-        locais.forEach(
-            function (local, indice) {
+            option.value = local.nome;
 
-                const option =
-                    document.createElement("option");
+            option.textContent =
+                local.nome +
+                " — " +
+                local.distancia.toFixed(2) +
+                " km";
 
+            option.dataset.latitude = local.latitude;
+            option.dataset.longitude = local.longitude;
+            option.dataset.distancia = local.distancia;
+            option.dataset.categoria = local.categoria;
 
-                option.value =
-                    local.nome;
+            petshop.appendChild(option);
 
-
-                option.textContent =
-                    local.nome +
-                    " — " +
-                    local.distancia.toFixed(2) +
-                    " km";
-
-
-                option.dataset.latitude =
-                    local.latitude;
-
-
-                option.dataset.longitude =
-                    local.longitude;
-
-
-                option.dataset.distancia =
-                    local.distancia;
-
-
-                option.dataset.categoria =
-                    local.categoria;
-
-
-                petshop.appendChild(
-                    option
-                );
-
-
-                if (indice === 0) {
-
-                    option.selected = true;
-
-                }
-
+            if (indice === 0) {
+                option.selected = true;
             }
-        );
-
+        });
 
         petshop.disabled = false;
 
-
-        const maisProximo =
-            locais[0];
-
+        const maisProximo = locais[0];
 
         if (distanciaPetshop) {
-
             distanciaPetshop.textContent =
                 "Mais próximo: " +
                 maisProximo.nome +
                 " — " +
                 maisProximo.distancia.toFixed(2) +
-                " km";
-
+                " km em linha reta";
         }
-
 
         atualizarResumo();
 
+        // Desenha automaticamente a rota até o primeiro destino
+        desenharRota(
+            maisProximo.latitude,
+            maisProximo.longitude
+        );
     }
-
 
     /* =================================================
        MARCADORES DOS PETSHOPS
     ================================================= */
 
     function mostrarPetshopsNoMapa(locais) {
-
         if (!mapa) {
             return;
         }
 
+        locais.forEach(function (local) {
+            const marcador = L.marker([
+                local.latitude,
+                local.longitude
+            ]).addTo(mapa);
 
-        locais.forEach(
-            function (local) {
+            marcador.bindPopup(
+                "<strong>" +
+                escaparHTML(local.nome) +
+                "</strong><br>" +
+                escaparHTML(local.categoria) +
+                "<br>" +
+                local.distancia.toFixed(2) +
+                " km em linha reta"
+            );
 
-                const marcador =
-                    L.marker(
-                        [
-                            local.latitude,
-                            local.longitude
-                        ]
-                    )
-                    .addTo(mapa);
-
-
-                marcador.bindPopup(
-                    "<strong>" +
-                    escaparHTML(local.nome) +
-                    "</strong><br>" +
-                    escaparHTML(local.categoria) +
-                    "<br>" +
-                    local.distancia.toFixed(2) +
-                    " km"
-                );
-
-
-                marcadoresPetshops.push(
-                    marcador
-                );
-
-            }
-        );
-
+            marcadoresPetshops.push(marcador);
+        });
     }
-
 
     /* =================================================
        ESCAPAR HTML
     ================================================= */
 
     function escaparHTML(texto) {
-
-        const div =
-            document.createElement("div");
-
-
-        div.textContent =
-            texto;
-
-
+        const div = document.createElement("div");
+        div.textContent = texto;
         return div.innerHTML;
-
     }
-
 
     /* =================================================
        PETSHOP ALTERADO
+       ATUALIZA A ROTA AO TROCAR O DESTINO
     ================================================= */
 
     if (petshop) {
+        petshop.addEventListener("change", function () {
+            const option = petshop.options[petshop.selectedIndex];
 
-        petshop.addEventListener(
-            "change",
-            function () {
-
-                const option =
-                    petshop.options[
-                        petshop.selectedIndex
-                    ];
-
-
-                if (!option) {
-                    return;
-                }
-
-
-                const lat =
-                    parseFloat(
-                        option.dataset.latitude
-                    );
-
-
-                const lon =
-                    parseFloat(
-                        option.dataset.longitude
-                    );
-
-
-                const distancia =
-                    parseFloat(
-                        option.dataset.distancia
-                    );
-
-
-                if (
-                    !isNaN(lat) &&
-                    !isNaN(lon) &&
-                    mapa
-                ) {
-
-                    mapa.setView(
-                        [
-                            lat,
-                            lon
-                        ],
-                        15
-                    );
-
-
-                    marcadoresPetshops.forEach(
-                        function (marcador) {
-
-                            const posicao =
-                                marcador.getLatLng();
-
-
-                            if (
-                                Math.abs(
-                                    posicao.lat - lat
-                                ) < 0.000001 &&
-
-                                Math.abs(
-                                    posicao.lng - lon
-                                ) < 0.000001
-                            ) {
-
-                                marcador.openPopup();
-
-                            }
-
-                        }
-                    );
-
-                }
-
-
-                if (
-                    distanciaPetshop &&
-                    !isNaN(distancia)
-                ) {
-
-                    distanciaPetshop.textContent =
-                        "Distância: " +
-                        distancia.toFixed(2) +
-                        " km";
-
-                }
-
-
-                atualizarResumo();
-
+            if (!option) {
+                return;
             }
-        );
 
+            const lat = parseFloat(option.dataset.latitude);
+            const lon = parseFloat(option.dataset.longitude);
+            const distancia = parseFloat(option.dataset.distancia);
+
+            if (!isNaN(lat) && !isNaN(lon)) {
+                // Recalcula a linha vermelha até o novo destino
+                desenharRota(lat, lon);
+
+                if (mapa) {
+                    mapa.setView([lat, lon], 15);
+
+                    marcadoresPetshops.forEach(function (marcador) {
+                        const posicao = marcador.getLatLng();
+
+                        if (
+                            Math.abs(posicao.lat - lat) < 0.000001 &&
+                            Math.abs(posicao.lng - lon) < 0.000001
+                        ) {
+                            marcador.openPopup();
+                        }
+                    });
+                }
+            }
+
+            if (
+                distanciaPetshop &&
+                !isNaN(distancia)
+            ) {
+                distanciaPetshop.textContent =
+                    "Distância em linha reta: " +
+                    distancia.toFixed(2) +
+                    " km";
+            }
+
+            atualizarResumo();
+        });
     }
-
 
     /* =================================================
        MOSTRAR / ESCONDER TAREFAS
     ================================================= */
 
     function atualizarMeio() {
-
         if (!Meio) {
             return;
         }
 
-
         if (Meio.value === "Outro") {
-
             if (containerTarefas) {
                 containerTarefas.style.display = "block";
             }
@@ -1329,9 +948,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (resumoTarefaContainer) {
                 resumoTarefaContainer.style.display = "flex";
             }
-
         } else {
-
             if (containerTarefas) {
                 containerTarefas.style.display = "none";
             }
@@ -1343,136 +960,72 @@ document.addEventListener("DOMContentLoaded", function () {
             if (Tarefas) {
                 Tarefas.value = "";
             }
-
         }
 
-
         atualizarResumo();
-
     }
-
 
     if (Meio) {
-
-        Meio.addEventListener(
-            "change",
-            atualizarMeio
-        );
-
+        Meio.addEventListener("change", atualizarMeio);
     }
-
 
     if (Tarefas) {
-
-        Tarefas.addEventListener(
-            "change",
-            atualizarResumo
-        );
-
+        Tarefas.addEventListener("change", atualizarResumo);
     }
-
 
     /* =================================================
        ATUALIZAR RESUMO
     ================================================= */
 
     function atualizarResumo() {
-
         if (resumoPet) {
-
             resumoPet.textContent =
                 pet && pet.value
-                    ? pet.options[
-                        pet.selectedIndex
-                    ].text
+                    ? pet.options[pet.selectedIndex].text
                     : "Não informado";
-
         }
-
 
         if (resumoOrigem) {
-
             resumoOrigem.textContent =
-                origem &&
-                origem.value.trim()
+                origem && origem.value.trim()
                     ? origem.value
                     : "Não informado";
-
         }
-
 
         if (resumoPetshop) {
-
             resumoPetshop.textContent =
-                petshop &&
-                petshop.value
-                    ? petshop.options[
-                        petshop.selectedIndex
-                    ].text
+                petshop && petshop.value
+                    ? petshop.options[petshop.selectedIndex].text
                     : "Não informado";
-
         }
 
-
         if (resumoData) {
-
             resumoData.textContent =
                 data && data.value
                     ? formatarData(data.value)
                     : "Não informada";
-
         }
-
 
         if (resumoHorario) {
-
             resumoHorario.textContent =
-                horario &&
-                horario.value
+                horario && horario.value
                     ? horario.value
                     : "Não informado";
-
         }
-
 
         if (resumoTipo) {
-
             resumoTipo.textContent =
                 tipo && tipo.value
-                    ? tipo.options[
-                        tipo.selectedIndex
-                    ].text
+                    ? tipo.options[tipo.selectedIndex].text
                     : "Não informado";
-
         }
-
-
-        /* =========================================
-           RESUMO DO MEIO
-        ========================================= */
 
         if (resumoMeio) {
-
-            if (Meio && Meio.value) {
-
-                resumoMeio.textContent =
-                    Meio.options[
-                        Meio.selectedIndex
-                    ].text;
-
-            } else {
-
-                resumoMeio.textContent =
-                    "Não informado";
-
-            }
-
+            resumoMeio.textContent =
+                Meio && Meio.value
+                    ? Meio.options[Meio.selectedIndex].text
+                    : "Não informado";
         }
-
-
-        /* =========================================
-           RESUMO DA TAREFA
-        ========================================= */
 
         if (
             resumoTarefa &&
@@ -1480,440 +1033,247 @@ document.addEventListener("DOMContentLoaded", function () {
             Meio &&
             Meio.value === "Outro"
         ) {
-
             resumoTarefa.textContent =
                 Tarefas.value
-                    ? Tarefas.options[
-                        Tarefas.selectedIndex
-                    ].text
+                    ? Tarefas.options[Tarefas.selectedIndex].text
                     : "Não informada";
-
         }
 
-
         calcularValor();
-
     }
-
 
     /* =================================================
        FORMATAR DATA
     ================================================= */
 
     function formatarData(dataOriginal) {
-
-        const partes =
-            dataOriginal.split("-");
-
+        const partes = dataOriginal.split("-");
 
         if (partes.length !== 3) {
-
             return dataOriginal;
-
         }
 
-
-        return (
-            partes[2] +
-            "/" +
-            partes[1] +
-            "/" +
-            partes[0]
-        );
-
+        return partes[2] + "/" + partes[1] + "/" + partes[0];
     }
-
 
     /* =================================================
        CALCULAR VALOR
     ================================================= */
 
     function calcularValor() {
-
-        /*
-            VALOR BASE DA CORRIDA
-        */
-
         let valor = 15;
 
-
-        /*
-            DESTINO PETSHOP
-        */
-
-        if (
-            petshop &&
-            petshop.value
-        ) {
-
+        // Valor adicional pelo destino
+        if (petshop && petshop.value) {
             valor += 10;
-
         }
 
-
-        /*
-            TIPO DE CORRIDA
-        */
-
-        if (
-            tipo &&
-            tipo.value
-        ) {
-
-            if (
-                tipo.value === "Veterinário"
-            ) {
-
-                valor += 5;
-
-            }
-
-
-            if (
-                tipo.value === "Banho e tosa"
-            ) {
-
-                valor += 3;
-
-            }
-
+        // Adicional conforme o tipo de corrida
+        if (tipo && tipo.value === "Veterinário") {
+            valor += 5;
         }
 
-
-        /*
-            MEIO DE TRANSPORTE / SERVIÇO
-
-            Transporte comum = + R$ 10,00
-            Carro elétrico   = + R$ 5,00
-            Tarefas          = + R$ 3,00
-
-            Dessa forma, o carro elétrico
-            fica mais barato.
-        */
-
-        if (
-            Meio &&
-            Meio.value
-        ) {
-
-            if (
-                Meio.value === "Corrida comum"
-            ) {
-
-                valor += 10;
-
-            }
-
-
-            else if (
-                Meio.value === "Carro eletrico"
-            ) {
-
-                valor += 5;
-
-            }
-
-
-            else if (
-                Meio.value === "Outro"
-            ) {
-
-                valor += 3;
-
-            }
-
+        if (tipo && tipo.value === "Banho e tosa") {
+            valor += 3;
         }
 
-
-        /*
-            MOSTRAR VALOR
-        */
+        // Adicional conforme o meio de transporte ou serviço
+        if (Meio && Meio.value === "Corrida comum") {
+            valor += 10;
+        } else if (Meio && Meio.value === "Carro eletrico") {
+            valor += 5;
+        } else if (Meio && Meio.value === "Outro") {
+            valor += 3;
+        }
 
         if (valorCorrida) {
-
             valorCorrida.textContent =
-                "R$ " +
-                valor
-                    .toFixed(2)
-                    .replace(".", ",");
-
+                "R$ " + valor.toFixed(2).replace(".", ",");
         }
 
-
         return valor;
-
     }
-
 
     /* =================================================
        EVENTOS DO FORMULÁRIO
     ================================================= */
 
     if (pet) {
-
-        pet.addEventListener(
-            "change",
-            atualizarResumo
-        );
-
+        pet.addEventListener("change", atualizarResumo);
     }
-
 
     if (data) {
-
-        data.addEventListener(
-            "change",
-            atualizarResumo
-        );
-
+        data.addEventListener("change", atualizarResumo);
     }
-
 
     if (horario) {
-
-        horario.addEventListener(
-            "change",
-            atualizarResumo
-        );
-
+        horario.addEventListener("change", atualizarResumo);
     }
-
 
     if (tipo) {
-
-        tipo.addEventListener(
-            "change",
-            atualizarResumo
-        );
-
+        tipo.addEventListener("change", atualizarResumo);
     }
-
 
     if (observacoes) {
-
-        observacoes.addEventListener(
-            "input",
-            atualizarResumo
-        );
-
+        observacoes.addEventListener("input", atualizarResumo);
     }
-
 
     /* =================================================
        SOLICITAR CORRIDA
     ================================================= */
 
     if (solicitarCorrida) {
+        solicitarCorrida.addEventListener("click", function () {
+            mostrarMensagemSolicitacao("");
 
-        solicitarCorrida.addEventListener(
-            "click",
-            function () {
+            if (!pet || !pet.value) {
+                mostrarMensagemSolicitacao("Selecione um pet.");
 
-                mostrarMensagemSolicitacao("");
-
-
-                if (!pet.value) {
-
-                    mostrarMensagemSolicitacao(
-                        "Selecione um pet."
-                    );
-
+                if (pet) {
                     pet.focus();
-
-                    return;
-
                 }
 
+                return;
+            }
 
-                if (
-                    !origem.value.trim()
-                ) {
-
-                    mostrarMensagemSolicitacao(
-                        "Informe o endereço de origem."
-                    );
-
-                    origem.focus();
-
-                    return;
-
-                }
-
-
-                if (
-                    !petshop.value
-                ) {
-
-                    mostrarMensagemSolicitacao(
-                        "Selecione o destino."
-                    );
-
-                    petshop.focus();
-
-                    return;
-
-                }
-
-
-                if (
-                    !data.value
-                ) {
-
-                    mostrarMensagemSolicitacao(
-                        "Selecione a data."
-                    );
-
-                    data.focus();
-
-                    return;
-
-                }
-
-
-                if (
-                    !horario.value
-                ) {
-
-                    mostrarMensagemSolicitacao(
-                        "Selecione o horário."
-                    );
-
-                    horario.focus();
-
-                    return;
-
-                }
-
-
-                if (
-                    !tipo.value
-                ) {
-
-                    mostrarMensagemSolicitacao(
-                        "Selecione o tipo de serviço."
-                    );
-
-                    tipo.focus();
-
-                    return;
-
-                }
-
-
-                /*
-                    SE ESCOLHER OUTRO,
-                    É OBRIGATÓRIO ESCOLHER UMA TAREFA.
-                */
-
-                if (
-                    Meio &&
-                    Meio.value === "Outro" &&
-                    Tarefas &&
-                    !Tarefas.value
-                ) {
-
-                    mostrarMensagemSolicitacao(
-                        "Selecione o tipo de tarefa."
-                    );
-
-                    Tarefas.focus();
-
-                    return;
-
-                }
-
-
-                const valor =
-                    calcularValor();
-
-
+            if (!origem || !origem.value.trim()) {
                 mostrarMensagemSolicitacao(
-                    "Corrida solicitada com sucesso! " +
-                    "Valor estimado: R$ " +
-                    valor
-                        .toFixed(2)
-                        .replace(".", ",") +
-                    "."
+                    "Informe o endereço de origem."
                 );
 
+                if (origem) {
+                    origem.focus();
+                }
+
+                return;
             }
-        );
 
+            if (!petshop || !petshop.value) {
+                mostrarMensagemSolicitacao("Selecione o destino.");
+
+                if (petshop) {
+                    petshop.focus();
+                }
+
+                return;
+            }
+
+            if (!data || !data.value) {
+                mostrarMensagemSolicitacao("Selecione a data.");
+
+                if (data) {
+                    data.focus();
+                }
+
+                return;
+            }
+
+            if (!horario || !horario.value) {
+                mostrarMensagemSolicitacao("Selecione o horário.");
+
+                if (horario) {
+                    horario.focus();
+                }
+
+                return;
+            }
+
+            if (!tipo || !tipo.value) {
+                mostrarMensagemSolicitacao(
+                    "Selecione o tipo de serviço."
+                );
+
+                if (tipo) {
+                    tipo.focus();
+                }
+
+                return;
+            }
+
+            if (
+                Meio &&
+                Meio.value === "Outro" &&
+                Tarefas &&
+                !Tarefas.value
+            ) {
+                mostrarMensagemSolicitacao(
+                    "Selecione o tipo de tarefa."
+                );
+
+                Tarefas.focus();
+                return;
+            }
+
+            // Confirma que existe um ponto de partida válido
+            if (
+                latitudeAtual === null ||
+                longitudeAtual === null
+            ) {
+                mostrarMensagemSolicitacao(
+                    "Busque e selecione seu endereço de partida no mapa."
+                );
+
+                if (origem) {
+                    origem.focus();
+                }
+
+                return;
+            }
+
+            const valor = calcularValor();
+
+            mostrarMensagemSolicitacao(
+                "Corrida solicitada com sucesso! " +
+                "Valor estimado: R$ " +
+                valor.toFixed(2).replace(".", ",") +
+                "."
+            );
+        });
     }
-
 
     /* =================================================
        DATA MÍNIMA
     ================================================= */
 
     if (data) {
+        const hoje = new Date();
 
-        const hoje =
-            new Date();
+        const ano = hoje.getFullYear();
 
+        const mes = String(
+            hoje.getMonth() + 1
+        ).padStart(2, "0");
 
-        const ano =
-            hoje.getFullYear();
+        const dia = String(
+            hoje.getDate()
+        ).padStart(2, "0");
 
-
-        const mes =
-            String(
-                hoje.getMonth() + 1
-            ).padStart(2, "0");
-
-
-        const dia =
-            String(
-                hoje.getDate()
-            ).padStart(2, "0");
-
-
-        data.min =
-            ano +
-            "-" +
-            mes +
-            "-" +
-            dia;
-
+        data.min = ano + "-" + mes + "-" + dia;
     }
-
 
     /* =================================================
        FECHAR SUGESTÕES
     ================================================= */
 
-    document.addEventListener(
-        "click",
-        function (evento) {
-
-            if (
-                sugestoes &&
-                origem &&
-                evento.target !== origem &&
-                !sugestoes.contains(
-                    evento.target
-                ) &&
-                evento.target !== buscarEndereco
-            ) {
-
-                sugestoes.innerHTML = "";
-
-            }
-
+    document.addEventListener("click", function (evento) {
+        if (
+            sugestoes &&
+            origem &&
+            evento.target !== origem &&
+            !sugestoes.contains(evento.target) &&
+            evento.target !== buscarEndereco
+        ) {
+            sugestoes.innerHTML = "";
         }
-    );
-
+    });
 
     /* =================================================
        INICIALIZAÇÃO
     ================================================= */
 
     iniciarMapa();
-
     atualizarMeio();
-
     atualizarResumo();
-
 
     console.log(
         "Taxi-Dog: corrida carregada corretamente."
