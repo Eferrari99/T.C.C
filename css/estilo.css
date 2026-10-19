@@ -12,6 +12,7 @@ html,
 body {
     height: 100%;
     margin: 0;
+    max-width: 100%;
 }
 
 body {
@@ -19,6 +20,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+}
+
+body {
+    overflow-x: clip;
 }
 
 
@@ -130,20 +135,25 @@ body {
 #carrossel {
     width: 1200px;
     height: 300px;
-
     position: relative;
     margin: 30px;
+    flex-shrink: 0;
+
+    clip-path: inset(0);
 }
 
 .imagens {
     display: flex;
     width: 3600px;
+    height: 300px;
     transition: transform 0.5s;
 }
 
 .imagens img {
+    display: block;
     width: 1200px;
     height: 300px;
+    min-width: 1200px;
     flex-shrink: 0;
     object-fit: cover;
 }
