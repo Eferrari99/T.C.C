@@ -1,0 +1,14 @@
+[
+  {
+    "id": "usr_4864ab87-0d1e-4b7e-9ba0-8e1db18682a0",
+    "name": "Lucca Serantoni Pinto",
+    "birthDate": "2000-02-22",
+    "cpf": "42922580822",
+    "phone": "+5519989959672",
+    "email": "luccaserantonipinto@gmail.com",
+    "passwordHash": "$2a$10$TbZmLfGHRobPKM.J9ESAV.shs2VEpVG7sc0uRft4L/kXV83eVEh16",
+    "provider": "local",
+    "photoUrl": "/uploads/ca285e1e-323d-485e-b93e-881f1ab65c27.jpg",
+    "createdAt": "2026-10-19T15:17:45.393Z"
+  }
+]
