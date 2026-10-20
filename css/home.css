@@ -1,0 +1,315 @@
+
+/* ========================================
+   HOME - PRODUTOS RECOMENDADOS
+======================================== */
+
+/* Área geral do carrossel */
+.produto-carrossel {
+    width: min(1200px, 98%);
+    margin: 20px auto 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+/* Área que contém a lista de produtos */
+.produto-container {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Lista horizontal dos cartões */
+.produto-lista {
+    display: flex;
+    align-items: stretch;
+    gap: 14px;
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 8px 4px 14px;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+}
+
+/* Esconde a barra de rolagem sem desativar a rolagem */
+.produto-lista::-webkit-scrollbar {
+    height: 7px;
+}
+
+.produto-lista::-webkit-scrollbar-thumb {
+    background: #b9a77b;
+    border-radius: 10px;
+}
+
+.produto-lista::-webkit-scrollbar-track {
+    background: #f4ead0;
+    border-radius: 10px;
+}
+
+/* ========================================
+   CARTÃO DO PRODUTO
+======================================== */
+
+.produto-lista .produto-card {
+    position: relative;
+    flex: 0 0 155px;
+    width: 155px;
+    min-width: 0;
+    height: 205px;
+    margin: 0;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px;
+    overflow: hidden;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #3A2603;
+    border-radius: 9px;
+    scroll-snap-align: start;
+}
+
+/* ========================================
+   IMAGEM DO PRODUTO
+======================================== */
+
+.produto-lista .produto-card img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: 112px;
+    min-height: 0;
+    flex: 0 0 112px;
+    margin: 0 auto;
+    object-fit: contain;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   NOME DO PRODUTO
+======================================== */
+
+.produto-lista .produto-card h2,
+.produto-lista .produto-card h3,
+.produto-lista .produto-card .nome-produto {
+    display: -webkit-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    font-size: 11px;
+    line-height: 1.25;
+    text-align: center;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+/* ========================================
+   PREÇO E INFORMAÇÕES
+======================================== */
+
+.produto-lista .produto-card p,
+.produto-lista .produto-card .preco,
+.produto-lista .produto-card .preco-produto {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    font-size: 10px;
+    line-height: 1.2;
+    text-align: center;
+}
+
+/* ========================================
+   BOTÕES DOS PRODUTOS
+======================================== */
+
+.produto-lista .produto-card button,
+.produto-lista .produto-card .botao-produto,
+.produto-lista .produto-card .ver-produto {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 24px;
+    margin: auto 0 0;
+    padding: 5px 3px;
+    box-sizing: border-box;
+    border: 1px solid #3A2603;
+    border-radius: 7px;
+    background: #FFC800;
+    color: #211900;
+    font-size: 10px;
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+}
+
+.produto-lista .produto-card button:hover,
+.produto-lista .produto-card .botao-produto:hover,
+.produto-lista .produto-card .ver-produto:hover {
+    background: #e9b900;
+}
+
+/* Links internos dos cartões */
+.produto-lista .produto-card a {
+    display: block;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
+}
+
+
+/* ========================================
+   SETAS DO CARROSSEL
+======================================== */
+
+.produto-carrossel .produto-seta {
+    flex: 0 0 38px;
+    width: 38px;
+    min-width: 38px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    border: 1px solid #3A2603;
+    border-radius: 18px;
+
+    background-color: #FFC800;
+    color: #3A2603;
+
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1;
+
+    cursor: pointer;
+    box-sizing: border-box;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+/* Ao passar o mouse, fica branca */
+.produto-carrossel .produto-seta:hover {
+    background-color: #FFFFFF;
+    color: #3A2603;
+}
+
+/* Foco pelo teclado */
+.produto-carrossel .produto-seta:focus-visible {
+    outline: 2px solid #3A2603;
+    outline-offset: 3px;
+}
+
+/* Garante que os símbolos das setas apareçam */
+.produto-carrossel .produto-seta::before {
+    display: block;
+    font-family: Arial, sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+/* Seta esquerda */
+.produto-carrossel .produto-seta:first-child::before {
+    content: "\276E";
+}
+
+/* Seta direita */
+.produto-carrossel .produto-seta:last-child::before {
+    content: "\276F";
+}
+
+/* ========================================
+   RESPONSIVIDADE DAS SETAS
+======================================== */
+
+@media (max-width: 650px) {
+    .produto-carrossel {
+        width: 100%;
+        gap: 5px;
+    }
+
+    .produto-lista {
+        gap: 10px;
+    }
+
+    .produto-lista .produto-card {
+        flex-basis: 145px;
+        width: 145px;
+        height: 200px;
+    }
+
+    .produto-lista .produto-card img {
+        height: 105px;
+        flex-basis: 105px;
+    }
+
+    .produto-carrossel .produto-seta {
+        flex-basis: 28px;
+        width: 28px;
+        min-width: 28px;
+        height: 52px;
+        font-size: 18px;
+    }
+
+    .produto-carrossel .produto-seta::before {
+        font-size: 18px;
+    }
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 650px) {
+    .produto-carrossel {
+        width: 100%;
+        gap: 5px;
+    }
+
+    .produto-lista {
+        gap: 10px;
+    }
+
+    .produto-lista .produto-card {
+        flex-basis: 145px;
+        width: 145px;
+        height: 200px;
+    }
+
+    .produto-lista .produto-card img {
+        height: 105px;
+        flex-basis: 105px;
+    }
+
+    .produto-carrossel .produto-seta {
+        flex-basis: 28px;
+        width: 28px;
+        min-width: 28px;
+        height: 52px;
+        font-size: 14px;
+    }
+}

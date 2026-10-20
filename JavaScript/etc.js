@@ -1,3 +1,4 @@
+
 /* =========================
    CARROSSEL DO BANNER
 ========================= */
@@ -5,16 +6,12 @@
 let imagemAtual = 0;
 
 function anterior() {
+    const imagens = document.querySelector(".imagens");
 
-    const imagens =
-        document.querySelector(".imagens");
+    if (!imagens) return;
 
-    if (!imagens) {
-        return;
-    }
-
-    const quantidadeImagens =
-        imagens.children.length;
+    const quantidadeImagens = imagens.children.length;
+    if (quantidadeImagens === 0) return;
 
     imagemAtual--;
 
@@ -26,18 +23,13 @@ function anterior() {
         `translateX(-${imagemAtual * 1200}px)`;
 }
 
-
 function proximo() {
+    const imagens = document.querySelector(".imagens");
 
-    const imagens =
-        document.querySelector(".imagens");
+    if (!imagens) return;
 
-    if (!imagens) {
-        return;
-    }
-
-    const quantidadeImagens =
-        imagens.children.length;
+    const quantidadeImagens = imagens.children.length;
+    if (quantidadeImagens === 0) return;
 
     imagemAtual++;
 
@@ -55,259 +47,149 @@ function proximo() {
 ========================= */
 
 document.addEventListener("DOMContentLoaded", function () {
-
-    setInterval(function () {
-        proximo();
-    }, 3000);
-
+    if (document.querySelector(".imagens")) {
+        setInterval(proximo, 3000);
+    }
 });
 
 
 /* =========================
-   CARROSSEL DE PRODUTOS
+   CARROSSEL INFINITO
+   DE PRODUTOS
+========================= */
+
+
+/* =========================
+   CARROSSEL INFINITO DE PRODUTOS
 ========================= */
 
 let posicao = 0;
 let quantidadeProdutos = 0;
 let movimentoProduto = 0;
 let animando = false;
+let carrosselInicializado = false;
 
 const quantidadeCopias = 10;
 
+window.inicializarCarrossel = function () {
+    const produtos = document.getElementById("produtos");
 
-/* =========================
-   INICIALIZAÇÃO
-========================= */
+    if (!produtos || carrosselInicializado) return;
 
-document.addEventListener("DOMContentLoaded", function () {
+    const originais = Array.from(produtos.children).filter(
+        item => item.classList.contains("produto-card")
+    );
 
-    const produtos =
-        document.getElementById("produtos");
+    if (originais.length === 0) return;
 
-    if (!produtos) {
-        return;
-    }
+    quantidadeProdutos = originais.length;
 
-    const produtosOriginais =
-        Array.from(produtos.children);
-
-    quantidadeProdutos =
-        produtosOriginais.length;
-
-
-    const fragmentoAntes =
-        document.createDocumentFragment();
-
-    const fragmentoDepois =
-        document.createDocumentFragment();
-
-
-    /* Produtos antes */
+    const antes = document.createDocumentFragment();
+    const depois = document.createDocumentFragment();
 
     for (let i = 0; i < quantidadeCopias; i++) {
-
-        produtosOriginais.forEach(function (produto) {
-
-            fragmentoAntes.appendChild(
-                produto.cloneNode(true)
-            );
-
+        originais.forEach(produto => {
+            antes.appendChild(produto.cloneNode(true));
+            depois.appendChild(produto.cloneNode(true));
         });
-
     }
 
+    produtos.replaceChildren(antes, ...originais, depois);
 
-    /* Produtos depois */
-
-    for (let i = 0; i < quantidadeCopias; i++) {
-
-        produtosOriginais.forEach(function (produto) {
-
-            fragmentoDepois.appendChild(
-                produto.cloneNode(true)
-            );
-
-        });
-
-    }
-
-
-    /* Reorganiza os produtos */
-
-    produtos.innerHTML = "";
-
-    produtos.appendChild(fragmentoAntes);
-
-    produtosOriginais.forEach(function (produto) {
-        produtos.appendChild(produto);
-    });
-
-    produtos.appendChild(fragmentoDepois);
-
-
-    /* Começa no meio */
-
-    posicao =
-        quantidadeProdutos * quantidadeCopias;
+    carrosselInicializado = true;
+    posicao = quantidadeProdutos * quantidadeCopias;
 
     calcularMovimento();
 
-
-    /* Posiciona sem animação */
-
     produtos.style.transition = "none";
-
     atualizarPosicao();
 
+    void produtos.offsetWidth;
 
-    /* Libera a animação */
-
-    setTimeout(function () {
-
-        produtos.style.transition =
-            "transform 0.5s ease";
-
-    }, 50);
-
-});
-
-
-/* =========================
-   CALCULAR MOVIMENTO
-========================= */
+    produtos.style.transition = "transform 0.5s ease";
+};
 
 function calcularMovimento() {
+    const produtos = document.getElementById("produtos");
+    const card = produtos?.querySelector(".produto-card");
 
-    const produtos =
-        document.getElementById("produtos");
+    if (!produtos || !card) return;
 
-    const card =
-        produtos.querySelector(".produto-card");
-
-    const estilo =
-        window.getComputedStyle(produtos);
-
-    const largura =
-        card.getBoundingClientRect().width;
-
-    const gap =
-        parseFloat(estilo.gap);
-
+    const estilo = getComputedStyle(produtos);
     movimentoProduto =
-        largura + gap;
+        card.getBoundingClientRect().width +
+        (parseFloat(estilo.columnGap || estilo.gap) || 0);
 }
 
-
-/* =========================
-   ATUALIZAR POSIÇÃO
-========================= */
-
 function atualizarPosicao() {
+    const produtos = document.getElementById("produtos");
 
-    const produtos =
-        document.getElementById("produtos");
+    if (!produtos) return;
 
     produtos.style.transform =
         `translateX(-${posicao * movimentoProduto}px)`;
 }
 
-
-/* =========================
-   MOVER PRODUTOS
-========================= */
-
 function mover(direcao) {
+    const produtos = document.getElementById("produtos");
 
-    const produtos =
-        document.getElementById("produtos");
-
-    if (!produtos || animando) {
-        return;
-    }
+    if (!produtos || !carrosselInicializado || animando) return;
 
     calcularMovimento();
 
-    posicao += direcao;
+    if (movimentoProduto <= 0) return;
 
     animando = true;
+    posicao += direcao > 0 ? 1 : -1;
 
-    produtos.style.transition =
-        "transform 0.5s ease";
-
+    produtos.style.transition = "transform 0.5s ease";
     atualizarPosicao();
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    const produtos = document.getElementById("produtos");
 
-/* =========================
-   FINAL DA ANIMAÇÃO
-========================= */
+    if (!produtos) return;
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    const produtos =
-        document.getElementById("produtos");
-
-    if (!produtos) {
-        return;
-    }
-
-
-    produtos.addEventListener(
-        "transitionend",
-        function (evento) {
-
-            if (evento.propertyName !== "transform") {
-                return;
-            }
-
-
-            /* Loop para a direita */
-
-            if (
-                posicao >=
-                quantidadeProdutos *
-                (quantidadeCopias + 1)
-            ) {
-
-                posicao -= quantidadeProdutos;
-
-                produtos.style.transition =
-                    "none";
-
-                atualizarPosicao();
-
-                void produtos.offsetWidth;
-
-                produtos.style.transition =
-                    "transform 0.5s ease";
-            }
-
-
-            /* Loop para a esquerda */
-
-            else if (
-                posicao <=
-                quantidadeProdutos *
-                (quantidadeCopias - 1)
-            ) {
-
-                posicao += quantidadeProdutos;
-
-                produtos.style.transition =
-                    "none";
-
-                atualizarPosicao();
-
-                void produtos.offsetWidth;
-
-                produtos.style.transition =
-                    "transform 0.5s ease";
-            }
-
-
-            animando = false;
-
+    const tentarInicializar = () => {
+        if (produtos.querySelector(".produto-card")) {
+            inicializarCarrossel();
+            return true;
         }
-    );
+        return false;
+    };
 
+    if (tentarInicializar()) return;
+
+    const observador = new MutationObserver(() => {
+        if (tentarInicializar()) observador.disconnect();
+    });
+
+    observador.observe(produtos, { childList: true });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const produtos = document.getElementById("produtos");
+
+    if (!produtos) return;
+
+    produtos.addEventListener("transitionend", evento => {
+        if (evento.propertyName !== "transform") return;
+
+        const limite = quantidadeProdutos * (quantidadeCopias + 1);
+
+        if (posicao >= limite) {
+            posicao -= quantidadeProdutos;
+        } else if (posicao < quantidadeProdutos * quantidadeCopias) {
+            posicao += quantidadeProdutos;
+        }
+
+        produtos.style.transition = "none";
+        atualizarPosicao();
+
+        void produtos.offsetWidth;
+
+        produtos.style.transition = "transform 0.5s ease";
+        animando = false;
+    });
 });

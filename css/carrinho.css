@@ -1,28 +1,211 @@
 /* Carrinho dinâmico */
-.pagina-carrinho { width:min(1100px,94%); margin:25px auto 45px; flex:1; }
-.titulo-carrinho { width:max-content; min-width:180px; padding:10px 25px; margin:0 auto 25px; background:#FFC800; border:1px solid #3A2603; border-radius:12px; text-align:center; font-size:24px; }
-.carrinho-layout { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(260px,.8fr); gap:22px; align-items:start; }
-.lista-carrinho, .resumo-carrinho { background:#fff; border:1px solid #b5a98c; border-radius:12px; padding:16px; }
-.carrinho-cabecalho { display:flex; justify-content:space-between; align-items:center; padding-bottom:14px; border-bottom:1px solid #ddd; }
-.carrinho-cabecalho label { display:flex; align-items:center; gap:8px; }
-.itens-carrinho { display:flex; flex-direction:column; }
-.item-carrinho { display:flex; align-items:center; gap:13px; padding:16px 0; border-bottom:1px solid #e4dfd3; }
-.item-carrinho:last-child { border-bottom:0; }
-.item-carrinho>img { width:95px; height:95px; object-fit:contain; border:1px solid #ddd; border-radius:9px; flex-shrink:0; }
-.item-carrinho .info-produto { flex:1; min-width:0; }
-.nome-preco { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
-.local { margin:6px 0; font-size:13px; color:#555; }
-.quantidade { display:flex; align-items:center; gap:10px; margin-top:10px; }
-.quantidade button { width:28px; height:28px; border:0; border-radius:50%; background:#ddd; font-weight:bold; }
-.remover-item { border:0; background:transparent; color:#a51e1e; text-decoration:underline; margin-top:7px; padding:0; }
-.resumo-carrinho h2 { text-align:center; margin:0 0 22px; font-size:21px; }
-.resumo-linha, .resumo-total { display:flex; justify-content:space-between; gap:12px; margin-bottom:17px; }
-.resumo-total { font-size:20px; font-weight:bold; margin-top:20px; }
-.resumo-carrinho hr { border:0; border-top:1px solid #bbb; }
-.confirmar-compra, .mais-opcoes { display:flex; align-items:center; justify-content:center; width:100%; min-height:43px; padding:10px; border:0; border-radius:20px; text-decoration:none; text-align:center; font-weight:bold; box-sizing:border-box; }
-.confirmar-compra { background:#58B53D; color:white; margin:18px 0 12px; }
-.confirmar-compra:disabled { opacity:.55; cursor:not-allowed; }
-.mais-opcoes { background:#FFC800; color:#211900; }
-#mensagemCompra { margin:14px 0 0; padding:12px; border-radius:10px; background:#e7f7e2; color:#176b2c; text-align:center; }
-.carrinho-vazio { padding:28px 10px; text-align:center; }
-@media(max-width:760px) { .carrinho-layout { grid-template-columns:1fr; } .item-carrinho { gap:8px; } .item-carrinho>img { width:75px; height:75px; } .nome-preco { flex-direction:column; gap:3px; } }
+.pagina-carrinho {
+    width: min(1100px, 94%);
+    margin: 25px auto 45px;
+    flex: 1;
+}
+
+.titulo-carrinho {
+    width: max-content;
+    min-width: 180px;
+    padding: 10px 25px;
+    margin: 0 auto 25px;
+    background: #FFC800;
+    border: 2px solid #3A2603;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.carrinho-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(260px, .8fr);
+    gap: 22px;
+    align-items: start;
+}
+
+.lista-carrinho,
+.resumo-carrinho {
+    background: #fdd194;
+    border: 2px solid #000000;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.carrinho-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 14px;
+    border-bottom: 2px solid #000000;
+}
+
+.carrinho-cabecalho label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.itens-carrinho {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-carrinho {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 16px 0;
+    border-bottom: 1px solid #e4dfd3;
+}
+
+.item-carrinho:last-child {
+    border-bottom: 0;
+}
+
+.item-carrinho>img {
+    width: 95px;
+    height: 95px;
+    object-fit: contain;
+    border: 2px solid #000000;
+    border-radius: 9px;
+    flex-shrink: 0;
+}
+
+.item-carrinho .info-produto {
+    flex: 1;
+    min-width: 0;
+}
+
+.nome-preco {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.local {
+    margin: 6px 0;
+    font-size: 13px;
+    color: #555;
+}
+
+.quantidade {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.quantidade button {
+    width: 28px;
+    height: 28px;
+    border: 0;
+    border-radius: 50%;
+    background: #ddd;
+    font-weight: bold;
+    border-color: 1px solid #000000;
+}
+
+.remover-item {
+    border: 0;
+    background: transparent;
+    color: #a51e1e;
+    text-decoration: underline;
+    margin-top: 7px;
+    padding: 0;
+}
+
+.resumo-carrinho h2 {
+    text-align: center;
+    margin: 0 0 22px;
+    font-size: 21px;
+}
+
+.resumo-linha,
+.resumo-total {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 17px;
+}
+
+.resumo-total {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.resumo-carrinho hr {
+    border: 0;
+    border-top: 1px solid #000000;
+}
+
+.confirmar-compra,
+.mais-opcoes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 43px;
+    padding: 10px;
+    border: 0;
+    border-radius: 20px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    box-sizing: border-box;
+    border-color: 1px solid #000000;
+}
+
+.confirmar-compra {
+    background: #58B53D;
+    color: white;
+    margin: 18px 0 12px;
+    border-color: 1px solid #000000;
+}
+
+.confirmar-compra:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+.mais-opcoes {
+    background: #FFC800;
+    color: #211900;
+    border-color: 1px solid #000000;
+}
+
+#mensagemCompra {
+    margin: 14px 0 0;
+    padding: 12px;
+    border-radius: 10px;
+    background: #e7f7e2;
+    color: #176b2c;
+    text-align: center;
+}
+
+.carrinho-vazio {
+    padding: 28px 10px;
+    text-align: center;
+}
+
+@media(max-width:760px) {
+    .carrinho-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .item-carrinho {
+        gap: 8px;
+    }
+
+    .item-carrinho>img {
+        width: 75px;
+        height: 75px;
+    }
+
+    .nome-preco {
+        flex-direction: column;
+        gap: 3px;
+    }
+}
