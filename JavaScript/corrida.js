@@ -12,6 +12,71 @@ document.addEventListener("DOMContentLoaded", function () {
     ================================================= */
 
     const pet = document.getElementById("pet");
+
+    /* =================================================
+       CARREGAR PETS CADASTRADOS NA CONTA
+    ================================================= */
+
+    async function carregarPetsCadastrados() {
+        if (!pet) return;
+
+        const userId = localStorage.getItem("taxidog_userId");
+        pet.replaceChildren();
+
+        const opcaoInicial = document.createElement("option");
+        opcaoInicial.value = "";
+        opcaoInicial.textContent = "Carregando seus pets...";
+        pet.appendChild(opcaoInicial);
+
+        if (!userId) {
+            opcaoInicial.textContent = "Entre na sua conta para ver seus pets";
+            pet.disabled = true;
+            return;
+        }
+
+        try {
+            const resposta = await fetch("/api/pets", {
+                method: "GET",
+                cache: "no-store",
+                headers: { "x-user-id": userId }
+            });
+
+            const dados = await resposta.json().catch(() => ({}));
+            if (!resposta.ok) {
+                throw new Error(dados.error || "Não foi possível carregar seus pets.");
+            }
+
+            pet.replaceChildren();
+            const placeholder = document.createElement("option");
+            placeholder.value = "";
+            placeholder.textContent = dados.pets?.length
+                ? "Selecione seu pet"
+                : "Você ainda não cadastrou pets";
+            pet.appendChild(placeholder);
+
+            (dados.pets || []).forEach((animal) => {
+                const option = document.createElement("option");
+                option.value = animal.id;
+                option.textContent = animal.name;
+                option.dataset.species = animal.species || "";
+                option.dataset.breed = animal.breed || "";
+                pet.appendChild(option);
+            });
+
+            pet.disabled = !dados.pets || dados.pets.length === 0;
+            pet.dispatchEvent(new Event("change", { bubbles: true }));
+        } catch (error) {
+            console.error("Erro ao carregar pets cadastrados:", error);
+            pet.replaceChildren();
+            const erro = document.createElement("option");
+            erro.value = "";
+            erro.textContent = error.message || "Erro ao carregar os pets";
+            pet.appendChild(erro);
+            pet.disabled = true;
+        }
+    }
+
+    carregarPetsCadastrados();
     const origem = document.getElementById("origem");
     const buscarEndereco = document.getElementById("buscarEndereco");
     const usarLocal = document.getElementById("usarLocal");

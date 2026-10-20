@@ -1,237 +1,138 @@
+document.addEventListener('DOMContentLoaded', async () => {
+    const list = document.getElementById('itensCarrinho');
+    const empty = document.getElementById('carrinhoVazio');
+    const selectAll = document.getElementById('todosProdutos');
+    const confirmButton = document.getElementById('confirmarCompra');
+    const message = document.getElementById('mensagemCompra');
+    if (!list || !window.TaxiDogProdutos) return;
 
-document.addEventListener("DOMContentLoaded", function () {
+    let products = [];
+    let cart = TaxiDogProdutos.getCart();
+    const money = TaxiDogProdutos.money;
 
-    // CHECKBOX TODOS OS PRODUTOS
-    const todosProdutos = document.getElementById("todosProdutos");
+    function save() {
+        TaxiDogProdutos.saveCart(cart);
+        render();
+    }
 
-    // CHECKBOXES DOS PRODUTOS
-    const produtosCheckbox =
-        document.querySelectorAll(".produto-checkbox");
+    function render() {
+        list.replaceChildren();
+        cart = cart.filter(item => products.some(product => product.id === item.id) && Number(item.quantity) > 0);
+        TaxiDogProdutos.saveCart(cart);
+        empty.hidden = cart.length > 0;
+        selectAll.checked = cart.length > 0;
+        selectAll.disabled = cart.length === 0;
 
-    // PRODUTOS
-    const produtos =
-        document.querySelectorAll(".produto");
+        cart.forEach(item => {
+            const product = products.find(product => product.id === item.id);
+            if (!product) return;
 
+            const row = document.createElement('article');
+            row.className = 'item-carrinho';
 
-    // ==============================
-    // SELECIONAR TODOS
-    // ==============================
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.className = 'produto-checkbox';
+            checkbox.checked = item.selected !== false;
+            checkbox.setAttribute('aria-label', `Selecionar ${product.nome}`);
+            checkbox.addEventListener('change', () => {
+                item.selected = checkbox.checked;
+                updateSummary();
+            });
 
-    todosProdutos.addEventListener("change", function () {
+            const img = document.createElement('img');
+            img.src = product.imagem;
+            img.alt = product.nome;
 
-        produtosCheckbox.forEach(function (checkbox) {
+            const info = document.createElement('div');
+            info.className = 'info-produto';
 
-            checkbox.checked = todosProdutos.checked;
+            const title = document.createElement('div');
+            title.className = 'nome-preco';
+            const name = document.createElement('strong');
+            name.textContent = product.nome;
+            const price = document.createElement('span');
+            price.textContent = money(product.preco);
+            title.append(name, price);
 
+            const store = document.createElement('p');
+            store.className = 'local';
+            store.textContent = `Loja: ${product.loja}`;
+
+            const quantity = document.createElement('div');
+            quantity.className = 'quantidade';
+            const less = document.createElement('button');
+            less.type = 'button'; less.textContent = '−'; less.setAttribute('aria-label', 'Diminuir quantidade');
+            const count = document.createElement('span');
+            count.className = 'numero-quantidade'; count.textContent = item.quantity;
+            const more = document.createElement('button');
+            more.type = 'button'; more.textContent = '+'; more.setAttribute('aria-label', 'Aumentar quantidade');
+            less.addEventListener('click', () => { item.quantity = Math.max(1, item.quantity - 1); save(); });
+            more.addEventListener('click', () => { item.quantity = Math.min(Number(product.estoque) || 99, item.quantity + 1); save(); });
+            quantity.append(less, count, more);
+
+            const remove = document.createElement('button');
+            remove.type = 'button';
+            remove.className = 'remover-item';
+            remove.textContent = 'Remover';
+            remove.addEventListener('click', () => {
+                cart = cart.filter(cartItem => cartItem.id !== item.id);
+                save();
+            });
+
+            info.append(title, store, quantity, remove);
+            row.append(checkbox, img, info);
+            list.appendChild(row);
         });
 
-        atualizarResumo();
+        updateSummary();
+    }
 
+    function updateSummary() {
+        const selected = cart.filter(item => item.selected !== false);
+        const quantity = selected.reduce((sum, item) => sum + item.quantity, 0);
+        const subtotal = selected.reduce((sum, item) => {
+            const product = products.find(product => product.id === item.id);
+            return sum + (product ? product.preco * item.quantity : 0);
+        }, 0);
+        const shipping = quantity > 0 ? 10 : 0;
+
+        document.getElementById('quantidade-produtos').textContent = quantity;
+        document.getElementById('totalItensCabecalho').textContent = `${cart.length} produto(s)`;
+        document.getElementById('subtotal').textContent = money(subtotal);
+        document.getElementById('frete').textContent = money(shipping);
+        document.getElementById('total').textContent = money(subtotal + shipping);
+        confirmButton.disabled = quantity === 0;
+        if (selectAll) selectAll.checked = cart.length > 0 && cart.every(item => item.selected !== false);
+    }
+
+    selectAll.addEventListener('change', () => {
+        cart.forEach(item => { item.selected = selectAll.checked; });
+        TaxiDogProdutos.saveCart(cart);
+        render();
     });
 
-
-    // ==============================
-    // CHECKBOX INDIVIDUAL
-    // ==============================
-
-    produtosCheckbox.forEach(function (checkbox) {
-
-        checkbox.addEventListener("change", function () {
-
-            const todosSelecionados =
-                [...produtosCheckbox].every(function (produto) {
-                    return produto.checked;
-                });
-
-            todosProdutos.checked = todosSelecionados;
-
-            atualizarResumo();
-
-        });
-
-    });
-
-
-    // ==============================
-    // BOTÕES + E -
-    // ==============================
-
-    produtos.forEach(function (produto) {
-
-        const botaoMais =
-            produto.querySelector(".mais");
-
-        const botaoMenos =
-            produto.querySelector(".menos");
-
-        const numeroQuantidade =
-            produto.querySelector(".numero-quantidade");
-
-
-        // BOTÃO +
-        botaoMais.addEventListener("click", function () {
-
-            let quantidade =
-                Number(numeroQuantidade.textContent);
-
-            quantidade++;
-
-            numeroQuantidade.textContent =
-                quantidade;
-
-            atualizarResumo();
-
-        });
-
-
-        // BOTÃO -
-        botaoMenos.addEventListener("click", function () {
-
-            let quantidade =
-                Number(numeroQuantidade.textContent);
-
-            if (quantidade > 1) {
-
-                quantidade--;
-
-                numeroQuantidade.textContent =
-                    quantidade;
-
-                atualizarResumo();
-
-            }
-
-        });
-
-    });
-
-
-    // ==============================
-    // BOTÃO CONFIRMAR COMPRA
-    // ==============================
-
-    const botaoConfirmar =
-        document.getElementById("confirmarCompra");
-
-    const mensagemCompra =
-        document.getElementById("mensagemCompra");
-
-
-    botaoConfirmar.addEventListener("click", function () {
-
-        const quantidade =
-            Number(
-                document.getElementById("quantidade-produtos").textContent
-            );
-
-
-        // Verifica se algum produto foi selecionado
-        if (quantidade === 0) {
-
-            alert("Selecione pelo menos um produto.");
-
+    confirmButton.addEventListener('click', () => {
+        const selected = cart.filter(item => item.selected !== false);
+        if (!selected.length) {
+            message.hidden = false;
+            message.textContent = 'Selecione pelo menos um produto para confirmar a compra.';
             return;
-
         }
-
-
-        // Mostra a mensagem
-        mensagemCompra.style.display = "block";
-
+        const count = selected.reduce((sum, item) => sum + item.quantity, 0);
+        // Remove do carrinho os itens comprados; itens desmarcados permanecem.
+        cart = cart.filter(item => item.selected === false);
+        TaxiDogProdutos.saveCart(cart);
+        message.hidden = false;
+        message.textContent = `Compra confirmada! ${count} unidade(s) comprada(s).`;
+        render();
+        message.hidden = false;
     });
 
-
-    // ==============================
-    // ATUALIZAR RESUMO
-    // ==============================
-
-    function atualizarResumo() {
-
-        let quantidadeTotal = 0;
-
-        let subtotal = 0;
-
-
-        produtos.forEach(function (produto) {
-
-            const checkbox =
-                produto.querySelector(".produto-checkbox");
-
-
-            // Só calcula produtos selecionados
-            if (checkbox.checked) {
-
-                const preco =
-                    Number(produto.dataset.preco);
-
-                const quantidade =
-                    Number(
-                        produto.querySelector(".numero-quantidade").textContent
-                    );
-
-
-                quantidadeTotal += quantidade;
-
-                subtotal += preco * quantidade;
-
-            }
-
-        });
-
-
-        // FRETE
-        const frete =
-            quantidadeTotal > 0 ? 10 : 0;
-
-
-        // TOTAL
-        const total =
-            subtotal + frete;
-
-
-        // QUANTIDADE
-        document.getElementById("quantidade-produtos").textContent =
-            quantidadeTotal;
-
-
-        // SUBTOTAL
-        document.getElementById("subtotal").textContent =
-            formatarDinheiro(subtotal);
-
-
-        // FRETE
-        document.getElementById("frete").textContent =
-            formatarDinheiro(frete);
-
-
-        // TOTAL
-        document.getElementById("total").textContent =
-            formatarDinheiro(total);
-
+    try {
+        products = await TaxiDogProdutos.getProducts();
+        render();
+    } catch (error) {
+        list.textContent = error.message;
     }
-
-
-    // ==============================
-    // FORMATAÇÃO DO DINHEIRO
-    // ==============================
-
-    function formatarDinheiro(valor) {
-
-        return valor.toLocaleString("pt-BR", {
-
-            style: "currency",
-
-            currency: "BRL"
-
-        });
-
-    }
-
-
-    // ==============================
-    // INICIAR
-    // ==============================
-
-    atualizarResumo();
-
 });

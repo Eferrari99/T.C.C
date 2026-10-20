@@ -22,5 +22,17 @@
     "provider": "local",
     "photoUrl": "/uploads/c9e0f790-f3f1-4b89-9b09-807968831106.webp",
     "createdAt": "2026-10-19T18:51:36.141Z"
+  },
+  {
+    "id": "usr_a251946d-dc31-4a6d-8fcc-04f90a56f42c",
+    "name": "teste4",
+    "birthDate": "2000-12-12",
+    "cpf": "12100219211",
+    "phone": "121212121212",
+    "email": "00001109116925sp@al.educacao.sp.gov.br",
+    "passwordHash": "$2a$10$bTliFdhbKmcJRi8HB7EMEOR04DwD7BgdVyJAXmUiqcc6jqaVbxAAy",
+    "provider": "local",
+    "photoUrl": "/uploads/28383cf1-65ef-4ecc-aa06-6b950d22077c.jpg",
+    "createdAt": "2026-10-20T12:29:07.758Z"
   }
 ]

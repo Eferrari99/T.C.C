@@ -22,7 +22,20 @@
     "age": 2,
     "weight": 2,
     "comorbidities": "",
-    "photoUrl": "",
+    "photoUrl": "/uploads/728decaa-42c7-4da0-8add-38a4dd44ff0e.png",
     "createdAt": "2026-10-19T18:45:14.187Z"
+  },
+  {
+    "id": "pet_a057c50e-2e78-44d2-85ca-1c01198121a3",
+    "userId": "usr_a251946d-dc31-4a6d-8fcc-04f90a56f42c",
+    "name": "Maia",
+    "sex": "feminino",
+    "species": "cachorro",
+    "breed": "Beagle",
+    "age": 9,
+    "weight": 30,
+    "comorbidities": "gorda",
+    "photoUrl": "/uploads/513c7bb8-80ff-41fb-9b69-e88632a486a0.jpg",
+    "createdAt": "2026-10-20T12:30:04.753Z"
   }
 ]

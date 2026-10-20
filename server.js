@@ -561,6 +561,22 @@ app.post(
     }
 );
 
+
+// ========================================
+// CATÁLOGO PÚBLICO DE PRODUTOS
+// ========================================
+app.get('/api/products', (_req, res) => {
+    try {
+        const productsFile = path.join(DB_DIR, 'produtos.json');
+        const products = JSON.parse(fs.readFileSync(productsFile, 'utf8'));
+        res.set('Cache-Control', 'no-store');
+        return res.json({ products: Array.isArray(products) ? products : [] });
+    } catch (error) {
+        console.error('Erro ao carregar produtos:', error);
+        return res.status(500).json({ error: 'Não foi possível carregar os produtos.' });
+    }
+});
+
 // ========================================
 // PÁGINA INICIAL
 // ========================================

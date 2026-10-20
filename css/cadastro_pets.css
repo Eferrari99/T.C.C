@@ -1,3 +1,47 @@
+.menu {
+    background: #FFC800;
+    border: 2px solid #3A2603;
+    border-radius: 10px;
+    min-height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu img {
+    height: 86px;
+    max-width: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+#menu {
+    background: #FFC800;
+    border: 2px solid #3A2603;
+    border-radius: 10px;
+    min-height: 90px;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+#menu img {
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+}
+
+#menu a {
+    text-decoration: none;
+    font-weight: 600;
+}
+
+#menu a:hover {
+    text-decoration: underline;
+}
 .cadastro {
     display: flex;
     flex-direction: column;
