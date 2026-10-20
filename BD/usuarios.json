@@ -5,7 +5,7 @@
     "birthDate": "2000-02-22",
     "cpf": "42922580822",
     "phone": "+5519989959672",
-    "email": "luccaserantonipinto@gmail.com",
+    "email": "teste2@gmail.com",
     "passwordHash": "$2a$10$TbZmLfGHRobPKM.J9ESAV.shs2VEpVG7sc0uRft4L/kXV83eVEh16",
     "provider": "local",
     "photoUrl": "/uploads/0bf97f4b-88d7-4267-9866-611f4424c2d2.jpg",
@@ -17,7 +17,7 @@
     "birthDate": "1111-11-22",
     "cpf": "23333333333",
     "phone": "2221111111111111111111",
-    "email": "eferrari200109@gmail.com",
+    "email": "teste3@gmail.com",
     "passwordHash": "$2a$10$fOtNLp1P0pIGkhPP9hE14e7CLo527KvKQAvjU3n5plFMqODFtHUdW",
     "provider": "local",
     "photoUrl": "/uploads/c9e0f790-f3f1-4b89-9b09-807968831106.webp",
@@ -29,10 +29,22 @@
     "birthDate": "2000-12-12",
     "cpf": "12100219211",
     "phone": "121212121212",
-    "email": "00001109116925sp@al.educacao.sp.gov.br",
+    "email": "teste4@gmail.com",
     "passwordHash": "$2a$10$bTliFdhbKmcJRi8HB7EMEOR04DwD7BgdVyJAXmUiqcc6jqaVbxAAy",
     "provider": "local",
     "photoUrl": "/uploads/28383cf1-65ef-4ecc-aa06-6b950d22077c.jpg",
     "createdAt": "2026-10-20T12:29:07.758Z"
+  },
+  {
+    "id": "usr_53f02974-49de-44ba-b0e0-f0aa9831e312",
+    "name": "Lucca Serantoni Pinto",
+    "birthDate": "1111-11-11",
+    "cpf": "19292182181",
+    "phone": "+121012021991",
+    "email": "luccaserantonipinto@gmail.com",
+    "passwordHash": "$2a$10$Irimtxa9W0OSe6Rkty3n6.A/Q3PBYMIBM.z9lq8FagMQgFI9tSBtO",
+    "provider": "local",
+    "photoUrl": "/uploads/cbb8332c-7216-45c5-b717-eec1e1b2f9f6.png",
+    "createdAt": "2026-10-20T14:25:31.271Z"
   }
 ]

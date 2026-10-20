@@ -577,6 +577,301 @@ app.get('/api/products', (_req, res) => {
     }
 });
 
+
+// ========================================
+// GEOCODIFICAÇÃO (PESQUISA E ENDEREÇO ATUAL)
+// Mantém as chamadas ao OpenStreetMap no servidor para evitar
+// bloqueios de CORS/rate-limit do Nominatim no navegador.
+// ========================================
+async function fetchNominatim(url, timeoutMs = 12000) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+        const resposta = await fetch(url, {
+            headers: {
+                'Accept': 'application/json',
+                'Accept-Language': 'pt-BR,pt;q=0.9,en;q=0.7',
+                'User-Agent': 'Taxi-Dog/1.0 (https://localhost; pet location service)'
+            },
+            signal: controller.signal
+        });
+
+        if (!resposta.ok) {
+            throw new Error(`Nominatim HTTP ${resposta.status}`);
+        }
+
+        return await resposta.json();
+    } finally {
+        clearTimeout(timer);
+    }
+}
+
+app.get('/api/geocode/search', async (req, res) => {
+    const query = String(req.query.q || '').trim();
+
+    if (query.length < 3) {
+        return res.status(400).json({ error: 'Digite pelo menos 3 caracteres.' });
+    }
+
+    try {
+        const url = new URL('https://nominatim.openstreetmap.org/search');
+        url.searchParams.set('format', 'jsonv2');
+        url.searchParams.set('addressdetails', '1');
+        url.searchParams.set('limit', '8');
+        url.searchParams.set('countrycodes', 'br');
+        url.searchParams.set('dedupe', '1');
+        url.searchParams.set('q', query);
+
+        // Se o usuário já tiver uma posição, ela serve como preferência
+        // geográfica, mas a busca continua podendo retornar outra cidade.
+        const latitude = Number(req.query.lat);
+        const longitude = Number(req.query.lon);
+        if (Number.isFinite(latitude) && Number.isFinite(longitude) &&
+            Math.abs(latitude) <= 90 && Math.abs(longitude) <= 180) {
+            const deltaLat = 0.35;
+            const deltaLon = 0.35;
+            url.searchParams.set('viewbox', [
+                longitude - deltaLon,
+                latitude + deltaLat,
+                longitude + deltaLon,
+                latitude - deltaLat
+            ].join(','));
+            url.searchParams.set('bounded', '0');
+        }
+
+        const dados = await fetchNominatim(url);
+        return res.json(Array.isArray(dados) ? dados : []);
+    } catch (error) {
+        console.error('Falha na busca de endereço:', error?.message || error);
+        return res.status(503).json({
+            error: 'Não foi possível consultar o serviço de endereços agora.'
+        });
+    }
+});
+
+app.get('/api/geocode/reverse', async (req, res) => {
+    const latitude = Number(req.query.lat);
+    const longitude = Number(req.query.lon);
+
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude) ||
+        Math.abs(latitude) > 90 || Math.abs(longitude) > 180) {
+        return res.status(400).json({ error: 'Coordenadas inválidas.' });
+    }
+
+    try {
+        const url = new URL('https://nominatim.openstreetmap.org/reverse');
+        url.searchParams.set('format', 'jsonv2');
+        url.searchParams.set('addressdetails', '1');
+        url.searchParams.set('zoom', '18');
+        url.searchParams.set('lat', String(latitude));
+        url.searchParams.set('lon', String(longitude));
+
+        let dados = await fetchNominatim(url);
+
+        // Alguns pontos de GPS ficam fora de um endereço de porta. Nesse
+        // caso, tenta novamente em um nível mais amplo para obter rua/bairro.
+        if (!dados || !dados.display_name) {
+            url.searchParams.set('zoom', '16');
+            dados = await fetchNominatim(url);
+        }
+
+        return res.json(dados || {});
+    } catch (error) {
+        console.error('Falha no reverse geocoding:', error?.message || error);
+        return res.status(503).json({
+            error: 'Não foi possível identificar o endereço da localização atual.'
+        });
+    }
+});
+
+
+// ========================================
+// BUSCA RÁPIDA DE PETSHOPS E VETERINÁRIOS
+// O servidor consulta o OpenStreetMap por múltiplos espelhos e,
+// se o Overpass estiver indisponível, usa o Nominatim como fallback.
+// ========================================
+app.get('/api/locais-proximos', async (req, res) => {
+    const latitude = Number(req.query.lat);
+    const longitude = Number(req.query.lon);
+
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude) ||
+        Math.abs(latitude) > 90 || Math.abs(longitude) > 180) {
+        return res.status(400).json({ error: 'Coordenadas inválidas.' });
+    }
+
+    const raio = 5000;
+    const chaveCache = `${latitude.toFixed(3)},${longitude.toFixed(3)}`;
+    const agora = Date.now();
+    globalThis.__taxiDogLocaisCache ??= new Map();
+    const cacheLocais = globalThis.__taxiDogLocaisCache;
+    const cacheado = cacheLocais.get(chaveCache);
+
+    if (cacheado && agora - cacheado.timestamp < 5 * 60 * 1000) {
+        res.set('Cache-Control', 'public, max-age=300');
+        return res.json(cacheado.dados);
+    }
+
+    const consulta = `[out:json][timeout:20];(
+        nwr["shop"="pet"](around:${raio},${latitude},${longitude});
+        nwr["shop"="pet_grooming"](around:${raio},${latitude},${longitude});
+        nwr["amenity"="veterinary"](around:${raio},${latitude},${longitude});
+        nwr["healthcare"="veterinary"](around:${raio},${latitude},${longitude});
+        nwr["name"~"pet.?shop|pet ?shop|petshop|veterin",i](around:${raio},${latitude},${longitude});
+    );out center tags;`;
+
+    const servidores = [
+        'https://overpass-api.de/api/interpreter',
+        'https://overpass.kumi.systems/api/interpreter',
+        'https://overpass.private.coffee/api/interpreter',
+        'https://overpass.nchc.org.tw/api/interpreter'
+    ];
+
+    async function consultarOverpass(servidor) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 15000);
+
+        try {
+            const resposta = await fetch(servidor, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+                    'Accept': 'application/json',
+                    'User-Agent': 'Taxi-Dog/1.0 (petshop locator)'
+                },
+                body: 'data=' + encodeURIComponent(consulta),
+                signal: controller.signal
+            });
+
+            if (!resposta.ok) {
+                throw new Error(`Overpass HTTP ${resposta.status}`);
+            }
+
+            const dados = await resposta.json();
+            if (!dados || !Array.isArray(dados.elements)) {
+                throw new Error('Resposta inválida do Overpass');
+            }
+
+            return { elements: dados.elements };
+        } finally {
+            clearTimeout(timer);
+        }
+    }
+
+    async function consultarNominatim() {
+        const deltaLat = raio / 111320;
+        const deltaLon = raio / (111320 * Math.max(Math.cos(latitude * Math.PI / 180), 0.2));
+        const viewbox = [
+            longitude - deltaLon,
+            latitude + deltaLat,
+            longitude + deltaLon,
+            latitude - deltaLat
+        ].join(',');
+
+        const consultas = [
+            'pet shop',
+            'petshop',
+            'pet shop veterinário',
+            'veterinário',
+            'clínica veterinária'
+        ];
+
+        const resultados = [];
+
+        for (const termo of consultas) {
+            const url = new URL('https://nominatim.openstreetmap.org/search');
+            url.searchParams.set('format', 'jsonv2');
+            url.searchParams.set('q', termo);
+            url.searchParams.set('viewbox', viewbox);
+            url.searchParams.set('bounded', '1');
+            url.searchParams.set('limit', '25');
+            url.searchParams.set('countrycodes', 'br');
+            url.searchParams.set('addressdetails', '1');
+
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 10000);
+
+            try {
+                const resposta = await fetch(url, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Accept-Language': 'pt-BR',
+                        'User-Agent': 'Taxi-Dog/1.0 (petshop locator)'
+                    },
+                    signal: controller.signal
+                });
+
+                if (!resposta.ok) continue;
+                const dados = await resposta.json();
+                if (Array.isArray(dados)) resultados.push(...dados);
+            } finally {
+                clearTimeout(timer);
+            }
+        }
+
+        const vistos = new Set();
+        const elements = [];
+
+        for (const item of resultados) {
+            const lat = Number(item.lat);
+            const lon = Number(item.lon);
+            if (!Number.isFinite(lat) || !Number.isFinite(lon)) continue;
+
+            const chave = `${lat.toFixed(6)},${lon.toFixed(6)}`;
+            if (vistos.has(chave)) continue;
+            vistos.add(chave);
+
+            const tags = {};
+            if (item.name) tags.name = item.name;
+            if (item.type === 'veterinary' || /veterin/i.test(item.display_name || '')) {
+                tags.amenity = 'veterinary';
+            } else {
+                tags.shop = 'pet';
+            }
+            if (item.address?.road) tags['addr:street'] = item.address.road;
+            if (item.address?.house_number) tags['addr:housenumber'] = item.address.house_number;
+
+            elements.push({ type: 'node', lat, lon, tags });
+        }
+
+        return { elements };
+    }
+
+    try {
+        let dados;
+
+        try {
+            dados = await Promise.any(servidores.map(consultarOverpass));
+        } catch (overpassError) {
+            console.warn(
+                'Overpass indisponível; tentando fallback do Nominatim:',
+                overpassError?.errors?.map(error => error.message) || overpassError?.message
+            );
+            dados = await consultarNominatim();
+        }
+
+        // Mesmo quando o serviço responde corretamente, evita dados antigos ou inválidos.
+        dados.elements = (dados.elements || []).filter(elemento => {
+            const lat = Number(elemento.lat ?? elemento.center?.lat);
+            const lon = Number(elemento.lon ?? elemento.center?.lon);
+            return Number.isFinite(lat) && Number.isFinite(lon);
+        });
+
+        cacheLocais.set(chaveCache, { dados, timestamp: Date.now() });
+        while (cacheLocais.size > 100) {
+            cacheLocais.delete(cacheLocais.keys().next().value);
+        }
+
+        res.set('Cache-Control', 'public, max-age=300');
+        return res.json(dados);
+    } catch (error) {
+        console.error('Falha na busca de locais próximos:', error?.message || error);
+        return res.status(503).json({
+            error: 'Os serviços de mapas estão temporariamente indisponíveis.'
+        });
+    }
+});
+
 // ========================================
 // PÁGINA INICIAL
 // ========================================

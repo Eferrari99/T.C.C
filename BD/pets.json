@@ -37,5 +37,18 @@
     "comorbidities": "gorda",
     "photoUrl": "/uploads/513c7bb8-80ff-41fb-9b69-e88632a486a0.jpg",
     "createdAt": "2026-10-20T12:30:04.753Z"
+  },
+  {
+    "id": "pet_f0e19302-7122-468a-a42a-0f0e9b06269c",
+    "userId": "usr_53f02974-49de-44ba-b0e0-f0aa9831e312",
+    "name": "Maia",
+    "sex": "feminino",
+    "species": "cão",
+    "breed": "beagle",
+    "age": 2,
+    "weight": 40,
+    "comorbidities": "obesa",
+    "photoUrl": "/uploads/5143deec-b32a-45ed-b9a2-add7a55b768c.jpg",
+    "createdAt": "2026-10-20T14:26:12.305Z"
   }
 ]

@@ -206,36 +206,16 @@ async function buscarEnderecos(texto) {
 
 
         const url =
+            "/api/geocode/search?q=" + encodeURIComponent(texto);
 
-            "https://nominatim.openstreetmap.org/search" +
+        const resposta = await fetch(url, {
+            headers: { "Accept": "application/json" },
+            cache: "no-store"
+        });
 
-            "?format=json" +
-
-            "&addressdetails=1" +
-
-            "&limit=5" +
-
-            "&countrycodes=br" +
-
-            "&q=" +
-
-            encodeURIComponent(texto);
-
-
-        const resposta =
-            await fetch(
-                url,
-                {
-
-                    headers: {
-
-                        "Accept-Language":
-                            "pt-BR"
-
-                    }
-
-                }
-            );
+        if (!resposta.ok) {
+            throw new Error("Busca de endereço HTTP " + resposta.status);
+        }
 
 
         const dados =
@@ -484,26 +464,19 @@ async function obterEnderecoAtual() {
 
 
         const url =
+            "/api/geocode/reverse?lat=" + encodeURIComponent(latitudeAtual) +
+            "&lon=" + encodeURIComponent(longitudeAtual);
 
-            "https://nominatim.openstreetmap.org/reverse" +
+        const resposta = await fetch(url, {
+            headers: { "Accept": "application/json" },
+            cache: "no-store"
+        });
 
-            "?format=json" +
+        if (!resposta.ok) {
+            throw new Error("Reverse geocoding HTTP " + resposta.status);
+        }
 
-            "&lat=" +
-            latitudeAtual +
-
-            "&lon=" +
-            longitudeAtual +
-
-            "&zoom=18";
-
-
-        const resposta =
-            await fetch(url);
-
-
-        const dados =
-            await resposta.json();
+        const dados = await resposta.json();
 
 
         if (dados.display_name) {
@@ -599,75 +572,32 @@ async function buscarLocaisProximos() {
     `;
 
 
-    /* Raio de 5 quilômetros */
-
-    const raio = 5000;
-
-
-    /*
-        Consulta do OpenStreetMap.
-
-        veterinary = clínica veterinária
-
-        pet = petshop
-    */
-
-    const query = `
-
-        [out:json];
-
-        (
-
-            node["amenity"="veterinary"](
-                around:${raio},
-                ${latitudeAtual},
-                ${longitudeAtual}
-            );
-
-            way["amenity"="veterinary"](
-                around:${raio},
-                ${latitudeAtual},
-                ${longitudeAtual}
-            );
-
-            node["shop"="pet"](
-                around:${raio},
-                ${latitudeAtual},
-                ${longitudeAtual}
-            );
-
-            way["shop"="pet"](
-                around:${raio},
-                ${latitudeAtual},
-                ${longitudeAtual}
-            );
-
-        );
-
-        out center;
-
-    `;
-
-
     try {
 
+        const url =
+            `/api/locais-proximos?lat=${encodeURIComponent(latitudeAtual)}&lon=${encodeURIComponent(longitudeAtual)}`;
 
-        const resposta =
-            await fetch(
-                "https://overpass-api.de/api/interpreter",
-                {
+        let resposta = await fetch(url, {
+            headers: { "Accept": "application/json" },
+            cache: "no-store"
+        });
 
-                    method: "POST",
+        if (!resposta.ok) {
+            await new Promise(function (resolve) { setTimeout(resolve, 700); });
+            resposta = await fetch(url, {
+                headers: { "Accept": "application/json" },
+                cache: "no-store"
+            });
+        }
 
-                    body: query
+        if (!resposta.ok) {
+            throw new Error(`Busca de locais HTTP ${resposta.status}`);
+        }
 
-                }
-            );
-
-
-        const dados =
-            await resposta.json();
-
+        const dados = await resposta.json();
+        if (!dados || !Array.isArray(dados.elements)) {
+            throw new Error("Resposta inválida da busca de locais");
+        }
 
         let locais = [];
 

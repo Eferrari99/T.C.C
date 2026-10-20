@@ -1,4 +1,8 @@
-/* Carrinho dinâmico */
+
+/* =========================
+   PÁGINA DO CARRINHO
+========================= */
+
 .pagina-carrinho {
     width: min(1100px, 94%);
     margin: 25px auto 45px;
@@ -27,17 +31,19 @@
 .lista-carrinho,
 .resumo-carrinho {
     background: #fdd194;
-    border: 2px solid #000000;
+    border: 2px solid #000;
     border-radius: 12px;
     padding: 16px;
+    min-width: 0;
 }
 
 .carrinho-cabecalho {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
     padding-bottom: 14px;
-    border-bottom: 2px solid #000000;
+    border-bottom: 2px solid #000;
 }
 
 .carrinho-cabecalho label {
@@ -63,11 +69,11 @@
     border-bottom: 0;
 }
 
-.item-carrinho>img {
+.item-carrinho > img {
     width: 95px;
     height: 95px;
     object-fit: contain;
-    border: 2px solid #000000;
+    border: 2px solid #000;
     border-radius: 9px;
     flex-shrink: 0;
 }
@@ -100,11 +106,11 @@
 .quantidade button {
     width: 28px;
     height: 28px;
-    border: 0;
+    border: 1px solid #000;
     border-radius: 50%;
     background: #ddd;
     font-weight: bold;
-    border-color: 1px solid #000000;
+    cursor: pointer;
 }
 
 .remover-item {
@@ -114,6 +120,7 @@
     text-decoration: underline;
     margin-top: 7px;
     padding: 0;
+    cursor: pointer;
 }
 
 .resumo-carrinho h2 {
@@ -138,8 +145,48 @@
 
 .resumo-carrinho hr {
     border: 0;
-    border-top: 1px solid #000000;
+    border-top: 1px solid #000;
 }
+
+/* =========================
+   MÉTODO DE PAGAMENTO
+========================= */
+
+.pagamento-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 24px;
+}
+
+.pagamento-container label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #3A2603;
+}
+
+.pagamento-container select {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px;
+    border: 1px solid #3A2603;
+    border-radius: 8px;
+    background: #fff;
+    color: #211900;
+    font: inherit;
+    font-size: 13px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.pagamento-container select:focus {
+    outline: 2px solid #FFC800;
+    outline-offset: 2px;
+}
+
+/* =========================
+   BOTÕES
+========================= */
 
 .confirmar-compra,
 .mais-opcoes {
@@ -149,20 +196,23 @@
     width: 100%;
     min-height: 43px;
     padding: 10px;
-    border: 0;
+    border: 1px solid #3A2603;
     border-radius: 20px;
     text-decoration: none;
     text-align: center;
     font-weight: bold;
     box-sizing: border-box;
-    border-color: 1px solid #000000;
+    cursor: pointer;
 }
 
 .confirmar-compra {
     background: #58B53D;
-    color: white;
+    color: #fff;
     margin: 18px 0 12px;
-    border-color: 1px solid #000000;
+}
+
+.confirmar-compra:hover:not(:disabled) {
+    background: #44972e;
 }
 
 .confirmar-compra:disabled {
@@ -173,8 +223,15 @@
 .mais-opcoes {
     background: #FFC800;
     color: #211900;
-    border-color: 1px solid #000000;
 }
+
+.mais-opcoes:hover {
+    background: #e9b900;
+}
+
+/* =========================
+   MENSAGENS
+========================= */
 
 #mensagemCompra {
     margin: 14px 0 0;
@@ -190,7 +247,11 @@
     text-align: center;
 }
 
-@media(max-width:760px) {
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 760px) {
     .carrinho-layout {
         grid-template-columns: 1fr;
     }
@@ -199,7 +260,7 @@
         gap: 8px;
     }
 
-    .item-carrinho>img {
+    .item-carrinho > img {
         width: 75px;
         height: 75px;
     }
@@ -207,5 +268,17 @@
     .nome-preco {
         flex-direction: column;
         gap: 3px;
+    }
+}
+
+@media (max-width: 400px) {
+    .lista-carrinho,
+    .resumo-carrinho {
+        padding: 10px;
+    }
+
+    .item-carrinho > img {
+        width: 60px;
+        height: 60px;
     }
 }

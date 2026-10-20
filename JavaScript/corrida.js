@@ -375,6 +375,57 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /* =================================================
+       FALLBACK DIRETO DOS SERVIÇOS DE MAPA
+    ================================================= */
+
+    async function buscarEnderecoDireto(endereco) {
+        const url =
+            "https://nominatim.openstreetmap.org/search?format=jsonv2" +
+            "&addressdetails=1&limit=8&countrycodes=br&dedupe=1&q=" +
+            encodeURIComponent(endereco);
+        const resposta = await fetch(url, {
+            headers: { "Accept": "application/json", "Accept-Language": "pt-BR,pt;q=0.9" },
+            cache: "no-store"
+        });
+        if (!resposta.ok) throw new Error("Nominatim HTTP " + resposta.status);
+        return await resposta.json();
+    }
+
+    async function buscarLocaisDireto(latitude, longitude) {
+        const raio = 5000;
+        const consulta = `[out:json][timeout:20];(nwr["shop"="pet"](around:${raio},${latitude},${longitude});nwr["shop"="pet_grooming"](around:${raio},${latitude},${longitude});nwr["amenity"="veterinary"](around:${raio},${latitude},${longitude});nwr["healthcare"="veterinary"](around:${raio},${latitude},${longitude});nwr["name"~"pet.?shop|pet ?shop|petshop|veterin",i](around:${raio},${latitude},${longitude}););out center tags;`;
+        const servidores = [
+            "https://overpass-api.de/api/interpreter",
+            "https://overpass.kumi.systems/api/interpreter"
+        ];
+        for (const servidor of servidores) {
+            try {
+                const resposta = await fetch(servidor + "?data=" + encodeURIComponent(consulta), {
+                    headers: { "Accept": "application/json" },
+                    cache: "no-store"
+                });
+                if (!resposta.ok) continue;
+                const dados = await resposta.json();
+                if (dados && Array.isArray(dados.elements)) return dados;
+            } catch (_) {}
+        }
+        throw new Error("Serviços de mapa indisponíveis");
+    }
+
+    async function obterEnderecoDireto(latitude, longitude) {
+        const url =
+            "https://nominatim.openstreetmap.org/reverse?format=jsonv2" +
+            "&addressdetails=1&zoom=18&lat=" + encodeURIComponent(latitude) +
+            "&lon=" + encodeURIComponent(longitude);
+        const resposta = await fetch(url, {
+            headers: { "Accept": "application/json", "Accept-Language": "pt-BR,pt;q=0.9" },
+            cache: "no-store"
+        });
+        if (!resposta.ok) throw new Error("Nominatim HTTP " + resposta.status);
+        return await resposta.json();
+    }
+
+    /* =================================================
        BUSCAR ENDEREÇO
     ================================================= */
 
@@ -395,24 +446,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             const url =
-                "https://nominatim.openstreetmap.org/search" +
-                "?format=json" +
-                "&q=" + encodeURIComponent(endereco) +
-                "&limit=5" +
-                "&countrycodes=br" +
-                "&addressdetails=1";
+                "/api/geocode/search?q=" + encodeURIComponent(endereco);
 
             const resposta = await fetch(url, {
-                headers: {
-                    "Accept": "application/json"
-                }
+                headers: { "Accept": "application/json" },
+                cache: "no-store"
             });
 
-            if (!resposta.ok) {
-                throw new Error("Erro HTTP " + resposta.status);
+            let resultados;
+            try {
+                if (!resposta.ok) throw new Error("Erro HTTP " + resposta.status);
+                resultados = await resposta.json();
+                if (!Array.isArray(resultados)) throw new Error("Resposta inválida");
+            } catch (_) {
+                resultados = await buscarEnderecoDireto(endereco);
             }
-
-            const resultados = await resposta.json();
 
             if (sugestoes) {
                 sugestoes.innerHTML = "";
@@ -636,24 +684,22 @@ document.addEventListener("DOMContentLoaded", function () {
     async function obterEnderecoGPS(latitude, longitude) {
         try {
             const url =
-                "https://nominatim.openstreetmap.org/reverse" +
-                "?format=json" +
-                "&lat=" + latitude +
-                "&lon=" + longitude +
-                "&zoom=18" +
-                "&addressdetails=1";
+                "/api/geocode/reverse?lat=" + encodeURIComponent(latitude) +
+                "&lon=" + encodeURIComponent(longitude);
 
             const resposta = await fetch(url, {
-                headers: {
-                    "Accept": "application/json"
-                }
+                headers: { "Accept": "application/json" },
+                cache: "no-store"
             });
 
-            if (!resposta.ok) {
-                throw new Error("Erro no reverse geocoding.");
+            let resultado;
+            try {
+                if (!resposta.ok) throw new Error("Erro no reverse geocoding.");
+                resultado = await resposta.json();
+                if (!resultado || !resultado.display_name) throw new Error("Resposta inválida");
+            } catch (_) {
+                resultado = await obterEnderecoDireto(latitude, longitude);
             }
-
-            const resultado = await resposta.json();
 
             if (resultado && resultado.display_name) {
                 if (origem) {
@@ -743,30 +789,37 @@ document.addEventListener("DOMContentLoaded", function () {
         limparRota();
 
         try {
-            const raio = 5000;
+            const urlLocais =
+                `/api/locais-proximos?lat=${encodeURIComponent(latitude)}&lon=${encodeURIComponent(longitude)}`;
 
-            const consulta = `
-                [out:json][timeout:25];
-                (
-                    node["shop"="pet"](around:${raio},${latitude},${longitude});
-                    way["shop"="pet"](around:${raio},${latitude},${longitude});
-                    node["amenity"="veterinary"](around:${raio},${latitude},${longitude});
-                    way["amenity"="veterinary"](around:${raio},${latitude},${longitude});
-                );
-                out center;
-            `;
+            let resposta = await fetch(urlLocais, {
+                headers: { "Accept": "application/json" },
+                cache: "no-store"
+            });
 
-            const url =
-                "https://overpass-api.de/api/interpreter?data=" +
-                encodeURIComponent(consulta);
-
-            const resposta = await fetch(url);
+            // Uma segunda tentativa resolve falhas transitórias dos espelhos do mapa.
+            if (!resposta.ok) {
+                await new Promise(function (resolve) { setTimeout(resolve, 700); });
+                resposta = await fetch(urlLocais, {
+                    headers: { "Accept": "application/json" },
+                    cache: "no-store"
+                });
+            }
 
             if (!resposta.ok) {
-                throw new Error("Erro ao consultar Overpass.");
+                let detalhe = "";
+                try {
+                    const erroApi = await resposta.json();
+                    detalhe = erroApi.error || "";
+                } catch (_) {}
+                throw new Error(detalhe || `Busca de locais HTTP ${resposta.status}`);
             }
 
             const dados = await resposta.json();
+            if (!dados || !Array.isArray(dados.elements)) {
+                throw new Error("Resposta inválida da busca de locais");
+            }
+
             const locais = [];
 
             dados.elements.forEach(function (elemento) {
@@ -820,7 +873,32 @@ document.addEventListener("DOMContentLoaded", function () {
             mostrarPetshopsNoMapa(locais);
 
         } catch (erro) {
-            console.error("Erro ao buscar petshops:", erro);
+            console.warn("API de locais indisponível; tentando busca direta:", erro);
+
+            try {
+                const dadosDiretos = await buscarLocaisDireto(latitude, longitude);
+                const locaisDiretos = [];
+
+                dadosDiretos.elements.forEach(function (elemento) {
+                    let lat = Number(elemento.lat ?? elemento.center?.lat);
+                    let lon = Number(elemento.lon ?? elemento.center?.lon);
+                    if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+
+                    const tags = elemento.tags || {};
+                    const nome = tags.name || "Estabelecimento para pets";
+                    const distancia = calcularDistancia(latitude, longitude, lat, lon);
+                    const categoria = tags.amenity === "veterinary" || tags.healthcare === "veterinary"
+                        ? "Clínica veterinária" : "Pet shop";
+                    locaisDiretos.push({ nome, latitude: lat, longitude: lon, distancia, categoria });
+                });
+
+                locaisDiretos.sort((a, b) => a.distancia - b.distancia);
+                preencherPetshops(locaisDiretos);
+                mostrarPetshopsNoMapa(locaisDiretos);
+                return;
+            } catch (erroDireto) {
+                console.error("Erro na busca direta de petshops:", erroDireto);
+            }
 
             if (petshop) {
                 petshop.disabled = false;
