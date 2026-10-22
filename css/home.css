@@ -212,7 +212,7 @@
 
 /* Ao passar o mouse, fica branca */
 .produto-carrossel .produto-seta:hover {
-    background-color: #FFFFFF;
+    background-color: #dbac00;
     color: #3A2603;
 }
 

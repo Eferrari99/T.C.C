@@ -50,5 +50,18 @@
     "comorbidities": "obesa",
     "photoUrl": "/uploads/5143deec-b32a-45ed-b9a2-add7a55b768c.jpg",
     "createdAt": "2026-10-20T14:26:12.305Z"
+  },
+  {
+    "id": "pet_30bf43fb-75e8-4cd2-8603-f3f73dceec87",
+    "userId": "usr_53f02974-49de-44ba-b0e0-f0aa9831e312",
+    "name": "bob",
+    "sex": "masculino",
+    "species": "cão",
+    "breed": "vira lata",
+    "age": 14,
+    "weight": 20,
+    "comorbidities": "cego",
+    "photoUrl": "/uploads/f5446a11-1985-4ca7-a6cd-085dbaa5aa02.webp",
+    "createdAt": "2026-10-22T14:20:52.079Z"
   }
 ]
