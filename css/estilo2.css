@@ -26,30 +26,57 @@ select {
 
 
 #rodape {
-    margin-top: auto;
-    background: #FFC800;
-    border: 2px solid #3A2603;
-    border-radius: 10px;
-    min-height: 80px;
-    padding: 8px 20px;
+    background-color: #FFC800;
+
     display: flex;
+
+    justify-content: flex-start;
+
     align-items: center;
-    justify-content: space-between;
-    gap: 15px;
+
+    gap: 0px;
+
+    border: #3A2603 solid;
+
+    border-radius: 10px;
+
+    margin-top: auto;
 }
 
 #rodape img {
-    max-height: 65px;
-    width: auto;
+    max-height: 90px;
+
+    margin: 0;
 }
 
 #rodape a {
-    font-weight: bold;
+    color: white;
+
     text-decoration: none;
+
+    font-weight: bold;
+
+    padding: 0 12px;
 }
 
 #rodape a:hover {
     text-decoration: underline;
+}
+#entre_em_contato {
+    /*deixa em uma coluna centralizada*/
+    margin: 0 auto;
+    width: 150px;
+    padding: 5px;
+
+    border-radius: 10px;
+    /*coloca borda e cor na borda*/
+    border: #3A2603 solid;
+
+    /*alinha itens no centro*/
+    text-align: center;
+    /*coloca um quadrado cinza de funda da div*/
+    background-color: #FFC800;
+    font-size: 24px;
 }
 
 .mensagem {
