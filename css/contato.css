@@ -16,7 +16,7 @@
 
 #contato {
     /*deixa em uma coluna centralizada*/
-    margin: 10 auto;
+    margin: 0 auto;
     width: 50%;
     padding: 20px;
 
@@ -29,7 +29,7 @@
     /*coloca um quadrado bonitinho*/
     margin: 0 auto;
     width: 50%;
-    padding: 10px;
+    padding: 20px;
     
     border-radius: 5px;
     /*alinha itens no centro*/
@@ -41,30 +41,32 @@
 
     margin: 20px auto;
     width: 300px;
-    padding: 10px;
+    padding: 20px;
     height: auto;
     /*alinha no centro*/
     
     
     border-radius: 10px;
     /*coloca borda e cor na borda*/
-    border: 1px solid #8a8a8a;
+    border: 1px solid #3A2603;
     /*alinha itens no centro*/
     text-align: center;
     /*coloca um quadrado cinza de funda da div*/
-    background-color: #ffffed;
+    background-color: #fdd194;
 }
 
 
 #telefone {
     /*deixa cinza o texto*/
-    color: #8a8a8a;
+    color: #b67300;
+    margin-top: 5px;
 }
 #inputAjuda {
     /*deixa em uma coluna centralizada*/
     margin: 0 auto;
-    width: 50%;
+    width: 60%;
     padding: 10px;
+    margin-top: 5px;
     /*tipo da fonte*/
     font-family: Arial, sans-serif;
     /*tamanho da fonte*/
@@ -78,7 +80,7 @@
     #sugestoes {
         width: 100%;
         background: white;
-        border: #b5b5b5 solid 1px;
+        border: #3A2603 solid 1px;
         border-radius: 8px;
         height: auto;
         margin-top: 5px;
@@ -95,7 +97,7 @@
         margin-top: 15px;
         padding: 15px;
         background-color: #ffffff;
-       border: #b5b5b5 solid 1px;
+       border: #3A2603 solid 1px;
         border-radius: 8px;
         text-align: left;
     }
@@ -103,7 +105,7 @@
 #fill {
     width: 80%;
     height: 40px;
-    border: 1px solid #ccc;
+    border: 1px solid #3A2603;
     border-radius: 10px;
     padding: 10px;
     box-sizing: border-box;

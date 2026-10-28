@@ -3,6 +3,7 @@
    LAYOUT DO PERFIL
 ======================================== */
 
+
 .perfil {
     width: min(1100px, 96%);
     margin: 35px auto;
@@ -11,6 +12,7 @@
     align-items: flex-start;
     gap: 40px;
     flex: 1;
+    margin-top: 0px;
 }
 
 .coluna {
@@ -22,8 +24,17 @@
 }
 
 .coluna h2 {
-    margin: 8px 0 15px;
-    font-size: 22px;
+    color: rgb(0, 0, 0);
+    margin: 30px auto;
+    width: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    border: #3A2603 solid;
+    text-align: center;
+    background-color: #ffd640;
+    font-weight: bold;
+    box-sizing: border-box;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* ========================================
@@ -132,6 +143,7 @@
     padding: 12px;
     box-sizing: border-box;
     margin: 8px;
+    border: 1px solid #3A2603;
 }
 
 .informacao {
@@ -160,7 +172,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: stretch;
-    gap: 10px;
+    gap: 40px;
 }
 
 .pet-card {
@@ -170,6 +182,7 @@
     padding: 15px;
     box-sizing: border-box;
     overflow: visible;
+    border: 1px solid #3A2603;
 }
 
 .pet-card h3 {

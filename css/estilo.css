@@ -320,6 +320,8 @@ body {
 
     cursor: pointer;
 
+    border: 1px solid #3A2603;
+
 }
 
 
@@ -403,6 +405,8 @@ body {
     border: #3A2603 solid;
 
     border-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 
 }
 

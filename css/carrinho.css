@@ -10,15 +10,18 @@
 }
 
 .titulo-carrinho {
-    width: max-content;
-    min-width: 180px;
-    padding: 10px 25px;
-    margin: 0 auto 25px;
-    background: #FFC800;
-    border: 2px solid #3A2603;
-    border-radius: 12px;
+    color: rgb(0, 0, 0);
+    margin: 30px auto;
+    width: 300px;
+    padding: 10px;
+    border-radius: 10px;
+    border: #3A2603 solid;
     text-align: center;
-    font-size: 24px;
+    background-color: #ffd640;
+    font-weight: bold;
+    box-sizing: border-box;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    margin-top: 10px;
 }
 
 .carrinho-layout {
