@@ -70,5 +70,17 @@
     "provider": "local",
     "photoUrl": "/uploads/4b2b333e-0bc0-47eb-b4fe-f59b278a0b98.png",
     "createdAt": "2026-10-29T12:47:08.710Z"
+  },
+  {
+    "id": "usr_653ab31a-e249-4e03-8e50-7cd4087d23d9",
+    "name": "Laís Da silva",
+    "birthDate": "2000-02-12",
+    "cpf": "12345678967",
+    "phone": "123456789011",
+    "email": "laissimonetto@gmail.com",
+    "passwordHash": "$2a$10$TKQIKv4CuxiUOqZLHFRW5.TRFfqr/xQyhMUQD9Trk6FqJ.tzPAoZS",
+    "provider": "local",
+    "photoUrl": "/uploads/12914324-7b6b-4cdf-8ebe-80a966bcc1dc.jpg",
+    "createdAt": "2026-10-29T13:00:53.930Z"
   }
 ]

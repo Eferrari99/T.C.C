@@ -76,18 +76,5 @@
     "comorbidities": "gorda",
     "photoUrl": "/uploads/5212c581-9147-4286-b679-e20e035865f8.jpg",
     "createdAt": "2026-10-29T12:42:59.575Z"
-  },
-  {
-    "id": "pet_a846dd72-9f11-461a-9114-e8733a3b6194",
-    "userId": "usr_cd1abc28-a460-4d2e-8a8e-63e007849814",
-    "name": "dogteste",
-    "sex": "masculino",
-    "species": "testamento",
-    "breed": "Test",
-    "age": 73,
-    "weight": 12,
-    "comorbidities": "01",
-    "photoUrl": "/uploads/461d72ae-4f90-49f6-9281-100c30587012.webp",
-    "createdAt": "2026-10-29T12:57:56.819Z"
   }
 ]
