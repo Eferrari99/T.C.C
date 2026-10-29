@@ -65,6 +65,7 @@
     "createdAt": "2026-10-22T14:20:52.079Z"
   },
   {
+<<<<<<< HEAD
     "id": "pet_24301e69-5276-49e0-9e9a-054c98823185",
     "userId": "usr_25d6a253-f21d-4db7-881f-b3983dca9072",
     "name": "Robertinho",
@@ -102,5 +103,31 @@
     "comorbidities": "rabo quebrado",
     "photoUrl": "",
     "createdAt": "2026-10-29T13:02:58.558Z"
+=======
+    "id": "pet_e8394714-af7c-4c6c-bb29-10f4137ce6f6",
+    "userId": "usr_65f8f8b3-f919-4a72-a0c8-9827e0c158a2",
+    "name": "akinoreku II",
+    "sex": "masculino",
+    "species": "rato",
+    "breed": "branco",
+    "age": 2,
+    "weight": 1,
+    "comorbidities": "gorda",
+    "photoUrl": "/uploads/5212c581-9147-4286-b679-e20e035865f8.jpg",
+    "createdAt": "2026-10-29T12:42:59.575Z"
+  },
+  {
+    "id": "pet_a846dd72-9f11-461a-9114-e8733a3b6194",
+    "userId": "usr_cd1abc28-a460-4d2e-8a8e-63e007849814",
+    "name": "dogteste",
+    "sex": "masculino",
+    "species": "testamento",
+    "breed": "Test",
+    "age": 73,
+    "weight": 12,
+    "comorbidities": "01",
+    "photoUrl": "/uploads/461d72ae-4f90-49f6-9281-100c30587012.webp",
+    "createdAt": "2026-10-29T12:57:56.819Z"
+>>>>>>> d2fd1eb830b7e3582044f24028c3c24e0a79e90f
   }
 ]

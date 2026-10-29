@@ -334,6 +334,55 @@ app.get('/api/me', requireUser, (req, res) => {
 });
 
 // ========================================
+// EDITAR INFORMAÇÕES DO USUÁRIO
+// ========================================
+
+app.put('/api/me', requireUser, (req, res) => {
+    try {
+        const { name, phone, email, birthDate, cpf } = req.body;
+        if (![name, phone, email, birthDate, cpf].every(value => String(value ?? '').trim())) {
+            return res.status(400).json({ error: 'Preencha todos os campos.' });
+        }
+
+        const normalizedEmail = normalizeEmail(email);
+        if (!/^\S+@\S+\.\S+$/.test(normalizedEmail)) {
+            return res.status(400).json({ error: 'Informe um e-mail válido.' });
+        }
+
+        const cpfDigits = String(cpf).replace(/\D/g, '');
+        if (cpfDigits.length !== 11) {
+            return res.status(400).json({ error: 'O CPF deve conter 11 números.' });
+        }
+        if (Number.isNaN(Date.parse(`${birthDate}T00:00:00`))) {
+            return res.status(400).json({ error: 'Informe uma data de nascimento válida.' });
+        }
+
+        const users = readDb(USERS_FILE);
+        const user = users.find(item => item.id === req.user.id);
+        if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
+
+        if (users.some(item => item.id !== user.id && normalizeEmail(item.email) === normalizedEmail)) {
+            return res.status(409).json({ error: 'Este e-mail já está cadastrado em outra conta.' });
+        }
+        if (users.some(item => item.id !== user.id && String(item.cpf || '').replace(/\D/g, '') === cpfDigits)) {
+            return res.status(409).json({ error: 'Este CPF já está cadastrado em outra conta.' });
+        }
+
+        user.name = String(name).trim();
+        user.phone = String(phone).trim();
+        user.email = normalizedEmail;
+        user.birthDate = String(birthDate).trim();
+        user.cpf = cpfDigits;
+        writeDb(USERS_FILE, users);
+
+        return res.json({ message: 'Informações atualizadas com sucesso.', user: publicUser(user) });
+    } catch (error) {
+        console.error('Erro ao editar usuário:', error);
+        return res.status(500).json({ error: 'Não foi possível atualizar as informações do usuário.' });
+    }
+});
+
+// ========================================
 // ATUALIZAR FOTO DO USUÁRIO
 // ========================================
 
@@ -508,6 +557,61 @@ app.post(
         }
     }
 );
+
+// ========================================
+// EDITAR E REMOVER PETS DO USUÁRIO
+// ========================================
+
+app.put('/api/pets/:petId', requireUser, (req, res) => {
+    try {
+        const { name, sex, species, breed, age, weight, comorbidities } = req.body;
+        if (![name, sex, species, breed, age, weight].every(value => String(value ?? '').trim() !== '')) {
+            return res.status(400).json({ error: 'Preencha nome, sexo, espécie, raça, idade e peso.' });
+        }
+        if (!['masculino', 'feminino'].includes(sex)) {
+            return res.status(400).json({ error: 'Selecione o sexo do pet.' });
+        }
+        if (!Number.isInteger(Number(age)) || Number(age) < 0 || Number(age) > 100) {
+            return res.status(400).json({ error: 'Informe uma idade válida entre 0 e 100 anos.' });
+        }
+        if (!Number.isFinite(Number(weight)) || Number(weight) <= 0 || Number(weight) > 500) {
+            return res.status(400).json({ error: 'Informe um peso válido em kg.' });
+        }
+
+        const pets = readDb(PETS_FILE);
+        const pet = pets.find(item => item.id === req.params.petId && item.userId === req.user.id);
+        if (!pet) return res.status(404).json({ error: 'Pet não encontrado na sua conta.' });
+
+        pet.name = String(name).trim();
+        pet.sex = sex;
+        pet.species = String(species).trim();
+        pet.breed = String(breed).trim();
+        pet.age = Number(age);
+        pet.weight = Number(weight);
+        pet.comorbidities = String(comorbidities || '').trim();
+        writeDb(PETS_FILE, pets);
+        return res.json({ message: 'Informações do pet atualizadas com sucesso.', pet });
+    } catch (error) {
+        console.error('Erro ao editar pet:', error);
+        return res.status(500).json({ error: 'Não foi possível atualizar as informações do pet.' });
+    }
+});
+
+app.delete('/api/pets/:petId', requireUser, (req, res) => {
+    try {
+        const pets = readDb(PETS_FILE);
+        const index = pets.findIndex(item => item.id === req.params.petId && item.userId === req.user.id);
+        if (index === -1) return res.status(404).json({ error: 'Pet não encontrado na sua conta.' });
+
+        const [pet] = pets.splice(index, 1);
+        writeDb(PETS_FILE, pets);
+        deleteUploadedImage(pet.photoUrl);
+        return res.json({ message: 'Pet removido com sucesso.' });
+    } catch (error) {
+        console.error('Erro ao remover pet:', error);
+        return res.status(500).json({ error: 'Não foi possível remover o pet.' });
+    }
+});
 
 // ========================================
 // ALTERAR FOTO DE UM PET ESPECÍFICO

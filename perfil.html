@@ -53,13 +53,11 @@
 
         <section class="coluna coluna-usuario">
             <h2>Minha conta</h2>
-            <div class="avatar-inicial" id="avatarUsuario" aria-hidden="true">
-                U
-            </div>
-
             <div class="foto-perfil-controles">
 
                 <div class="foto-perfil-wrapper">
+
+                    <div class="avatar-inicial" id="avatarUsuario" aria-hidden="true">U</div>
 
                     <img
                         id="fotoUsuario"
@@ -100,6 +98,33 @@
             <div class="bloco1" id="dadosUsuario">
                 <p>Carregando seus dados...</p>
             </div>
+
+            <button class="botao-acao-perfil" id="botaoEditarUsuario" type="button">
+                <i class="bi bi-pencil-square" aria-hidden="true"></i> Editar informações
+            </button>
+
+            <form id="formEditarUsuario" class="form-edicao" hidden>
+                <label for="editarNomeUsuario">Nome completo</label>
+                <input id="editarNomeUsuario" name="name" type="text" maxlength="100" required>
+
+                <label for="editarTelefoneUsuario">Telefone</label>
+                <input id="editarTelefoneUsuario" name="phone" type="tel" maxlength="25" required>
+
+                <label for="editarEmailUsuario">E-mail</label>
+                <input id="editarEmailUsuario" name="email" type="email" maxlength="150" required>
+
+                <label for="editarNascimentoUsuario">Data de nascimento</label>
+                <input id="editarNascimentoUsuario" name="birthDate" type="date" required>
+
+                <label for="editarCpfUsuario">CPF</label>
+                <input id="editarCpfUsuario" name="cpf" type="text" inputmode="numeric" maxlength="14" required>
+
+                <p class="mensagem-formulario" id="mensagemEditarUsuario" role="status" aria-live="polite"></p>
+                <div class="acoes-formulario">
+                    <button class="botao-acao-perfil" type="submit">Salvar alterações</button>
+                    <button class="botao-cancelar" id="cancelarEditarUsuario" type="button">Cancelar</button>
+                </div>
+            </form>
 
             <button class="botao-sair" id="botaoSair" type="button">
                 Sair da conta
