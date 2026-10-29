@@ -65,6 +65,45 @@
     "createdAt": "2026-10-22T14:20:52.079Z"
   },
   {
+<<<<<<< HEAD
+    "id": "pet_24301e69-5276-49e0-9e9a-054c98823185",
+    "userId": "usr_25d6a253-f21d-4db7-881f-b3983dca9072",
+    "name": "Robertinho",
+    "sex": "masculino",
+    "species": "cachorro",
+    "breed": "lulu da pomerania",
+    "age": 10,
+    "weight": 4,
+    "comorbidities": "tem asma",
+    "photoUrl": "/uploads/efd893a7-14b6-475f-8ac1-e4be95f67551.webp",
+    "createdAt": "2026-10-29T12:50:03.582Z"
+  },
+  {
+    "id": "pet_cf648d21-d5bc-4e4a-8460-66222d90e66a",
+    "userId": "usr_c67601af-6ce2-4be4-a88d-69a2fecf57f4",
+    "name": "Nina",
+    "sex": "feminino",
+    "species": "cachorro",
+    "breed": "poodle",
+    "age": 9,
+    "weight": 7,
+    "comorbidities": "cardiopata",
+    "photoUrl": "",
+    "createdAt": "2026-10-29T13:01:34.109Z"
+  },
+  {
+    "id": "pet_e6d3d802-ec53-468f-80c6-d810a8ec67d7",
+    "userId": "usr_c67601af-6ce2-4be4-a88d-69a2fecf57f4",
+    "name": "Lua",
+    "sex": "feminino",
+    "species": "gato",
+    "breed": "frajola",
+    "age": 0,
+    "weight": 1.9,
+    "comorbidities": "rabo quebrado",
+    "photoUrl": "",
+    "createdAt": "2026-10-29T13:02:58.558Z"
+=======
     "id": "pet_e8394714-af7c-4c6c-bb29-10f4137ce6f6",
     "userId": "usr_65f8f8b3-f919-4a72-a0c8-9827e0c158a2",
     "name": "akinoreku II",
@@ -76,5 +115,22 @@
     "comorbidities": "gorda",
     "photoUrl": "/uploads/5212c581-9147-4286-b679-e20e035865f8.jpg",
     "createdAt": "2026-10-29T12:42:59.575Z"
+<<<<<<< HEAD
+=======
+  },
+  {
+    "id": "pet_a846dd72-9f11-461a-9114-e8733a3b6194",
+    "userId": "usr_cd1abc28-a460-4d2e-8a8e-63e007849814",
+    "name": "dogteste",
+    "sex": "masculino",
+    "species": "testamento",
+    "breed": "Test",
+    "age": 73,
+    "weight": 12,
+    "comorbidities": "01",
+    "photoUrl": "/uploads/461d72ae-4f90-49f6-9281-100c30587012.webp",
+    "createdAt": "2026-10-29T12:57:56.819Z"
+>>>>>>> d2fd1eb830b7e3582044f24028c3c24e0a79e90f
+>>>>>>> b412d8d8189dd0b92c3515057b72f4aea97bb7d1
   }
 ]
