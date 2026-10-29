@@ -46,5 +46,29 @@
     "provider": "local",
     "photoUrl": "/uploads/496f5dd9-5cbf-48e2-ab3f-b77638f6944a.jpg",
     "createdAt": "2026-10-20T14:25:31.271Z"
+  },
+  {
+    "id": "usr_25d6a253-f21d-4db7-881f-b3983dca9072",
+    "name": "Anonimo1",
+    "birthDate": "2001-09-11",
+    "cpf": "11111111111",
+    "phone": "(99) 99999-9191",
+    "email": "anonimo1@gmail.com",
+    "passwordHash": "$2a$10$rjTGtOBwVoS6gyV5IEXYv.GbE0UieTWO/qJecvEzdKqaHQcD1LQA2",
+    "provider": "local",
+    "photoUrl": "",
+    "createdAt": "2026-10-29T12:45:47.683Z"
+  },
+  {
+    "id": "usr_c67601af-6ce2-4be4-a88d-69a2fecf57f4",
+    "name": "Klicya Rampi",
+    "birthDate": "2008-09-24",
+    "cpf": "00000000000",
+    "phone": "(19)40028922",
+    "email": "klicyarampi88@gmail.com",
+    "passwordHash": "$2a$10$XEJJInh5fXs5lH95BBplL.6PbJuWyYsKoCz37LKiDahzELTqOISFG",
+    "provider": "local",
+    "photoUrl": "",
+    "createdAt": "2026-10-29T12:58:44.972Z"
   }
 ]
