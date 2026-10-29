@@ -46,5 +46,29 @@
     "provider": "local",
     "photoUrl": "/uploads/496f5dd9-5cbf-48e2-ab3f-b77638f6944a.jpg",
     "createdAt": "2026-10-20T14:25:31.271Z"
+  },
+  {
+    "id": "usr_65f8f8b3-f919-4a72-a0c8-9827e0c158a2",
+    "name": "Jacinto pinto akinoreku",
+    "birthDate": "2012-12-13",
+    "cpf": "11344566789",
+    "phone": "12765778967",
+    "email": "netojoaomiguel056@gmail.com",
+    "passwordHash": "$2a$10$zzT6ASriBqQbEclTJOy2D.67Y3R5.6vMz1ZHOBpiK7qjd0RvmsBIe",
+    "provider": "local",
+    "photoUrl": "/uploads/542d30bc-93c4-4a3e-8293-4a1a7e1b6903.png",
+    "createdAt": "2026-10-29T12:41:54.990Z"
+  },
+  {
+    "id": "usr_cd1abc28-a460-4d2e-8a8e-63e007849814",
+    "name": "teste9",
+    "birthDate": "2009-09-09",
+    "cpf": "99999999999",
+    "phone": "9999999999999999999999",
+    "email": "teste9@gmail.com",
+    "passwordHash": "$2a$10$C40oDGL7ullhGvLb8OA/xOBeXZubiHcDpOENgBQ2De/1c44fUQO9W",
+    "provider": "local",
+    "photoUrl": "/uploads/4b2b333e-0bc0-47eb-b4fe-f59b278a0b98.png",
+    "createdAt": "2026-10-29T12:47:08.710Z"
   }
 ]
