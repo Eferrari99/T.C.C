@@ -48,7 +48,7 @@
     "createdAt": "2026-10-20T14:25:31.271Z"
   },
   {
-<<<<<<< HEAD
+
     "id": "usr_25d6a253-f21d-4db7-881f-b3983dca9072",
     "name": "Anonimo1",
     "birthDate": "2001-09-11",
@@ -71,7 +71,8 @@
     "provider": "local",
     "photoUrl": "",
     "createdAt": "2026-10-29T12:58:44.972Z"
-=======
+  },
+  {
     "id": "usr_65f8f8b3-f919-4a72-a0c8-9827e0c158a2",
     "name": "Jacinto pinto akinoreku",
     "birthDate": "2012-12-13",
@@ -94,7 +95,6 @@
     "provider": "local",
     "photoUrl": "/uploads/4b2b333e-0bc0-47eb-b4fe-f59b278a0b98.png",
     "createdAt": "2026-10-29T12:47:08.710Z"
-<<<<<<< HEAD
   },
   {
     "id": "usr_653ab31a-e249-4e03-8e50-7cd4087d23d9",
@@ -107,8 +107,6 @@
     "provider": "local",
     "photoUrl": "/uploads/12914324-7b6b-4cdf-8ebe-80a966bcc1dc.jpg",
     "createdAt": "2026-10-29T13:00:53.930Z"
-=======
->>>>>>> d2fd1eb830b7e3582044f24028c3c24e0a79e90f
->>>>>>> b412d8d8189dd0b92c3515057b72f4aea97bb7d1
+
   }
 ]
