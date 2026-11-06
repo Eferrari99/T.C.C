@@ -143,7 +143,7 @@
     padding: 12px;
     box-sizing: border-box;
     margin: 8px;
-    border: 1px solid #3A2603;
+    border: 2px solid #3A2603;
 }
 
 .informacao {
@@ -156,6 +156,7 @@
     overflow-wrap: anywhere;
     font-size: 14px;
     box-sizing: border-box;
+    border: 1px solid #3A2603;
 }
 
 .informacao:last-child {
@@ -182,12 +183,25 @@
     padding: 15px;
     box-sizing: border-box;
     overflow: visible;
-    border: 1px solid #3A2603;
+    border: 2px solid #3A2603;
 }
 
 .pet-card h3 {
+    text-align: center;
+    align-self: center;
     margin: 0 0 14px;
     overflow-wrap: anywhere;
+    width: 100%;
+    min-height: 30px;
+    background: #D9D9D9;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    overflow-wrap: anywhere;
+    font-size: 24px;
+    box-sizing: border-box;
+    border: 1px solid #3A2603;
+    
 }
 
 /* ========================================
@@ -299,11 +313,12 @@
     width: 170px;
     min-height: 40px;
     border: 0;
-    border-radius: 20px;
+    border-radius: 10px;
     background: #d93025;
     color: white;
     font-size: 16px;
     cursor: pointer;
+    border: 1px solid #000000;
 }
 
 .botao-sair:hover {
@@ -326,6 +341,7 @@
     font-size: 30px;
     text-decoration: none;
     color: #241b0d;
+    border: 1px solid #3A2603;
 }
 
 .botao-adicionar:hover {
@@ -412,7 +428,7 @@
 
 .botao-remover-pet {
     background: #d93025;
-    border-color: #a91d16;
+    border-color: #000000;
     color: #fff;
 }
 
@@ -433,7 +449,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background: #fff7dc;
+    background: #ffdbab;
     border: 1px solid #3A2603;
     border-radius: 10px;
     box-sizing: border-box;
@@ -474,7 +490,7 @@
 .form-edicao input:focus,
 .form-edicao select:focus,
 .form-edicao textarea:focus {
-    outline: 2px solid #c99c00;
+    outline: 2px solid #5b5952;
     outline-offset: 1px;
 }
 

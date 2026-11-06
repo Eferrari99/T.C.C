@@ -23,7 +23,48 @@ select {
     font: inherit;
 }
 
+#menu {
 
+    background-color: #FFC800;
+
+    display: flex;
+    
+
+    justify-content: flex-start;
+    align-items: center;
+
+    gap: 40px;
+
+    border: #3A2603 solid;
+    border-radius: 10px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+
+}
+
+
+#menu img {
+
+    max-height: 90px;
+
+    margin: 0;
+
+}
+
+
+#menu a {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    padding: 0 20px;
+
+    font-size: 20px;
+
+}
 
 #rodape {
 
@@ -105,23 +146,3 @@ select {
     border: 0;
 }
 
-@media (max-width: 700px) {
-    #menu {
-        gap: 10px;
-        padding: 10px;
-    }
-
-    #menu .logo-link {
-        width: 100%;
-        text-align: center;
-    }
-
-    #rodape {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    body {
-        overflow-x: hidden;
-    }
-}

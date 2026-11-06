@@ -48,7 +48,6 @@
     "createdAt": "2026-10-20T14:25:31.271Z"
   },
   {
-
     "id": "usr_25d6a253-f21d-4db7-881f-b3983dca9072",
     "name": "Anonimo1",
     "birthDate": "2001-09-11",
@@ -107,6 +106,17 @@
     "provider": "local",
     "photoUrl": "/uploads/12914324-7b6b-4cdf-8ebe-80a966bcc1dc.jpg",
     "createdAt": "2026-10-29T13:00:53.930Z"
-
+  },
+  {
+    "id": "usr_dc7f0c04-237e-452f-9645-d3550c1b3763",
+    "name": "santo",
+    "birthDate": "2001-09-11",
+    "cpf": "69696967671",
+    "phone": "+5519989959672",
+    "email": "testenum10@gmail.com",
+    "passwordHash": "$2a$10$t0c32ruElrSHvKuumyNDsezQ7.sExb0UAcGeEQO2Ntqu5Yfs4bvSi",
+    "provider": "local",
+    "photoUrl": "/uploads/ed018e3d-1414-4df0-9a92-0b777a6534be.jpg",
+    "createdAt": "2026-11-03T12:32:20.061Z"
   }
 ]
