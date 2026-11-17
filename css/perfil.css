@@ -529,3 +529,35 @@
         align-items: stretch;
     }
 }
+
+
+/* ========================================
+   BLOCO DE ENDEREÇO DO PERFIL
+======================================== */
+.bloco-endereco {
+    width: min(100%, 330px);
+    margin: 12px 8px;
+    padding: 14px;
+    box-sizing: border-box;
+    background: #E1B982;
+    border: 2px solid #3A2603;
+    border-radius: 10px;
+}
+
+.bloco-endereco h3 {
+    margin: 0 0 12px;
+    color: #3A2603;
+    text-align: center;
+}
+
+.bloco-endereco .informacao {
+    margin: 0;
+    min-height: 40px;
+}
+
+.bloco-endereco .endereco-ausente {
+    margin: 0;
+    color: #6b3b00;
+    font-size: 14px;
+    text-align: center;
+}

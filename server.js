@@ -197,12 +197,13 @@ app.post('/api/register', async (req, res) => {
             birthDate,
             cpf,
             phone,
+            address,
             email,
             password,
             confirmPassword
         } = req.body;
 
-        if (![name, birthDate, cpf, phone, email, password, confirmPassword]
+        if (![name, birthDate, cpf, phone, address, email, password, confirmPassword]
             .every(value => String(value || '').trim())) {
             return res.status(400).json({
                 error: 'Preencha todos os campos.'
@@ -264,6 +265,7 @@ app.post('/api/register', async (req, res) => {
             birthDate: String(birthDate),
             cpf: cpfDigits,
             phone: String(phone).trim(),
+            address: String(address).trim(),
             email: normalizedEmail,
             passwordHash: await bcrypt.hash(String(password), 10),
             provider: 'local',
@@ -339,8 +341,8 @@ app.get('/api/me', requireUser, (req, res) => {
 
 app.put('/api/me', requireUser, (req, res) => {
     try {
-        const { name, phone, email, birthDate, cpf } = req.body;
-        if (![name, phone, email, birthDate, cpf].every(value => String(value ?? '').trim())) {
+        const { name, phone, email, birthDate, cpf, address } = req.body;
+        if (![name, phone, email, birthDate, cpf, address].every(value => String(value ?? '').trim())) {
             return res.status(400).json({ error: 'Preencha todos os campos.' });
         }
 
@@ -373,6 +375,7 @@ app.put('/api/me', requireUser, (req, res) => {
         user.email = normalizedEmail;
         user.birthDate = String(birthDate).trim();
         user.cpf = cpfDigits;
+        user.address = String(address).trim();
         writeDb(USERS_FILE, users);
 
         return res.json({ message: 'Informações atualizadas com sucesso.', user: publicUser(user) });

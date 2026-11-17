@@ -128,5 +128,18 @@
     "comorbidities": "obeso",
     "photoUrl": "/uploads/6b8aca4d-bf53-4057-8b24-7f58266926e2.webp",
     "createdAt": "2026-11-03T12:36:20.052Z"
+  },
+  {
+    "id": "pet_567d9aaa-f47e-4393-a1a6-92f1b8a09e15",
+    "userId": "usr_f6b9030f-9dbf-4ce9-9a29-a1a33d2459b5",
+    "name": "mel",
+    "sex": "feminino",
+    "species": "cão",
+    "breed": "york shire",
+    "age": 10,
+    "weight": 2,
+    "comorbidities": "magra p caralho",
+    "photoUrl": "/uploads/4a0d97e7-7c41-4efa-a024-510df07e78f9.jpg",
+    "createdAt": "2026-11-17T13:01:21.379Z"
   }
 ]

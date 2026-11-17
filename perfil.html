@@ -99,6 +99,11 @@
                 <p>Carregando seus dados...</p>
             </div>
 
+            <section class="bloco-endereco" aria-labelledby="tituloEndereco">
+                <h3 id="tituloEndereco"><i class="bi bi-geo-alt-fill"></i> Endereço de entrega</h3>
+                <div id="dadosEndereco"><p>Carregando endereço...</p></div>
+            </section>
+
             <button class="botao-acao-perfil" id="botaoEditarUsuario" type="button">
                 <i class="bi bi-pencil-square" aria-hidden="true"></i> Editar informações
             </button>
@@ -118,6 +123,9 @@
 
                 <label for="editarCpfUsuario">CPF</label>
                 <input id="editarCpfUsuario" name="cpf" type="text" inputmode="numeric" maxlength="14" required>
+
+                <label for="editarEnderecoUsuario">Endereço para entrega</label>
+                <textarea id="editarEnderecoUsuario" name="address" rows="3" maxlength="300" placeholder="Rua, número, bairro, cidade, estado e CEP" required></textarea>
 
                 <p class="mensagem-formulario" id="mensagemEditarUsuario" role="status" aria-live="polite"></p>
                 <div class="acoes-formulario">

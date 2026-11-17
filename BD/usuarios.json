@@ -85,27 +85,16 @@
   },
   {
     "id": "usr_cd1abc28-a460-4d2e-8a8e-63e007849814",
-    "name": "teste9",
+    "name": "Lucca Serantoni Pinto",
     "birthDate": "2009-09-09",
     "cpf": "99999999999",
-    "phone": "9999999999999999999999",
+    "phone": "19989959672",
     "email": "teste9@gmail.com",
     "passwordHash": "$2a$10$C40oDGL7ullhGvLb8OA/xOBeXZubiHcDpOENgBQ2De/1c44fUQO9W",
     "provider": "local",
     "photoUrl": "/uploads/8fcf7df9-adad-4d33-9607-92e66ba2d497.png",
-    "createdAt": "2026-10-29T12:47:08.710Z"
-  },
-  {
-    "id": "usr_653ab31a-e249-4e03-8e50-7cd4087d23d9",
-    "name": "Laís Da silva",
-    "birthDate": "2000-02-12",
-    "cpf": "12345678967",
-    "phone": "123456789011",
-    "email": "laissimonetto@gmail.com",
-    "passwordHash": "$2a$10$TKQIKv4CuxiUOqZLHFRW5.TRFfqr/xQyhMUQD9Trk6FqJ.tzPAoZS",
-    "provider": "local",
-    "photoUrl": "/uploads/12914324-7b6b-4cdf-8ebe-80a966bcc1dc.jpg",
-    "createdAt": "2026-10-29T13:00:53.930Z"
+    "createdAt": "2026-10-29T12:47:08.710Z",
+    "address": "13467708 n1746 casa 4"
   },
   {
     "id": "usr_dc7f0c04-237e-452f-9645-d3550c1b3763",
@@ -118,5 +107,30 @@
     "provider": "local",
     "photoUrl": "/uploads/ed018e3d-1414-4df0-9a92-0b777a6534be.jpg",
     "createdAt": "2026-11-03T12:32:20.061Z"
+  },
+  {
+    "id": "usr_f6b9030f-9dbf-4ce9-9a29-a1a33d2459b5",
+    "name": "Yuri vinnicius ferreira garcia",
+    "birthDate": "2009-03-17",
+    "cpf": "19282818821",
+    "phone": "1998125724",
+    "email": "yurivinniciuscom2n@gmail.com",
+    "passwordHash": "$2a$10$8jOy88os8UUHh3xsn3AOq.uXivmwKwmMTT57qrT2V5uhZgWJK8zSK",
+    "provider": "local",
+    "photoUrl": "/uploads/881d0e9f-fb2c-46ec-a9a0-cf3879c855fd.png",
+    "createdAt": "2026-11-17T12:59:48.663Z"
+  },
+  {
+    "id": "usr_22542fb1-a2e6-4045-bcd9-4a132d59750f",
+    "name": "a",
+    "birthDate": "2001-02-22",
+    "cpf": "12038173172",
+    "phone": "122222121212121",
+    "address": "1746 13467708",
+    "email": "a@gmail.com",
+    "passwordHash": "$2a$10$029OIH9WQX0.RR7BPKVlf.Uuwa4lJtp2M.AzV6BjdJ1.YllDlzit6",
+    "provider": "local",
+    "photoUrl": "",
+    "createdAt": "2026-11-17T13:12:13.917Z"
   }
 ]

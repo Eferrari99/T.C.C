@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Confirmação da compra.
-    confirmButton.addEventListener('click', () => {
+    confirmButton.addEventListener('click', async () => {
         const selected = cart.filter(
             item => item.selected !== false
         );
@@ -212,6 +212,33 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!selected.length) {
             message.textContent =
                 'Selecione pelo menos um produto para continuar.';
+            return;
+        }
+
+        // Confere o endereço cadastrado antes de concluir a compra.
+        const userId = localStorage.getItem('taxidog_userId');
+        if (!userId) {
+            message.textContent = 'Entre na sua conta para continuar com a compra.';
+            setTimeout(() => { window.location.href = 'login.html'; }, 900);
+            return;
+        }
+
+        try {
+            const userResponse = await fetch('/api/me', {
+                cache: 'no-store',
+                headers: { 'x-user-id': userId }
+            });
+            const userData = await userResponse.json().catch(() => ({}));
+            if (!userResponse.ok) {
+                throw new Error(userData.error || 'Não foi possível verificar seu endereço.');
+            }
+            if (!userData.user?.address || !userData.user.address.trim()) {
+                message.textContent = 'Antes de realizar uma compra, cadastre seu endereço de entrega.';
+                setTimeout(() => { window.location.href = 'perfil.html?retorno=carrinho.html'; }, 900);
+                return;
+            }
+        } catch (error) {
+            message.textContent = error.message || 'Não foi possível verificar seu endereço.';
             return;
         }
 

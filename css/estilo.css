@@ -213,7 +213,7 @@ body {
 
     display: flex;
 
-    gap: 50px;
+    gap: 40px;
 
     width: max-content;
 
@@ -234,7 +234,7 @@ body {
 
     background-color: white;
 
-    border: 2px solid black;
+    border: 3px solid black;
 
     border-radius: 10px;
 

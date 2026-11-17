@@ -1,6 +1,7 @@
 (() => {
   const userBox = document.getElementById('dadosUsuario');
   const petsBox = document.getElementById('listaPets');
+  const addressBox = document.getElementById('dadosEndereco');
   const avatar = document.getElementById('avatarUsuario');
   const photo = document.getElementById('fotoUsuario');
   const photoInput = document.getElementById('arquivoFotoUsuario');
@@ -127,12 +128,25 @@
     addInfo(userBox, 'Nascimento', user.birthDate);
     if (user.cpf) addInfo(userBox, 'CPF', user.cpf);
 
+    if (addressBox) {
+      addressBox.replaceChildren();
+      if (user.address && user.address.trim()) {
+        addInfo(addressBox, 'Endereço', user.address);
+      } else {
+        const missing = document.createElement('p');
+        missing.className = 'endereco-ausente';
+        missing.textContent = 'Nenhum endereço cadastrado. Adicione seu endereço para realizar compras.';
+        addressBox.appendChild(missing);
+      }
+    }
+
     if (editUserForm) {
       editUserForm.elements.name.value = user.name || '';
       editUserForm.elements.phone.value = user.phone || '';
       editUserForm.elements.email.value = user.email || '';
       editUserForm.elements.birthDate.value = user.birthDate || '';
       editUserForm.elements.cpf.value = user.cpf || '';
+      editUserForm.elements.address.value = user.address || '';
     }
   }
 
@@ -159,7 +173,8 @@
       phone: editUserForm.elements.phone.value.trim(),
       email: editUserForm.elements.email.value.trim(),
       birthDate: editUserForm.elements.birthDate.value,
-      cpf: editUserForm.elements.cpf.value.trim()
+      cpf: editUserForm.elements.cpf.value.trim(),
+      address: editUserForm.elements.address.value.trim()
     };
     try {
       const result = await request('/api/me', {
@@ -171,6 +186,10 @@
       editUserForm.hidden = true;
       if (editUserButton) editUserButton.innerHTML = '<i class="bi bi-pencil-square" aria-hidden="true"></i> Editar informações';
       setFormMessage(userFormMessage, 'Informações atualizadas com sucesso!', true);
+      const retorno = new URLSearchParams(window.location.search).get('retorno');
+      if (retorno === 'carrinho.html' && result.user.address) {
+        setTimeout(() => { window.location.href = 'carrinho.html'; }, 700);
+      }
     } catch (error) {
       setFormMessage(userFormMessage, error.message);
     }
@@ -392,6 +411,13 @@
       const result = await request('/api/me');
       showUser(result.user);
       await loadPets();
+      if (new URLSearchParams(window.location.search).get('retorno') === 'carrinho.html' && !result.user.address) {
+        editUserForm.hidden = false;
+        if (editUserButton) editUserButton.textContent = 'Fechar edição';
+        editUserForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        editUserForm.elements.address.focus({ preventScroll: true });
+        setFormMessage(userFormMessage, 'Informe seu endereço de entrega para continuar a compra.');
+      }
     } catch (error) {
       console.error('Erro ao carregar perfil:', error);
       if (userBox) userBox.textContent = error.message;
