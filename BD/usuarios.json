@@ -133,19 +133,7 @@
     "photoUrl": "",
     "createdAt": "2026-11-17T13:12:13.917Z"
   },
-  {
-    "id": "usr_9cbaebf9-ab60-4a84-bcb1-25f2102f7d7a",
-    "name": "Lais",
-    "birthDate": "1222-12-12",
-    "cpf": "21212414121",
-    "phone": "2121414341212",
-    "address": "aaa",
-    "email": "teste11@gmail.com",
-    "passwordHash": "$2a$10$0HIpkAqEE/oZfrfHvlK9.uSSXgwy1GqQSwrsUIV.flfxey6hbFvje",
-    "provider": "local",
-    "photoUrl": "/uploads/2dfeba5c-0da2-4c54-be97-6ebac97a8cc8.jpg",
-    "createdAt": "2026-11-18T17:46:41.197Z"
-  },
+  
   {
     "id": "usr_a9a42c3a-4836-4c49-94be-921f74e17c5a",
     "name": ";udiç",

@@ -154,18 +154,5 @@
     "comorbidities": "a",
     "photoUrl": "/uploads/87bb0a4e-4f16-4c56-93f5-6dc058f8acc4.jpg",
     "createdAt": "2026-11-17T14:45:30.479Z"
-  },
-  {
-    "id": "pet_ca0db078-6d2d-431d-904e-a0fc14e380df",
-    "userId": "usr_9cbaebf9-ab60-4a84-bcb1-25f2102f7d7a",
-    "name": "jade",
-    "sex": "feminino",
-    "species": "cão",
-    "breed": "shitzu",
-    "age": 12,
-    "weight": 12,
-    "comorbidities": "",
-    "photoUrl": "/uploads/af7606a8-7434-4dfa-bf85-55128d22f7e5.jpg",
-    "createdAt": "2026-11-18T17:49:12.096Z"
   }
 ]
