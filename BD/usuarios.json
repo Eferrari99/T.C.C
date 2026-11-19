@@ -92,7 +92,7 @@
     "email": "teste9@gmail.com",
     "passwordHash": "$2a$10$C40oDGL7ullhGvLb8OA/xOBeXZubiHcDpOENgBQ2De/1c44fUQO9W",
     "provider": "local",
-    "photoUrl": "/uploads/8fcf7df9-adad-4d33-9607-92e66ba2d497.png",
+    "photoUrl": "/uploads/0cf2fa65-0cdf-414f-89d3-c2a59f19e0ba.jpg",
     "createdAt": "2026-10-29T12:47:08.710Z",
     "address": "13467708 n1746 casa 4"
   },
@@ -132,5 +132,44 @@
     "provider": "local",
     "photoUrl": "",
     "createdAt": "2026-11-17T13:12:13.917Z"
+  },
+  {
+    "id": "usr_9cbaebf9-ab60-4a84-bcb1-25f2102f7d7a",
+    "name": "Lais",
+    "birthDate": "1222-12-12",
+    "cpf": "21212414121",
+    "phone": "2121414341212",
+    "address": "aaa",
+    "email": "teste11@gmail.com",
+    "passwordHash": "$2a$10$0HIpkAqEE/oZfrfHvlK9.uSSXgwy1GqQSwrsUIV.flfxey6hbFvje",
+    "provider": "local",
+    "photoUrl": "/uploads/2dfeba5c-0da2-4c54-be97-6ebac97a8cc8.jpg",
+    "createdAt": "2026-11-18T17:46:41.197Z"
+  },
+  {
+    "id": "usr_a9a42c3a-4836-4c49-94be-921f74e17c5a",
+    "name": ";udiç",
+    "birthDate": "0909-04-23",
+    "cpf": "96733897587",
+    "phone": "1234567890098765",
+    "address": "hghfghhtg",
+    "email": "/hfxgfyufyy@gmail.com",
+    "passwordHash": "$2a$10$319ukec7TJZE4HGYEt/AG.fwiTCU0P17JFPUhmNPA4MJJ6geNMoru",
+    "provider": "local",
+    "photoUrl": "",
+    "createdAt": "2026-11-18T17:54:16.769Z"
+  },
+  {
+    "id": "usr_bde19c4d-58d6-4175-b6fc-58e5bd68917f",
+    "name": "viado",
+    "birthDate": "1212-12-24",
+    "cpf": "67676767767",
+    "phone": "+5519989959672",
+    "address": "Rua Guarujá",
+    "email": "eferrari200109@gmail.com",
+    "passwordHash": "$2a$10$eiK0NKhU/y3EQHDcwLWct.ImWMyS5T0OmIA0F5QHEcG1x61CwL.hm",
+    "provider": "local",
+    "photoUrl": "",
+    "createdAt": "2026-11-18T17:55:41.640Z"
   }
 ]
